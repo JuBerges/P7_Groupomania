@@ -1,9 +1,7 @@
 <template>
-  <h1 class="text-2xl border rounded shadow text-center">{{ msg }}</h1>
-  <h2>{{ cool }}</h2>
+  <h1>{{ msg }}</h1>
   <button @click="count++">count is: {{ count }}</button>
   <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
-  <button @click="count++" class="bg-gray-200 rounded text-4xl"> here </button>
 </template>
 
 <script>
@@ -14,8 +12,7 @@ export default {
   },
   data() {
     return {
-      count: 0,
-      cool: "it works fine",
+      count: 0
     }
   }
 }
