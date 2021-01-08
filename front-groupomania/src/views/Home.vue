@@ -1,6 +1,6 @@
 <template>
   <div class="home h-screen pt-11">
-    <h1 class="text-white bold">HELLO WALL</h1>
+    <h1 class="text-white bold text-5xl text-center">WALL</h1>
   </div>
 </template>
 

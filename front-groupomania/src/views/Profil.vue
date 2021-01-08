@@ -1,6 +1,6 @@
 <template>
   <div class="profil h-screen pt-11">
-    <h1 class="text-white bold">HELLO PROFIL</h1>
+    <h1 class="text-white bold text-5xl text-center">PROFIL</h1>
   </div>
 </template>
 
