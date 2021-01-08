@@ -12,6 +12,7 @@ export default {
   components: { NavBar },
 };
 </script>
+<!--Style du darkmode-->
 <style>
 .darkbody {
   background-color: rgb(24, 25, 26);
