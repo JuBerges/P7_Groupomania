@@ -1,10 +1,13 @@
 <template>
-  <header id="nav" class="grid grid-cols-3 gap-1 bg-gray-800 h-20">
-    <img
-      class="w-40 mt-7"
-      src="../assets/images/icon-left-font-monochrome-white.svg"
-      alt="logo groupomania"
-    />
+  <header id="nav" class="grid grid-cols-3 gap-4 darknav h-20 darkborder">
+    <!--Logo du site-->
+    <router-link to="/"
+      ><img
+        class="w-40 mt-6 mx-4"
+        src="../assets/images/icon-left-font-monochrome-white.svg"
+        alt="logo groupomania"
+    /></router-link>
+    <!--Home Link To The Wall-->
     <router-link class="text-white h-8 mt-5 w-8" to="/"
       ><svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,3 +33,11 @@ export default {
   props: {},
 };
 </script>
+<style>
+.darknav {
+  background-color: rgb(36, 37, 38);
+}
+.darkborder {
+  border-bottom: solid rgb(48, 49, 50) 2px;
+}
+</style>

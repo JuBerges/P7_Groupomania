@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="darkbody bg-cover">
     <NavBar></NavBar>
     <router-view />
   </div>
@@ -12,3 +12,8 @@ export default {
   components: { NavBar },
 };
 </script>
+<style>
+.darkbody {
+  background-color: rgb(24, 25, 26);
+}
+</style>
