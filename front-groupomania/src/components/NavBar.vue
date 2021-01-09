@@ -4,9 +4,9 @@
     class="grid grid-cols-11 gap-0 darknav h-11 darkborder fixed"
   >
     <!--Logo du site-->
-    <router-link class="col-span-3 col-start-1 col-end-3" to="/"
+    <router-link class="col-span-3 col-start-1 col-end-3 flex-shrink" to="/"
       ><img
-        class="object-contain md:object-scale-down ml-4 xs:mt-4"
+        class="ml-4"
         src="../assets/images/nav-logo.png"
         alt="logo groupomania"
     /></router-link>

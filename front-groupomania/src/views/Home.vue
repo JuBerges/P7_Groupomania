@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import Signin from "../components/Signin.vue";
 export default {
   name: "Home",
-  components: {},
+  components: { Signin },
 };
 </script>
