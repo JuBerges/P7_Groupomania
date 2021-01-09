@@ -14,17 +14,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: function() {
-      return import(/* webpackChunkName: "about" */ "../views/Help.vue");
+      return import(/* webpackChunkName: "help" */ "../views/Help.vue");
     },
   },
   {
     path: "/profil",
     name: "Profil",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: function() {
-      return import(/* webpackChunkName: "about" */ "../views/Profil.vue");
+      return import(/* webpackChunkName: "profil" */ "../views/Profil.vue");
     },
   },
 ];
