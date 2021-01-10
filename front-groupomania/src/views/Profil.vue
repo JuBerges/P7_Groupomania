@@ -2,23 +2,16 @@
   <div class="profil h-screen pt-11">
     <h1 class="text-white bold text-5xl text-center">TEST PROFIL</h1>
     <!-- component -->
-    <div class="w-full relative mt-4 shadow-2xl rounded my-24 overflow-hidden">
-      <div class="top h-64 w-full bg-blue-600 overflow-hidden relative">
+    <div class="w-full mt-4 shadow-2xl rounded my-24 overflow-hidden">
+      <div
+        class="flex flex-col justify-center items-center h-full bg-black bg-opacity-50 text-white"
+      >
         <img
-          src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-          alt=""
-          class="bg w-full h-full object-cover object-center absolute z-0"
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+          class="h-24 w-24 object-cover rounded-full"
         />
-        <div
-          class="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            class="h-24 w-24 object-cover rounded-full"
-          />
-          <h1 class="text-2xl font-semibold">Antonia Howell</h1>
-          <h4 class="text-sm font-semibold">Joined Since '19</h4>
-        </div>
+        <h1 class="text-2xl font-semibold">Antonia Howell</h1>
+        <h4 class="text-sm font-semibold">Joined Since '19</h4>
       </div>
       <div class="grid grid-cols-12 bg-white">
         <div

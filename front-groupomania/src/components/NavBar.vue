@@ -1,19 +1,19 @@
 <template>
   <header
     id="nav"
-    class="grid grid-cols-11 gap-0 darknav h-11 darkborder fixed"
+    class="grid grid-cols-7 md:grid-cols-11 gap-0 darknav h-11 darkborder fixed"
   >
     <!--Logo du site-->
-    <router-link
-      class="col-span-2 col-start-1 flex-shrink-0"
-      :to="{ name: 'Home' }"
+    <router-link class="col-span-2 col-start-1 col-end-3" :to="{ name: 'Home' }"
       ><img
-        class="ml-4 object-contain"
+        class="ml-4"
         src="../assets/images/nav-logo.png"
         alt="logo groupomania"
     /></router-link>
     <!--Home Link To The Wall-->
-    <router-link class="mt-2 router col-start-5" :to="{ name: 'Home' }"
+    <router-link
+      class="mt-2 router col-start-3 md:col-start-5"
+      :to="{ name: 'Home' }"
       ><svg
         class="h-6 w-6 mx-auto"
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,9 @@
         /></svg
     ></router-link>
     <!-- Link To The Profile -->
-    <router-link class="mt-2 router col-start-6" :to="{ name: 'Profil' }"
+    <router-link
+      class="mt-2 router col-start-4 md:col-start-6"
+      :to="{ name: 'Profil' }"
       ><svg
         class="h-6 w-6 mx-auto"
         xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +49,9 @@
         /></svg
     ></router-link>
     <!-- Link To Help Section -->
-    <router-link class="mt-2 router col-start-7" :to="{ name: 'Help' }"
+    <router-link
+      class="mt-2 router col-start-5 md:col-start-7"
+      :to="{ name: 'Help' }"
       ><svg
         class="h-6 w-6 mx-auto"
         xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +68,7 @@
         /></svg
     ></router-link>
 
-    <div class="col-start-11" @click="deco = !deco">
+    <div class="col-start-7 md:col-start-11" @click="deco = !deco">
       <svg
         class="h-6 w-6 mx-auto mt-2 cursor-pointer router"
         xmlns="http://www.w3.org/2000/svg"
