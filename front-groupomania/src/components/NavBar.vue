@@ -81,7 +81,7 @@
         />
       </svg>
     </div>
-    <deco-modal v-if="deco"></deco-modal>
+    <deco-modal v-if="deco" @cancel-signout="deco = false"></deco-modal>
   </header>
 </template>
 
