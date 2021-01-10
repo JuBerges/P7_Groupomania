@@ -5,10 +5,10 @@
   >
     <!--Logo du site-->
     <router-link
-      class="col-span-3 col-start-1 col-end-3 flex-shrink"
+      class="col-span-2 col-start-1 flex-shrink-0"
       :to="{ name: 'Home' }"
       ><img
-        class="ml-4"
+        class="ml-4 object-contain"
         src="../assets/images/nav-logo.png"
         alt="logo groupomania"
     /></router-link>
@@ -64,7 +64,7 @@
         /></svg
     ></router-link>
 
-    <div class="col-start-11">
+    <div class="col-start-11" @click="deco = !deco">
       <svg
         class="h-6 w-6 mx-auto mt-2 cursor-pointer router"
         xmlns="http://www.w3.org/2000/svg"
@@ -81,13 +81,20 @@
         />
       </svg>
     </div>
+    <deco-modal v-if="deco"></deco-modal>
   </header>
 </template>
 
 <script>
+import DecoModal from "../components/DecoModal.vue";
 export default {
   name: "NavBar",
-  props: {},
+  components: { DecoModal },
+  data() {
+    return {
+      deco: false,
+    };
+  },
 };
 </script>
 <!-- Style for darkmode and router-link-activ -->

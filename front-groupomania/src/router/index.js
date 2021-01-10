@@ -14,15 +14,27 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: function() {
-      return import(/* webpackChunkName: "help" */ "../views/Help.vue");
+      return import(/* webpackChunkName: "Help" */ "../views/Help.vue");
     },
   },
   {
     path: "/profil",
     name: "Profil",
     component: function() {
-      return import(/* webpackChunkName: "profil" */ "../views/Profil.vue");
+      return import(/* webpackChunkName: "Profil" */ "../views/Profil.vue");
     },
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: function() {
+      return import(/* webpackChunkName: "NotFound" */ "../views/NotFound.vue");
+    },
+  },
+  {
+    //path: "*"
+    path: "/:catchAll(.*)",
+    redirect: "404",
   },
 ];
 
