@@ -67,8 +67,11 @@
           d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         /></svg
     ></router-link>
-
-    <div class="col-start-7 md:col-start-11" @click="deco = !deco">
+    <!-- SignOut Button -->
+    <div
+      class="col-start-7 md:col-start-11"
+      @click="cancelSignOut = !cancelSignOut"
+    >
       <svg
         class="h-6 w-6 mx-auto mt-2 cursor-pointer router"
         xmlns="http://www.w3.org/2000/svg"
@@ -85,18 +88,21 @@
         />
       </svg>
     </div>
-    <deco-modal v-if="deco" @cancel-signout="deco = false"></deco-modal>
+    <sign-out-modal
+      v-if="cancelSignOut"
+      @cancel-signout="cancelSignOut = false"
+    ></sign-out-modal>
   </header>
 </template>
 
 <script>
-import DecoModal from "../components/DecoModal.vue";
+import SignOutModal from "../components/SignOutModal.vue";
 export default {
   name: "NavBar",
-  components: { DecoModal },
+  components: { SignOutModal },
   data() {
     return {
-      deco: false,
+      cancelSignOut: false,
     };
   },
 };
