@@ -6,14 +6,16 @@
         <component :is="Component" />
       </transition>
     </router-view>
+    <the-footer></the-footer>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
+import TheFooter from "./components/TheFooter.vue";
 export default {
   name: "App",
-  components: { NavBar },
+  components: { NavBar, TheFooter },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
