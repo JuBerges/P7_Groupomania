@@ -1,15 +1,23 @@
 <template>
   <header
     id="nav"
-    class="grid grid-cols-7 md:grid-cols-11 gap-0 darknav h-11 darkborder fixed"
+    class="grid grid-cols-7 md:grid-cols-11 gap-0 darknav h-11 darkborder fixed w-full"
   >
     <!--Logo du site-->
-    <router-link class="col-span-2 col-start-1 col-end-3" :to="{ name: 'Home' }"
-      ><img
-        class="ml-4"
-        src="../assets/images/nav-logo.png"
-        alt="logo groupomania"
-    /></router-link>
+    <router-link
+      class="col-span-1 md:col-span-3 col-start-1 md:col-end-4"
+      :to="{ name: 'Home' }"
+    >
+      <div class="ml-1 md:ml-4 flex min-w-max">
+        <img
+          class="h-11"
+          src="../assets/images/nav-mini-logo.png"
+          alt="logo groupomania"
+        /><span class="text-white hidden md:block font-bold text-xl pl-1 pt-2"
+          ><p>Groupomania</p></span
+        >
+      </div>
+    </router-link>
     <!--Home Link To The Wall-->
     <router-link
       class="mt-2 router col-start-3 md:col-start-5"
@@ -108,7 +116,7 @@ export default {
 };
 </script>
 <!-- Style for darkmode and router-link-activ -->
-<style>
+<style scoped>
 .darknav {
   background-color: rgb(36, 37, 38);
 }

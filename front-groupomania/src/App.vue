@@ -1,9 +1,11 @@
 <template>
   <div id="app" class="darkbody bg-cover">
     <NavBar></NavBar>
-    <transition name="slide" mode="out-in">
-      <router-view :key="$route.path" />
-    </transition>
+    <router-view v-slot="{ Component }">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 

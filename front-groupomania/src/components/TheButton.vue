@@ -6,14 +6,13 @@
     <slot name="icon"></slot>
   </button>
 </template>
-</template>
 <script>
 export default {
   name: "TheButton",
 };
 </script>
 
-<style>
+<style scoped>
 .btn-blue {
   background-color: rgb(45, 136, 255);
 }
