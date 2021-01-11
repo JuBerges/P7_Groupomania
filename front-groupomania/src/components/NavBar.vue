@@ -5,6 +5,7 @@
   >
     <!--Logo du site-->
     <router-link
+      @click="scrollTop"
       class="col-span-1 md:col-span-3 col-start-1 md:col-end-4"
       :to="{ name: 'Home' }"
     >
@@ -20,6 +21,7 @@
     </router-link>
     <!--Home Link To The Wall-->
     <router-link
+      @click="scrollTop"
       class="mt-2 router col-start-3 md:col-start-5"
       :to="{ name: 'Home' }"
       ><svg
@@ -39,6 +41,7 @@
     ></router-link>
     <!-- Link To The Profile -->
     <router-link
+      @click="scrollTop"
       class="mt-2 router col-start-4 md:col-start-6"
       :to="{ name: 'Profil' }"
       ><svg
@@ -58,6 +61,7 @@
     ></router-link>
     <!-- Link To Help Section -->
     <router-link
+      @click="scrollTop"
       class="mt-2 router col-start-5 md:col-start-7"
       :to="{ name: 'Help' }"
       ><svg
@@ -112,6 +116,11 @@ export default {
     return {
       cancelSignOut: false,
     };
+  },
+  methods: {
+    scrollTop() {
+      return this.$emit("scroll-top");
+    },
   },
 };
 </script>

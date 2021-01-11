@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="darkbody bg-cover">
-    <NavBar></NavBar>
+    <NavBar @scroll-top="scrollToTop"></NavBar>
     <router-view v-slot="{ Component }">
       <transition name="slide" mode="out-in">
         <component :is="Component" />
@@ -14,6 +14,11 @@ import NavBar from "./components/NavBar.vue";
 export default {
   name: "App",
   components: { NavBar },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+  },
 };
 </script>
 <!--Style du darkmode-->
