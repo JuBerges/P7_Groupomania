@@ -1,6 +1,5 @@
 <template>
   <div class="profil h-screen pt-11">
-    <h1 class="text-white bold text-5xl text-center">TEST PROFIL</h1>
     <div><!-- img du profile --></div>
     <div><!-- USERname email et role --></div>
     <div><!-- Bio --></div>
@@ -12,8 +11,9 @@
 </template>
 
 <script>
+import SignupLogin from "../components/SignupLogin.vue";
 export default {
   name: "Profil",
-  components: {},
+  components: { SignupLogin },
 };
 </script>
