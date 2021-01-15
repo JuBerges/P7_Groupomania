@@ -1,3 +1,5 @@
+"use strict";
+const { error } = require("console");
 const http = require("http");
 const app = require("./app");
 
@@ -38,11 +40,17 @@ const errorHandler = (error) => {
 
 const server = http.createServer(app);
 
+const models = require("./models");
+models.sequelize
+  .sync(/*{force: true}*/)
+  .then(() => {
+    server.on("listening", () => {
+      const address = server.address();
+      const bind =
+        typeof address === "string" ? "pipe " + address : "port " + port;
+      console.log("Listening on " + bind);
+    });
+  })
+  .catch((err) => console.log(err));
 server.on("error", errorHandler);
-server.on("listening", () => {
-  const address = server.address();
-  const bind = typeof address === "string" ? "pipe " + address : "port " + port;
-  console.log("Listening on " + bind);
-});
-
 server.listen(port);
