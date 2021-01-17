@@ -1,7 +1,7 @@
 {
   "name": "back-groupomania",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend du projet 7 du parcours développeur web d'OpenClassRooms",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,6 +26,7 @@
     "sequelize": "^6.3.5",
     "sequelize-auto": "^0.7.6",
     "sequelize-cli": "^6.2.0",
-    "validator": "^13.5.2"
+    "validator": "^13.5.2",
+    "xss": "^1.0.8"
   }
 }

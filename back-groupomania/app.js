@@ -1,8 +1,8 @@
 const express = require("express");
-//const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 //const path = require("path");
 //const helmet = require("helmet");
-//const cors = require("cors");
+const cors = require("cors");
 //const rateLimit = require("express-rate-limit"); //===> Use to limit repeated requests
 /*const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //===> 15 minutes
@@ -10,7 +10,7 @@ const express = require("express");
 });*/
 
 //const saucesRoutes = require("./routes/sauce");
-//const userRoutes = require("./routes/user");
+//const userRoutes = require("./routes/users");
 
 /*mongoose
   .connect(process.env.MDB_URI, {
@@ -26,7 +26,7 @@ const app = express();
 
 //app.use(helmet.xssFilter()); //====>Cross-site scripting sercurity
 
-//app.use(cors({ origin: "http://localhost:4200" })); //====> Secure CORS
+app.use(cors()); //====> Secure CORS
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,19 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/test", (req, res, next) => {
-  const stuff = [
-    {
-      _id: "randomId",
-      title: "Le Grand Test",
-      description: "Ce test a pour but de tester",
-      price: 4900,
-      userId: "WadeSpectre",
-    },
-  ];
-  res.status(200).json(stuff);
-});
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 //app.use("/images", express.static(path.join(__dirname, "images")));
 
