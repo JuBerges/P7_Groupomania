@@ -1,15 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import Auth from "../components/SignupLogin.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Auth",
-    component: Auth,
-  },
-  {
-    path: "/home",
     name: "Home",
     component: Home,
   },

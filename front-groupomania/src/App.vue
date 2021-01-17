@@ -1,21 +1,32 @@
 <template>
   <div id="app" class="darkbody bg-cover">
-    <NavBar @scroll-top="scrollToTop"></NavBar>
-    <router-view v-slot="{ Component }">
-      <transition name="slide" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-    <the-footer></the-footer>
+    <div v-if="!signedIn">
+      <signup-login></signup-login>
+    </div>
+    <div v-if="signedIn">
+      <NavBar @scroll-top="scrollToTop"></NavBar>
+      <router-view v-slot="{ Component }">
+        <transition name="slide" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+      <the-footer></the-footer>
+    </div>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
 import TheFooter from "./components/TheFooter.vue";
+import SignupLogin from "./components/SignupLogin.vue";
 export default {
   name: "App",
-  components: { NavBar, TheFooter },
+  components: { NavBar, TheFooter, SignupLogin },
+  data() {
+    return {
+      signedIn: false,
+    };
+  },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
