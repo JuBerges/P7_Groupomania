@@ -3,7 +3,7 @@
     <div v-if="!signedIn">
       <signup-login></signup-login>
     </div>
-    <div v-if="signedIn">
+    <div v-else>
       <NavBar @scroll-top="scrollToTop"></NavBar>
       <router-view v-slot="{ Component }">
         <transition name="slide" mode="out-in">
