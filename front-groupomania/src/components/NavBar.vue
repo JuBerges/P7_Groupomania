@@ -103,6 +103,7 @@
     <sign-out-modal
       v-if="cancelSignOut"
       @cancel-signout="cancelSignOut = false"
+      @valid-signout="loggingOut"
     ></sign-out-modal>
   </header>
 </template>
@@ -120,6 +121,9 @@ export default {
   methods: {
     scrollTop() {
       return this.$emit("scroll-top");
+    },
+    loggingOut() {
+      return this.$emit("valid-signout");
     },
   },
 };

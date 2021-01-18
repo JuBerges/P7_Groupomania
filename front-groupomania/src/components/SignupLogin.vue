@@ -11,12 +11,30 @@
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Identifiez-vous</h2>
-        <form class="flex flex-col">
+        <form class="flex flex-col" @submit="checkForm" method="post">
+          <p v-if="errors.length">
+    <b class="text-second-color">Merci de corriger le(s) erreur(s) suivante(s):</b>
+    <ul>
+      <li :key="error" v-for="error in errors" class="text-red-600">{{ error }}</li>
+    </ul>
+  </p>
           <label class="pt-2" for="email">E-mail: </label>
-          <input id="email" class="mx-auto text-black p-1" type="email" />
+          <input
+            id="email"
+            class="mx-auto text-black p-1 placeholder-gray-500"
+            placeholder="E-mail"
+            v-model="user.email"
+            type="email"
+          />
           <label class="pt-2" for="password">Mot de passe: </label>
-          <input id="password" class="mx-auto text-black p-1" type="password" />
-          <the-button class="mt-6 mx-auto">
+          <input
+            id="password"
+            class="mx-auto text-black p-1 placeholder-gray-500"
+            placeholder="Mot de passe"
+            v-model="user.password"
+            type="password"
+          />
+          <the-button class="mt-6 mx-auto" type="submit" @click.prevent="checkForm">
             <template v-slot:label>Se connecter</template>
           </the-button>
           <p class="pt-4">Vous n'avez pas de compte?</p>
@@ -42,11 +60,26 @@
         <h2 class="custom-border font-bold text-2xl">Créez un compte</h2>
         <form class="flex flex-col">
           <label class="pt-2" for="username">Choisissez votre pseudo: </label>
-          <input id="username" class="mx-auto text-black p-1" type="text" />
+          <input
+            id="username"
+            class="mx-auto text-black p-1 placeholder-gray-500"
+            placeholder="Pseudo"
+            type="text"
+          />
           <label class="pt-2" for="email">E-mail: </label>
-          <input id="email" class="mx-auto text-black p-1" type="email" />
+          <input
+            id="email"
+            class="mx-auto text-black p-1 placeholder-gray-500"
+            placeholder="Adresse e-mail"
+            type="email"
+          />
           <label class="pt-2" for="password">Mot de passe: </label>
-          <input id="password" class="mx-auto text-black p-1" type="password" />
+          <input
+            id="password"
+            class="mx-auto text-black p-1 placeholder-gray-500"
+            placeholder="Mot de passe"
+            type="password"
+          />
           <span class="pt-2">Image de profil:</span>
           <label
             for="file-upload"
@@ -62,13 +95,14 @@
             class="sr-only"
             @input="onSelectFile"
           />
+          <p class="text-gray-400 text-xs pb-2">jpg, jpeg, png ou gif</p>
           <div
             v-if="imageData"
             class="w-20 h-20 rounded-full mx-auto cursor-pointer preview"
             :style="{ 'background-image': `url(${imageData})` }"
             @click="chooseImage"
           ></div>
-          <the-button class="mt-6 mx-auto">
+          <the-button class="mt-6 mx-auto" type="submit" @click="signUp">
             <template v-slot:label>S'inscrire</template>
           </the-button>
           <p class="pt-4">Déjà membre ?</p>
@@ -92,6 +126,12 @@ export default {
     return {
       toggleOptions: false,
       imageData: null,
+      errors: [],
+      user: {
+        email: null,
+        password: null,
+        username: null,
+      },
     };
   },
   methods: {
@@ -109,6 +149,33 @@ export default {
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
       }
+    },
+    logIn() {
+      //ATTENTION LA PORTE EST OUVERTE ^^
+      if (this.user.email.length === 0 || this.user.password.length === 0) {
+        window.alert("Entrez votre e-mail et votre mot de passe svp");
+      } else {
+        let data = {
+          email: this.user.email,
+          password: this.user.password,
+        };
+      }
+    },
+    checkForm: function (e) {
+      if (this.user.email && this.user.password) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.user.email) {
+        this.errors.push("Email requis.");
+      }
+      if (!this.user.password) {
+        this.errors.push("Mot de passe requis.");
+      }
+
+      e.preventDefault();
     },
   },
 };

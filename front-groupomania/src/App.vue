@@ -1,10 +1,13 @@
 <template>
   <div id="app" class="darkbody bg-cover">
     <div v-if="!signedIn">
-      <signup-login></signup-login>
+      <signup-login @logged-in="signedIn = true"></signup-login>
     </div>
     <div v-else>
-      <NavBar @scroll-top="scrollToTop"></NavBar>
+      <NavBar
+        @scroll-top="scrollToTop"
+        @valid-signout="signedIn = false"
+      ></NavBar>
       <router-view v-slot="{ Component }">
         <transition name="slide" mode="out-in">
           <component :is="Component" />
