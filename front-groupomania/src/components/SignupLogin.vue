@@ -12,18 +12,22 @@
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Identifiez-vous</h2>
         <form class="flex flex-col" @submit="checkForm" method="post">
-          <p v-if="errors.length">
-    <b class="text-second-color">Merci de corriger le(s) erreur(s) suivante(s):</b>
-    <ul>
-      <li :key="error" v-for="error in errors" class="text-red-600">{{ error }}</li>
-    </ul>
-  </p>
+          <div v-if="errors.length">
+            <b class="text-second-color"
+              >Merci de corriger le(s) erreur(s) suivante(s):</b
+            >
+            <ul>
+              <li :key="error" v-for="error in errors" class="text-red-600">
+                {{ error }}
+              </li>
+            </ul>
+          </div>
           <label class="pt-2" for="email">E-mail: </label>
           <input
             id="email"
             class="mx-auto text-black p-1 placeholder-gray-500"
             placeholder="E-mail"
-            v-model="user.email"
+            v-model="email"
             type="email"
           />
           <label class="pt-2" for="password">Mot de passe: </label>
@@ -31,16 +35,20 @@
             id="password"
             class="mx-auto text-black p-1 placeholder-gray-500"
             placeholder="Mot de passe"
-            v-model="user.password"
+            v-model="password"
             type="password"
           />
-          <the-button class="mt-6 mx-auto" type="submit" @click.prevent="checkForm">
+          <the-button
+            class="mt-6 mx-auto"
+            type="submit"
+            @click.prevent="checkForm"
+          >
             <template v-slot:label>Se connecter</template>
           </the-button>
           <p class="pt-4">Vous n'avez pas de compte?</p>
           <button
             class="p text-blue-600 hover:underline"
-            @click="toggleOptions = true"
+            @click="(toggleOptions = true), ((errors = []), (password = null))"
           >
             Créez un compte
           </button>
@@ -65,6 +73,7 @@
             class="mx-auto text-black p-1 placeholder-gray-500"
             placeholder="Pseudo"
             type="text"
+            v-model="username"
           />
           <label class="pt-2" for="email">E-mail: </label>
           <input
@@ -72,6 +81,7 @@
             class="mx-auto text-black p-1 placeholder-gray-500"
             placeholder="Adresse e-mail"
             type="email"
+            v-model="email"
           />
           <label class="pt-2" for="password">Mot de passe: </label>
           <input
@@ -79,6 +89,7 @@
             class="mx-auto text-black p-1 placeholder-gray-500"
             placeholder="Mot de passe"
             type="password"
+            v-model="password"
           />
           <span class="pt-2">Image de profil:</span>
           <label
@@ -102,7 +113,11 @@
             :style="{ 'background-image': `url(${imageData})` }"
             @click="chooseImage"
           ></div>
-          <the-button class="mt-6 mx-auto" type="submit" @click="signUp">
+          <the-button
+            class="mt-6 mx-auto"
+            type="submit"
+            @click.prevent="signUp"
+          >
             <template v-slot:label>S'inscrire</template>
           </the-button>
           <p class="pt-4">Déjà membre ?</p>
@@ -127,11 +142,9 @@ export default {
       toggleOptions: false,
       imageData: null,
       errors: [],
-      user: {
-        email: null,
-        password: null,
-        username: null,
-      },
+      email: null,
+      password: null,
+      username: null,
     };
   },
   methods: {
@@ -150,32 +163,90 @@ export default {
         this.$emit("input", files[0]);
       }
     },
-    logIn() {
-      //ATTENTION LA PORTE EST OUVERTE ^^
-      if (this.user.email.length === 0 || this.user.password.length === 0) {
-        window.alert("Entrez votre e-mail et votre mot de passe svp");
+    signUp() {
+      if (
+        this.email === null ||
+        this.password === null ||
+        this.username === null
+      ) {
+        window.alert(
+          "Entrez votre pseudo, votre e-mail et un mot de passe svp"
+        );
       } else {
+        let img = document.getElementById("file-upload").files[0];
         let data = {
-          email: this.user.email,
-          password: this.user.password,
+          email: this.email,
+          password: this.password,
+          username: this.username,
+          avatar: "Rien",
         };
+        let options = {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        };
+        let that = this;
+        let promise = fetch("http://localhost:3000/api/auth/signup", options)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (erreur) {
+            console.log(erreur);
+          });
+        let response = promise;
+        return (
+          response,
+          setTimeout(function () {
+            that.checkForm();
+          }, 500)
+        );
       }
     },
-    checkForm: function (e) {
-      if (this.user.email && this.user.password) {
-        return true;
+    checkForm: function () {
+      if (this.email && this.password) {
+        let data = {
+          email: this.email,
+          password: this.password,
+        };
+        let options = {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        };
+        const that = this;
+        let promise = fetch("http://localhost:3000/api/auth/login", options)
+          .then(function (response) {
+            if (response.ok) {
+              that.$emit("logged-in");
+              console.log("Utilisateur connecté !!");
+            } else {
+              that.errors = [];
+              that.errors.push("Email et/ou mot de passe non reconnue(s).");
+            }
+            console.log(response);
+          })
+          .catch(function (erreur) {
+            console.log(erreur);
+          });
+
+        let response = promise;
+        return response;
       }
 
       this.errors = [];
 
-      if (!this.user.email) {
+      if (!this.email) {
         this.errors.push("Email requis.");
       }
-      if (!this.user.password) {
+      if (!this.password) {
         this.errors.push("Mot de passe requis.");
       }
-
-      e.preventDefault();
     },
   },
 };

@@ -3,7 +3,7 @@ const fs = require("fs");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
 const models = require("../models");
-const jwt = require("../middleware/jwt");
+const jwt = require("jsonwebtoken");
 
 const schema = new passwordValidator();
 schema
@@ -27,114 +27,50 @@ schema
 exports.signup = (req, res) => {
   if (
     !validator.isEmail(req.body.email) ||
-    !validator.isAlphanumeric(req.body.username[("fr-FR", "en-US", locale)])
+    !validator.isAlphanumeric(req.body.username, ["fr-FR"])
   ) {
-    return res.status(422).json({
-      message:
-        "Mauvais format - Utilisez seulement des chiffres et des lettres svp",
-    });
   } else {
-    if (schema.validate(req.body.password)) {
-      let role;
-      models.users.findAll().then((users) => {
-        if (users.length === 0) {
-          bcrypt.hash(req.body.password, 10);
-          role = json.stringify(["admin", "user"]).then((hash) => {
-            let urlProfilePic;
-            if (req.file) {
-              urlProfilePic = req.file.filename;
-            } else {
-              urlProfilePic = `defaultProfielPic.png`;
-            }
-            models.users
-              .create({
-                email: xss(req.body.email),
-                password: hash,
-                username: xss(req.body.username),
-                url_profile_pic: urlProfilePic,
-                role: role,
-              })
-
-              .catch((err) => {
-                res.status(500).json(err);
-              });
-          });
-        } else {
-          role = JSON.stringify(["user"]);
-          models.users
-            .findOne({
-              attributes: ["email"],
-              where: { email: req.body.email },
-            })
-            .then((user) => {
-              if (!user) {
-                bcrypt.hash(req.body.password, 10).then((hash) => {
-                  let urlProfilePic;
-                  if (req.file) {
-                    urlProfilePic = req.file.filename;
-                  } else {
-                    urlProfilePic = `defaultProfilePic.png`;
-                  }
-                  models.users
-                    .create({
-                      email: xss(req.body.email),
-                      password: hash,
-                      username: xss(req.body.username),
-                      url_profile_pic: urlProfilePic,
-                      role: role,
-                    })
-                    .then((newUser) => {
-                      res.status(201).json({
-                        message: `New user created ! User ID: ${newUser.id}`,
-                      });
-                    })
-                    .catch((err) => {
-                      res.status(500).json(err);
-                    });
-                });
-              } else {
-                return res
-                  .status(401)
-                  .json({ message: "This email address is already used !" });
-              }
-            })
-            .catch((err) => {
-              res.status(500).json(err);
-            });
-        }
-      });
-    } else {
-      res.status(400).json({
-        message:
-          "Your password must contain at least 8 characters with minimun one uppercase letter and one digits ",
-      });
-    }
+    bcrypt
+      .hash(req.body.password, 10)
+      .then((hash) => {
+        const user = models.users.create({
+          email: req.body.email,
+          username: req.body.username,
+          role: "user",
+          avatar: req.body.avatar,
+          password: hash,
+        });
+        console.log(user);
+      })
+      .catch((error) => res.status(500).json({ error }));
   }
 };
 
 exports.login = (req, res) => {
-  if (!validator.isEmail(req.body.email)) {
-    return res.status(422).json({ message: "Invalid email !" });
-  } else {
-    models.users.findOne({ where: { email: req.body.email } }).then((user) => {
+  const logUser = models.users
+    .findOne({
+      where: { email: req.body.email },
+    })
+    .then((user) => {
       if (!user) {
-        return res.status(404).json({ message: "This user can't be found" });
+        console.log("Utilisateur introuvable!!!");
+        return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ error: "Wrong password !" });
-          } else {
-            res.status(200).json({
-              user_id: user.id,
-              token: jwt.tokenGeneration(user),
-            });
+            console.log("Mot de passe incorrect !!!");
+            return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
+          res.status(200).json({
+            userId: user._id,
+            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+              expiresIn: "24h",
+            }),
+          });
         })
-        .catch((error) => {
-          res.status(500).json({ error });
-        });
-    });
-  }
+        .catch((error) => res.status(500).json({ error }));
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
