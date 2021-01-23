@@ -1,36 +1,30 @@
 <template>
-  <div class="mt-6">
-    <div class="max-w-4xl mx-auto p-4 darkpost rounded-lg shadow-md">
-      <div class="flex justify-between items-center">
-        <span class="font-light text-gray-200">Jun 1, 2020</span>
+  <article class="my-6 lg:mx-10">
+    <div class="mx-auto p-4 darkpost rounded-lg shadow-md">
+      <div id="postInfos" class="flex justify-between">
+        <span class="my-blue font-bold text-sm">22 Janvier 2021</span>
+        <span class="flex items-center">
+          <p class="my-blue font-bold">Wade</p>
+          <img
+            src="../assets/images/defaultProfilePic.png"
+            alt="avatar"
+            class="mx-4 w-8 h-8 object-cover rounded-full hidden sm:block"
+          />
+        </span>
       </div>
-      <div class="mt-2">
-        <a href="#" class="text-2xl text-white font-bold hover:underline"
-          >Océane est un peu casse bonbon.</a
-        >
-        <p class="mt-2 text-gray-200">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora
-          expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-          enim reprehenderit nisi, accusamus delectus nihil quis facere in modi
-          ratione libero!
-        </p>
-        <img src="" alt="" />
-      </div>
-      <div class="flex justify-between items-center mt-4">
-        <a href="#" class="text-blue-500 hover:underline">Voir plus</a>
-        <div>
-          <a href="#" class="flex items-center"
-            ><img
-              src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-              alt="avatar"
-              class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block"
-            />
-            <h1 class="text-gray-200 font-bold hover:underline">Alex John</h1>
-          </a>
-        </div>
+      <div class="my-2 flex flex-col items-center">
+        <h2 href="#" class="text-2xl text-white uppercase font-bold">
+          je trouve rien!
+        </h2>
+
+        <img
+          src="https://media1.tenor.com/images/4d13bc35aa0d5f12299ff530e0e1078e/tenor.gif?itemid=17168549"
+          alt="image de post"
+          class=""
+        />
       </div>
     </div>
-  </div>
+  </article>
 </template>
 <script>
 export default {
@@ -44,5 +38,11 @@ export default {
 }
 .darkborder {
   border: solid rgb(48, 49, 50) 2px;
+}
+.my-blue {
+  color: rgb(45, 136, 255);
+}
+.my-gray {
+  color: rgb(150, 151, 152);
 }
 </style>

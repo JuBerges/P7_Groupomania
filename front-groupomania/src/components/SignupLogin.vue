@@ -11,7 +11,7 @@
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Identifiez-vous</h2>
-        <form class="flex flex-col" @submit="checkForm" method="post">
+        <form class="flex flex-col" @submit="logIn" method="post">
           <div v-if="errors.length">
             <b class="text-second-color"
               >Merci de corriger le(s) erreur(s) suivante(s):</b
@@ -38,17 +38,16 @@
             v-model="password"
             type="password"
           />
-          <the-button
-            class="mt-6 mx-auto"
-            type="submit"
-            @click.prevent="checkForm"
-          >
+          <the-button class="mt-6 mx-auto" type="submit" @click.prevent="logIn">
             <template v-slot:label>Se connecter</template>
           </the-button>
           <p class="pt-4">Vous n'avez pas de compte?</p>
           <button
             class="p text-blue-600 hover:underline"
-            @click="(toggleOptions = true), ((errors = []), (password = null))"
+            @click="
+              (toggleOptions = true),
+                ((errors = []), (password = null), (email = null))
+            "
           >
             Créez un compte
           </button>
@@ -66,7 +65,7 @@
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Créez un compte</h2>
-        <form class="flex flex-col">
+        <form class="flex flex-col" enctype="multipart/form-data" method="post">
           <label class="pt-2" for="username">Choisissez votre pseudo: </label>
           <input
             id="username"
@@ -100,7 +99,7 @@
           </label>
           <input
             id="file-upload"
-            name="file-upload"
+            name="image"
             type="file"
             ref="fileInput"
             class="sr-only"
@@ -123,7 +122,7 @@
           <p class="pt-4">Déjà membre ?</p>
           <button
             class="p text-blue-600 hover:underline pb-11"
-            @click="toggleOptions = false"
+            @click="(toggleOptions = false), (username = null)"
           >
             Se connecter
           </button>
@@ -170,23 +169,22 @@ export default {
         this.username === null
       ) {
         window.alert(
-          "Entrez votre pseudo, votre e-mail et un mot de passe svp"
+          "N'oubliez pas d'entrer votre pseudo, votre e-mail et un mot de passe svp"
         );
       } else {
-        let img = document.getElementById("file-upload").files[0];
-        let data = {
+        let user = {
           email: this.email,
           password: this.password,
           username: this.username,
-          avatar: "Rien",
         };
+        let form = new FormData();
+        form.append("user", JSON.stringify(user));
+        if (this.imageData !== null) {
+          form.append("image", this.imageData);
+        }
         let options = {
           method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
+          body: form,
         };
         let that = this;
         let promise = fetch("http://localhost:3000/api/auth/signup", options)
@@ -200,12 +198,12 @@ export default {
         return (
           response,
           setTimeout(function () {
-            that.checkForm();
+            that.logIn();
           }, 500)
         );
       }
     },
-    checkForm: function () {
+    logIn: function () {
       if (this.email && this.password) {
         let data = {
           email: this.email,
