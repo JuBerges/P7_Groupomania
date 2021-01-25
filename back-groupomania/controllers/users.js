@@ -25,7 +25,17 @@ schema
   .oneOf(["Passw0rd", "Password123"]); // Blacklist these values
 
 exports.signup = (req, res) => {
-  const userObject = JSON.parse(req.body.user);
+  const userObject = req.file
+    ? {
+        ...JSON.parse(req.body.user),
+        avatar: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : {
+        ...JSON.parse(req.body.user),
+        avatar: "http://localhost:3000/images/defaultProfilePic.png",
+      };
   if (
     !validator.isEmail(userObject.email) ||
     !validator.isAlphanumeric(userObject.username, ["fr-FR"])
@@ -34,19 +44,11 @@ exports.signup = (req, res) => {
     bcrypt
       .hash(userObject.password, 10)
       .then((hash) => {
-        let avatarImg;
-        if (!req.file) {
-          avatarImg = "http://localhost:3000/images/defaultProfilePic.png";
-        } else {
-          avatarImg = `${req.protocol}://${req.get("host")}/images/${
-            req.file.filename
-          }`;
-        }
         const user = models.users.create({
           email: userObject.email,
           username: userObject.username,
           role: "user",
-          avatar: avatarImg,
+          avatar: userObject.avatar,
           password: hash,
         });
         console.log(user);

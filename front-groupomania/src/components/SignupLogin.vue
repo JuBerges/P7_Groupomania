@@ -65,7 +65,12 @@
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Créez un compte</h2>
-        <form class="flex flex-col" enctype="multipart/form-data" method="post">
+        <form
+          class="flex flex-col"
+          action="/signup"
+          enctype="multipart/form-data"
+          method="post"
+        >
           <label class="pt-2" for="username">Choisissez votre pseudo: </label>
           <input
             id="username"
@@ -107,9 +112,9 @@
           />
           <p class="text-gray-400 text-xs pb-2">jpg, jpeg, png ou gif</p>
           <div
-            v-if="imageData"
+            v-if="file"
             class="w-20 h-20 rounded-full mx-auto cursor-pointer preview"
-            :style="{ 'background-image': `url(${imageData})` }"
+            :style="{ 'background-image': `url(${file})` }"
             @click="chooseImage"
           ></div>
           <the-button
@@ -139,7 +144,8 @@ export default {
   data() {
     return {
       toggleOptions: false,
-      imageData: null,
+      file: null,
+      avatar: null,
       errors: [],
       email: null,
       password: null,
@@ -156,10 +162,11 @@ export default {
       if (files && files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.imageData = e.target.result;
+          this.file = e.target.result;
         };
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
+        this.avatar = files[0];
       }
     },
     signUp() {
@@ -179,8 +186,14 @@ export default {
         };
         let form = new FormData();
         form.append("user", JSON.stringify(user));
-        if (this.imageData !== null) {
-          form.append("image", this.imageData);
+        if (this.avatar !== null) {
+          form.append("image", this.avatar);
+          console.log(
+            "Image d'avatar présente dans le formulaire !",
+            this.avatar
+          );
+        } else {
+          console.log("Image d'avatar absente du formulaire !");
         }
         let options = {
           method: "POST",
