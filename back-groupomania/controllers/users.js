@@ -13,11 +13,11 @@ schema
   .is()
   .max(100) // Maximum length 100
   .has()
-  .uppercase() // Must have at least uppercase letters
+  .uppercase() // Must have uppercase letters
   .has()
-  .lowercase() // Must have at least lowercase letters
+  .lowercase() // Must have lowercase letters
   .has()
-  .digits() // Must have at least 2 digits
+  .digits(1) // Must have at least 2 digits
   .has()
   .not()
   .spaces() // Should not have spaces
