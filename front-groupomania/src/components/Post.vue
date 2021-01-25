@@ -6,7 +6,7 @@
         <span class="flex items-center">
           <p class="my-blue font-bold">Wade</p>
           <img
-            src="../assets/images/defaultProfilePic.png"
+            src="../assets/images/deadpoolwallpaper.jpg"
             alt="avatar"
             class="mx-4 w-8 h-8 object-cover rounded-full hidden sm:block"
           />
@@ -14,11 +14,11 @@
       </div>
       <div class="my-2 flex flex-col items-center">
         <h2 href="#" class="text-2xl text-white uppercase font-bold">
-          je trouve rien!
+          ENFIN!!!!!!!!!
         </h2>
 
         <img
-          src="https://media1.tenor.com/images/4d13bc35aa0d5f12299ff530e0e1078e/tenor.gif?itemid=17168549"
+          src="https://pics.me.me/holy-sheet-itworks-sheeeeeett-it-works-quickmeme-53240740.png"
           alt="image de post"
           class=""
         />

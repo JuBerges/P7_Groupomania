@@ -3,6 +3,7 @@ const fs = require("fs");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
 const models = require("../models");
+const xss = require("xss");
 const jwt = require("jsonwebtoken");
 
 const schema = new passwordValidator();
@@ -12,11 +13,11 @@ schema
   .is()
   .max(100) // Maximum length 100
   .has()
-  .uppercase() // Must have uppercase letters
+  .uppercase() // Must have at least uppercase letters
   .has()
-  .lowercase() // Must have lowercase letters
+  .lowercase() // Must have at least lowercase letters
   .has()
-  .digits(1) // Must have at least 2 digits
+  .digits() // Must have at least 2 digits
   .has()
   .not()
   .spaces() // Should not have spaces
@@ -41,19 +42,23 @@ exports.signup = (req, res) => {
     !validator.isAlphanumeric(userObject.username, ["fr-FR"])
   ) {
   } else {
+    if (!schema.validate(userObject.password)) {
+      console.log("Mot de passe pas assez sécurisé!!");
+      return res.status(401).json({ error: "Mot de passe non sécurisé!!!" });
+    }
     bcrypt
       .hash(userObject.password, 10)
       .then((hash) => {
         const user = models.users.create({
-          email: userObject.email,
-          username: userObject.username,
+          email: xss(userObject.email),
+          username: xss(userObject.username),
           role: "user",
           avatar: userObject.avatar,
           password: hash,
         });
         console.log(user);
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(401).json({ error }));
   }
 };
 

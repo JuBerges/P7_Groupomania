@@ -95,6 +95,11 @@
             type="password"
             v-model="password"
           />
+          <p class="text-gray-400 text-xs pt-2">
+            Votre mot de passe doit contenir<br />
+            au minimum 8 caractères alphanumériques<br />
+            avec au minimum 1 mujuscule et un chiffre.
+          </p>
           <span class="pt-2">Image de profil:</span>
           <label
             for="file-upload"
@@ -110,7 +115,7 @@
             class="sr-only"
             @input="onSelectFile"
           />
-          <p class="text-gray-400 text-xs pb-2">jpg, jpeg, png ou gif</p>
+          <p class="text-gray-400 text-xs pb-2">jpg, jpeg, png ou gif.</p>
           <div
             v-if="file"
             class="w-20 h-20 rounded-full mx-auto cursor-pointer preview"
@@ -204,8 +209,8 @@ export default {
           .then(function (response) {
             console.log(response);
           })
-          .catch(function (erreur) {
-            console.log(erreur);
+          .catch(function (error) {
+            console.log(error);
           });
         let response = promise;
         return (
@@ -242,8 +247,8 @@ export default {
             }
             console.log(response);
           })
-          .catch(function (erreur) {
-            console.log(erreur);
+          .catch(function (error) {
+            console.log(error);
           });
 
         let response = promise;
