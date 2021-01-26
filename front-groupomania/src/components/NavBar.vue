@@ -15,7 +15,7 @@
           src="../assets/images/nav-mini-logo.png"
           alt="logo groupomania"
         /><span class="text-white hidden md:block font-bold text-xl pl-1 pt-2"
-          ><p>Groupomania</p></span
+          ><p>{{ $store.state.name }}</p></span
         >
       </div>
     </router-link>
@@ -43,7 +43,7 @@
     <router-link
       @click="scrollTop"
       class="mt-2 router col-start-4 md:col-start-6"
-      :to="{ name: 'Profil' }"
+      :to="{ name: 'Profile' }"
       ><svg
         class="h-6 w-6 mx-auto"
         xmlns="http://www.w3.org/2000/svg"

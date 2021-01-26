@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="darkbody bg-cover">
+  <div>
     <div v-if="!signedIn">
       <signup-login @logged-in="signedIn = true"></signup-login>
     </div>
@@ -39,10 +39,6 @@ export default {
 </script>
 <!--Style du darkmode-->
 <style>
-.darkbody {
-  background-color: rgb(24, 25, 26);
-}
-
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 200ms, transform 200ms;

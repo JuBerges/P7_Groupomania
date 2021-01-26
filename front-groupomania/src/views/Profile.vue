@@ -1,6 +1,6 @@
 <template>
-  <div class="profil h-screen pt-11">
-    <div><!-- img du profile --></div>
+  <div class="profile h-screen pt-11">
+    <div><img src="" alt="votre avatar" /></div>
     <div><!-- USERname email et role --></div>
     <div><!-- Bio --></div>
     <div>
@@ -13,7 +13,20 @@
 <script>
 import SignupLogin from "../components/SignupLogin.vue";
 export default {
-  name: "Profil",
+  name: "Profile",
   components: { SignupLogin },
+  data() {
+    return {
+      username: "",
+      email: "",
+      avatar: "../assets/images/defaultProfilePic.png",
+    };
+  },
+  comptuted: {
+    showAvatar() {
+      this.avatar;
+    },
+  },
+  methods: {},
 };
 </script>

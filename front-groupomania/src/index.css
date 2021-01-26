@@ -1,5 +1,7 @@
 /* ./src/index.css */
-
+body {
+  background-color: rgb(24, 25, 26);
+}
 /*! @import */
 @tailwind base;
 @tailwind components;

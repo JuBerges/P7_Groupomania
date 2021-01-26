@@ -18,10 +18,10 @@ const routes = [
     },
   },
   {
-    path: "/profil",
-    name: "Profil",
+    path: "/profile",
+    name: "Profile",
     component: function() {
-      return import(/* webpackChunkName: "Profil" */ "../views/Profil.vue");
+      return import(/* webpackChunkName: "Profile" */ "../views/Profile.vue");
     },
   },
   {

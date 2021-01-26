@@ -43,7 +43,6 @@ exports.signup = (req, res) => {
   ) {
   } else {
     if (!schema.validate(userObject.password)) {
-      console.log("Mot de passe pas assez sécurisé!!");
       return res.status(401).json({ error: "Mot de passe non sécurisé!!!" });
     }
     bcrypt

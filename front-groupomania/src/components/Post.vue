@@ -1,5 +1,5 @@
 <template>
-  <article class="my-6 lg:mx-10">
+  <article class="my-14 lg:mx-10">
     <div class="mx-auto p-4 darkpost rounded-lg shadow-md">
       <div id="postInfos" class="flex justify-between">
         <span class="my-blue font-bold text-sm">22 Janvier 2021</span>

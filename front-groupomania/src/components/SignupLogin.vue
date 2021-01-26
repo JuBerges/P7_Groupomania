@@ -1,5 +1,5 @@
 <template>
-  <div class="signuplogin h-full">
+  <div class="signuplogin">
     <div id="login" class="h-screen" v-if="!toggleOptions">
       <div id="homeTitle" class="flex w-max mx-auto pt-11">
         <img
@@ -7,7 +7,9 @@
           src="../assets/images/nav-mini-logo.png"
           alt="logo groupomania"
         />
-        <h1 class="text-white font-bold text-3xl pl-1 pt-1">Groupomania</h1>
+        <h1 class="text-white font-bold text-3xl pl-1 pt-1">
+          {{ $store.state.name }}
+        </h1>
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Identifiez-vous</h2>
@@ -61,7 +63,9 @@
           src="../assets/images/nav-mini-logo.png"
           alt="logo groupomania"
         />
-        <h1 class="text-white font-bold text-3xl pl-1 pt-1">Groupomania</h1>
+        <h1 class="text-white font-bold text-3xl pl-1 pt-1">
+          {{ $store.state.name }}
+        </h1>
       </div>
       <div class="text-white text-center">
         <h2 class="custom-border font-bold text-2xl">Créez un compte</h2>
@@ -79,6 +83,11 @@
             type="text"
             v-model="username"
           />
+          <p class="text-gray-400 text-xs pt-2">
+            Utilisez uniquement des chiffres<br />
+            et des lettres sans espace.
+          </p>
+
           <label class="pt-2" for="email">E-mail: </label>
           <input
             id="email"
@@ -98,7 +107,7 @@
           <p class="text-gray-400 text-xs pt-2">
             Votre mot de passe doit contenir<br />
             au minimum 8 caractères alphanumériques<br />
-            avec au minimum 1 mujuscule et un chiffre.
+            avec au moins 1 majuscule et un chiffre.
           </p>
           <span class="pt-2">Image de profil:</span>
           <label
@@ -157,6 +166,9 @@ export default {
       username: null,
     };
   },
+  mounted() {
+    localStorage.clear();
+  },
   methods: {
     chooseImage() {
       this.$refs.fileInput.click();
@@ -208,6 +220,9 @@ export default {
         let promise = fetch("http://localhost:3000/api/auth/signup", options)
           .then(function (response) {
             console.log(response);
+            if (response.status === 401) {
+              window.alert("Mot de passe pas assez sécurisé!!");
+            }
           })
           .catch(function (error) {
             console.log(error);
@@ -245,6 +260,7 @@ export default {
               that.errors = [];
               that.errors.push("Email et/ou mot de passe non reconnue(s).");
             }
+            localStorage.setItem("userId", JSON.stringify(response.body));
             console.log(response);
           })
           .catch(function (error) {
