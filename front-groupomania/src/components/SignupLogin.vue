@@ -168,6 +168,7 @@ export default {
   },
   mounted() {
     localStorage.clear();
+    this.$router.push({ path: "/" });
   },
   methods: {
     chooseImage() {
@@ -256,11 +257,11 @@ export default {
             if (response.ok) {
               that.$emit("logged-in");
               console.log("Utilisateur connecté !!");
+              localStorage.setItem("id", that.email);
             } else {
               that.errors = [];
               that.errors.push("Email et/ou mot de passe non reconnue(s).");
             }
-            localStorage.setItem("userId", JSON.stringify(response.body));
             console.log(response);
           })
           .catch(function (error) {

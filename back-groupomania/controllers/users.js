@@ -89,3 +89,10 @@ exports.login = (req, res) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+exports.getOne = (req, res) => {
+  const viewUser = models.users
+    .findOne({ where: { email: req.params.email } })
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(404).json({ error }));
+};
