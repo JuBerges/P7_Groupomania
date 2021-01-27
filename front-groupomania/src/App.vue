@@ -8,7 +8,7 @@
         @scroll-top="scrollToTop"
         @valid-signout="signedIn = false"
       ></NavBar>
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component }" @valid-signout="signedIn = false">
         <transition name="slide" mode="out-in">
           <component :is="Component" />
         </transition>

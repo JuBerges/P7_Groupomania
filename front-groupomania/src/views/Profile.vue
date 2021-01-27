@@ -1,31 +1,47 @@
 <template>
   <div class="profile h-screen pt-11">
-    <div><img src="" alt="votre avatar" /></div>
-    <div class="text-white text-2xl font-bold" v-if="email">
-      E-mail:{{ email }}
-    </div>
-    <div class="text-white text-2xl font-bold" v-if="username">
-      Pseudo:
+    <delete-account
+      v-if="displayModal"
+      @cancel-delete="displayModal = false"
+      @valid-delete="validDelete"
+    ></delete-account>
+    <div
+      title="image d'avatar de l'utilisateur"
+      v-if="avatar"
+      class="w-40 h-40 md:h-60 md:w-60 mt-11 rounded-full mx-auto preview"
+      :style="{ 'background-image': `url(${avatar})` }"
+    ></div>
+    <div class="text-white text-4xl font-bold text-center mt-4" v-if="username">
       {{ username }}
     </div>
-    <div>
-      <!-- profil créé le xx/xx/xxxx -->
-      <!-- profil mise à jour le xx/xx/xxxx -->
+    <div class="text-white text-2xl font-bold text-center mt-4" v-if="email">
+      {{ email }}
+    </div>
+    <div class="mx-auto mt-4">
+      <button
+        @click="deleteUser"
+        type="button"
+        class="mt-2 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        Supprimer mon compte
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import DeleteAccount from "../components/DeleteAccount.vue";
 import { authHeader } from "../helpers/auth-header.js";
 export default {
   name: "Profile",
-  components: {},
+  components: { DeleteAccount },
   data() {
     return {
       username: null,
       email: null,
-      avatar: "../assets/images/defaultProfilePic.png",
+      avatar: null,
       currentUser: null,
+      displayModal: false,
     };
   },
   async mounted() {
@@ -41,9 +57,23 @@ export default {
     const response = await promise.json();
     this.username = response.username;
     this.email = response.email;
+    this.avatar = response.avatar;
     console.log(response);
     return response;
   },
-  methods: {},
+  methods: {
+    deleteUser() {
+      this.displayModal = true;
+    },
+    validDelete() {
+      this.$emit("valid-signout");
+    },
+  },
 };
 </script>
+<style scoped>
+.preview {
+  background-size: cover;
+  background-position: center center;
+}
+</style>

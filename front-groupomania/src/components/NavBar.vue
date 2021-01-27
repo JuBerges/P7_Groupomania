@@ -44,21 +44,13 @@
       @click="scrollTop"
       class="mt-2 router col-start-4 md:col-start-6"
       :to="{ name: 'Profile' }"
-      ><svg
-        class="h-6 w-6 mx-auto"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <title>Profil</title>
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        /></svg
-    ></router-link>
+      ><div
+        title="image d'avatar de l'utilisateur"
+        v-if="avatar"
+        class="h-6 w-6 rounded-full mx-auto preview"
+        :style="{ 'background-image': `url(${avatar})` }"
+      ></div>
+    </router-link>
     <!-- Link To Help Section -->
     <router-link
       @click="scrollTop"
@@ -110,13 +102,30 @@
 
 <script>
 import SignOutModal from "../components/SignOutModal.vue";
+import { authHeader } from "../helpers/auth-header.js";
 export default {
   name: "NavBar",
   components: { SignOutModal },
   data() {
     return {
       cancelSignOut: false,
+      avatar: null,
     };
+  },
+  async mounted() {
+    const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+    let options = {
+      method: "GET",
+      headers: authHeader(),
+    };
+    const promise = await fetch(
+      "http://localhost:3000/api/auth/" + currentUserId,
+      options
+    );
+    const response = await promise.json();
+    this.avatar = response.avatar;
+    console.log(response);
+    return response;
   },
   methods: {
     scrollTop() {
@@ -143,6 +152,10 @@ export default {
   color: rgb(255, 255, 255);
 }
 
+.preview {
+  background-size: cover;
+  background-position: center center;
+}
 .router.router-link-active,
 .router.router-link-exact-active {
   border-bottom: solid 3px rgb(45, 136, 255);

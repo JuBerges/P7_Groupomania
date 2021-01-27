@@ -12,8 +12,8 @@ router.get("/:id", auth, userCtrl.getOne);
 
 //router.put("/:id", auth, multer, userCtrl.update);
 
-//router.get("/", auth, userCtrl.readAll);
+//router.get("/", auth, userCtrl.getAll);
 
-//router.delete("/:id", auth, multer, userCtrl.delete);
+router.delete("/:id", auth, userCtrl.deleteUser);
 
 module.exports = router;
