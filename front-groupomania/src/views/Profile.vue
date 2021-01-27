@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { authHeader } from "../helpers/auth-header.js";
 export default {
   name: "Profile",
   components: {},
@@ -28,9 +29,14 @@ export default {
     };
   },
   async mounted() {
-    const currentUserEmail = localStorage.getItem("id");
+    const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+    let options = {
+      method: "GET",
+      headers: authHeader(),
+    };
     const promise = await fetch(
-      "http://localhost:3000/api/auth/" + currentUserEmail
+      "http://localhost:3000/api/auth/" + currentUserId,
+      options
     );
     const response = await promise.json();
     this.username = response.username;

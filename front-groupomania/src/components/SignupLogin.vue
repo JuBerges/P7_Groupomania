@@ -206,10 +206,7 @@ export default {
         form.append("user", JSON.stringify(user));
         if (this.avatar !== null) {
           form.append("image", this.avatar);
-          console.log(
-            "Image d'avatar présente dans le formulaire !",
-            this.avatar
-          );
+          console.log("Image d'avatar présente dans le formulaire !");
         } else {
           console.log("Image d'avatar absente du formulaire !");
         }
@@ -253,23 +250,39 @@ export default {
         };
         const that = this;
         let promise = fetch("http://localhost:3000/api/auth/login", options)
-          .then(function (response) {
-            if (response.ok) {
+          .then(handleResponse)
+          .then(function (user) {
+            if (user.token) {
               that.$emit("logged-in");
               console.log("Utilisateur connecté !!");
-              localStorage.setItem("id", that.email);
+              localStorage.setItem("user", JSON.stringify(user));
             } else {
               that.errors = [];
               that.errors.push("Email et/ou mot de passe non reconnue(s).");
             }
-            console.log(response);
+            console.log(user);
           })
           .catch(function (error) {
             console.log(error);
           });
+        function handleResponse(response) {
+          return response.text().then((text) => {
+            const data = text && JSON.parse(text);
+            if (!response.ok) {
+              if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                localStorage.clear();
+              }
 
-        let response = promise;
-        return response;
+              const error = (data && data.message) || response.statusText;
+              return Promise.reject(error);
+            }
+
+            return data;
+          });
+        }
+        let user = promise;
+        return user;
       }
 
       this.errors = [];

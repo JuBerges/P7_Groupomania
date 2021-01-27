@@ -8,7 +8,7 @@ router.post("/signup", multer, userCtrl.signup);
 
 router.post("/login", userCtrl.login);
 
-router.get("/:email", userCtrl.getOne);
+router.get("/:id", auth, userCtrl.getOne);
 
 //router.put("/:id", auth, multer, userCtrl.update);
 

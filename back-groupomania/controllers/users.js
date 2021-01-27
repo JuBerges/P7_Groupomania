@@ -79,8 +79,8 @@ exports.login = (req, res) => {
             return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
           res.status(200).json({
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            userId: user.id,
+            token: jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
             }),
           });
@@ -92,7 +92,7 @@ exports.login = (req, res) => {
 
 exports.getOne = (req, res) => {
   const viewUser = models.users
-    .findOne({ where: { email: req.params.email } })
+    .findOne({ where: { id: req.params.id } })
     .then((user) => res.status(200).json(user))
     .catch((error) => res.status(404).json({ error }));
 };
