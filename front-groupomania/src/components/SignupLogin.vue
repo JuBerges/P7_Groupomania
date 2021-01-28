@@ -167,7 +167,8 @@ export default {
     };
   },
   mounted() {
-    localStorage.clear();
+    this.$store.commit("getId", "erased");
+    this.$store.commit("getToken", "erased");
     this.$router.push({ path: "/" });
   },
   methods: {
@@ -255,7 +256,8 @@ export default {
             if (user.token) {
               that.$emit("logged-in");
               console.log("Utilisateur connecté !!");
-              localStorage.setItem("user", JSON.stringify(user));
+              that.$store.commit("getId", user.userId);
+              that.$store.commit("getToken", user.token);
             } else {
               that.errors = [];
               that.errors.push("Email et/ou mot de passe non reconnue(s).");

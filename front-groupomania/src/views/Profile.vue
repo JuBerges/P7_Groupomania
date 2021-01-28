@@ -45,7 +45,7 @@ export default {
     };
   },
   async mounted() {
-    const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+    const currentUserId = this.$store.state.current_user;
     let options = {
       method: "GET",
       headers: authHeader(),
