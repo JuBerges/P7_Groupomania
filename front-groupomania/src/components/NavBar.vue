@@ -114,6 +114,8 @@ export default {
   },
   async mounted() {
     const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+    this.$store.commit("getId", currentUserId);
+
     let options = {
       method: "GET",
       headers: authHeader(),
@@ -124,7 +126,6 @@ export default {
     );
     const response = await promise.json();
     this.avatar = response.avatar;
-    console.log(response);
     return response;
   },
   methods: {

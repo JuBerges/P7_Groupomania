@@ -260,7 +260,6 @@ export default {
               that.errors = [];
               that.errors.push("Email et/ou mot de passe non reconnue(s).");
             }
-            console.log(user);
           })
           .catch(function (error) {
             console.log(error);

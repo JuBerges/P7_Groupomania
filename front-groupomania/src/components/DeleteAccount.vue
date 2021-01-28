@@ -119,7 +119,12 @@ export default {
   data() {
     return {
       verif: null,
+      checker: null,
     };
+  },
+  mounted() {
+    const thatIdWas = this.$store.state.current_user;
+    this.checker = thatIdWas;
   },
   methods: {
     cancelDelete() {
@@ -130,7 +135,10 @@ export default {
     },
     checkAndDelete() {
       let that = this;
-      if (this.verif === "supprimer") {
+      const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+      if (!this.checker || currentUserId !== this.checker) {
+        return console.log("Action non autorisé !!!");
+      } else if (this.verif === "supprimer" && this.checker === currentUserId) {
         return this.deleteUser(), this.validDelete();
       } else if (this.verif !== "supprimer") {
         return alert('Vous devez taper le mot "supprimer"');
