@@ -114,7 +114,6 @@ export default {
   },
   async mounted() {
     const currentUserId = this.$store.state.current_user;
-    console.log(this.$store.state.current_user);
     let options = {
       method: "GET",
       headers: authHeader(),

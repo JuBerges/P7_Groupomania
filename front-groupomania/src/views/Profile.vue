@@ -17,11 +17,11 @@
     <div class="text-white text-2xl font-bold text-center mt-4" v-if="email">
       {{ email }}
     </div>
-    <div class="mx-auto mt-4">
+    <div class="mt-4 flex justify-center">
       <button
         @click="deleteUser"
         type="button"
-        class="mt-2 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+        class="mt-2 w-full mx-4 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
       >
         Supprimer mon compte
       </button>
@@ -58,7 +58,6 @@ export default {
     this.username = response.username;
     this.email = response.email;
     this.avatar = response.avatar;
-    console.log(response);
     return response;
   },
   methods: {
