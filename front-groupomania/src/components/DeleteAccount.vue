@@ -135,7 +135,7 @@ export default {
     },
     checkAndDelete() {
       let that = this;
-      const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+      const currentUserId = this.$store.state.current_user;
       if (!this.checker || currentUserId !== this.checker) {
         return console.log("Action non autorisé !!!");
       } else if (this.verif === "supprimer" && this.checker === currentUserId) {
@@ -146,7 +146,7 @@ export default {
     },
 
     async deleteUser() {
-      const currentUserId = JSON.parse(localStorage.getItem("user")).userId;
+      const currentUserId = this.$store.state.current_user;
       let options = {
         method: "DELETE",
         headers: authHeader(),
