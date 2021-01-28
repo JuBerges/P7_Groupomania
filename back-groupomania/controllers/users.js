@@ -35,7 +35,7 @@ exports.signup = (req, res) => {
       }
     : {
         ...JSON.parse(req.body.user),
-        avatar: "http://localhost:3000/images/defaultProfilePic.png",
+        avatar: "http://localhost:3000/images/default_profile_pic.png",
       };
   if (
     !validator.isEmail(userObject.email) ||
@@ -108,14 +108,23 @@ exports.deleteUser = (req, res) => {
     .findOne({ where: { id: req.params.id } })
     .then((user) => {
       const filename = user.avatar.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
-        models.users
-          .destroy({ where: { id: req.params.id } })
-          .then(() =>
-            res.status(200).json({ message: "Utilisateur supprimé !" })
-          )
-          .catch((error) => res.status(400).json({ error }));
-      });
+      if (!filename.includes("default_profile_pic.png")) {
+        fs.unlink(`images/${filename}`, () => {
+          models.users
+            .destroy({ where: { id: req.params.id } })
+            .then(() =>
+              res.status(200).json({ message: "Utilisateur supprimé !" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        });
+      } else {
+        models.users.destroy({ where: { id: req.params.id } }).then(() =>
+          res
+            .status(200)
+            .json({ message: "Utilisateur supprimé !" })
+            .catch((error) => res.status(400).json({ error }))
+        );
+      }
     })
     .catch((error) => res.status(500).json({ error }));
 };

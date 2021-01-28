@@ -135,7 +135,7 @@ export default {
     },
     checkAndDelete() {
       let that = this;
-      const currentUserId = this.$store.state.current_user;
+      const currentUserId = this.$store.state.user.current_id;
       if (!this.checker || currentUserId !== this.checker) {
         return console.log("Action non autorisé !!!");
       } else if (this.verif === "supprimer" && this.checker === currentUserId) {
@@ -144,9 +144,9 @@ export default {
         return alert('Vous devez taper le mot "supprimer"');
       }
     },
-
+    // TRANSFERER TOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!les fetchs
     async deleteUser() {
-      const currentUserId = this.$store.state.current_user;
+      const currentUserId = this.$store.state.user.current_id;
       let options = {
         method: "DELETE",
         headers: authHeader(),

@@ -113,18 +113,9 @@ export default {
     };
   },
   async mounted() {
-    const currentUserId = this.$store.state.current_user;
-    let options = {
-      method: "GET",
-      headers: authHeader(),
-    };
-    const promise = await fetch(
-      "http://localhost:3000/api/auth/" + currentUserId,
-      options
-    );
-    const response = await promise.json();
-    this.avatar = response.avatar;
-    return response;
+    this.$store.dispatch("user/getCurrentUser").then((user) => {
+      this.avatar = user.avatar;
+    });
   },
   methods: {
     scrollTop() {

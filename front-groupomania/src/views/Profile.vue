@@ -11,10 +11,16 @@
       class="w-40 h-40 md:h-60 md:w-60 mt-11 rounded-full mx-auto preview"
       :style="{ 'background-image': `url(${avatar})` }"
     ></div>
-    <div class="text-white text-4xl font-bold text-center mt-4" v-if="username">
+    <div
+      class="text-white text-3xl md:text-4xl font-bold text-center mt-4"
+      v-if="username"
+    >
       {{ username }}
     </div>
-    <div class="text-white text-2xl font-bold text-center mt-4" v-if="email">
+    <div
+      class="text-white text-xl md:text-2xl font-bold text-center mt-4 mx-3"
+      v-if="email"
+    >
       {{ email }}
     </div>
     <div class="mt-4 flex justify-center">
@@ -45,20 +51,10 @@ export default {
     };
   },
   async mounted() {
-    const currentUserId = this.$store.state.current_user;
-    let options = {
-      method: "GET",
-      headers: authHeader(),
-    };
-    const promise = await fetch(
-      "http://localhost:3000/api/auth/" + currentUserId,
-      options
-    );
-    const response = await promise.json();
-    this.username = response.username;
-    this.email = response.email;
-    this.avatar = response.avatar;
-    return response;
+    let currentUser = this.$store.state.user.current_user;
+    this.avatar = currentUser.avatar;
+    this.username = currentUser.username;
+    this.email = currentUser.email;
   },
   methods: {
     deleteUser() {
