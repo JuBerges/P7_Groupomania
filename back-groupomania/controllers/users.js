@@ -128,3 +128,36 @@ exports.deleteUser = (req, res) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+exports.updateUser = (req, res) => {
+  let userAvatar = {};
+  if (req.file) {
+    models.users
+      .findOne({ where: { id: req.params.id } })
+      .then((user) => {
+        const filename = user.avatar.split("/images/")[1];
+        if (!filename.includes("default_profile_pic.png")) {
+          fs.unlinkSync(`images/${filename}`);
+        }
+        userAvatar = {
+          avatar: `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`,
+        };
+      })
+      .then(() => {
+        models.users.update(
+          { avatar: userAvatar.avatar },
+          { where: { id: req.params.id } }
+        );
+      })
+      .then(() => {
+        res
+          .status(200)
+          .json({ message: "Utilisateur modifié !" })
+          .catch((error) => res.status(400).json({ error }));
+      });
+  } else {
+    res.status(401).json({ message: "req.file not found !" });
+  }
+};

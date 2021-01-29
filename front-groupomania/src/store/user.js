@@ -19,6 +19,9 @@ export const user = {
     },
   },
   actions: {
+    modifyCurrentUser({ commit }, formData) {
+      return UserRoutes.modifyCurrentUser(formData);
+    },
     getCurrentUser({ commit }) {
       return UserRoutes.getCurrentUser().then((user) => {
         commit("getCurrentUser", user);

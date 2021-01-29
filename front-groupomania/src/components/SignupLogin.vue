@@ -45,7 +45,7 @@
           </the-button>
           <p class="pt-4">Vous n'avez pas de compte?</p>
           <button
-            class="p text-blue-600 hover:underline"
+            class="p text-blue-600 hover:underline mb-6"
             @click="
               (toggleOptions = true),
                 ((errors = []), (password = null), (email = null))
@@ -163,6 +163,7 @@ export default {
       errors: [],
       email: null,
       password: null,
+      passwordCheck: null,
       username: null,
     };
   },
@@ -274,7 +275,8 @@ export default {
             if (!response.ok) {
               if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                localStorage.clear();
+                that.errors = [];
+                that.errors.push("Email et/ou mot de passe non reconnue(s).");
               }
 
               const error = (data && data.message) || response.statusText;

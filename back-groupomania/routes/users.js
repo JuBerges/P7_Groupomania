@@ -10,7 +10,7 @@ router.post("/login", userCtrl.login);
 
 router.get("/:id", auth, userCtrl.getOne);
 
-//router.put("/:id", auth, multer, userCtrl.update);
+router.put("/:id", auth, multer, userCtrl.updateUser);
 
 //router.get("/", auth, userCtrl.getAll);
 
