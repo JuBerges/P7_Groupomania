@@ -100,9 +100,15 @@
           <input
             id="password"
             class="mx-auto text-black p-1 placeholder-gray-500"
-            placeholder="Mot de passe"
+            placeholder="Votre mot de passe"
             type="password"
             v-model="password"
+          /><input
+            id="passwordCheck"
+            class="mx-auto text-black p-1 placeholder-gray-500 mt-1"
+            placeholder="Retapez votre mot de passe"
+            type="password"
+            v-model="passwordCheck"
           />
           <p class="text-gray-400 text-xs pt-2">
             Votre mot de passe doit contenir<br />
@@ -208,34 +214,40 @@ export default {
         };
         let form = new FormData();
         form.append("user", JSON.stringify(user));
-        if (this.avatar !== null) {
-          form.append("image", this.avatar);
-          console.log("Image d'avatar présente dans le formulaire !");
+        if (this.password !== this.passwordCheck) {
+          return window.alert(
+            "Votre mot de passe doit être le même dans les 2 champs"
+          );
         } else {
-          console.log("Image d'avatar absente du formulaire !");
+          if (this.avatar !== null) {
+            form.append("image", this.avatar);
+            console.log("Image d'avatar présente dans le formulaire !");
+          } else {
+            console.log("Image d'avatar absente du formulaire !");
+          }
+          let options = {
+            method: "POST",
+            body: form,
+          };
+          let that = this;
+          let promise = fetch("http://localhost:3000/api/auth/signup", options)
+            .then(function (response) {
+              console.log(response);
+              if (response.status === 401) {
+                window.alert("Mot de passe pas assez sécurisé!!");
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          let response = promise;
+          return (
+            response,
+            setTimeout(function () {
+              that.logIn();
+            }, 500)
+          );
         }
-        let options = {
-          method: "POST",
-          body: form,
-        };
-        let that = this;
-        let promise = fetch("http://localhost:3000/api/auth/signup", options)
-          .then(function (response) {
-            console.log(response);
-            if (response.status === 401) {
-              window.alert("Mot de passe pas assez sécurisé!!");
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        let response = promise;
-        return (
-          response,
-          setTimeout(function () {
-            that.logIn();
-          }, 500)
-        );
       }
     },
     logIn: function () {
