@@ -171,7 +171,6 @@ export default {
     this.$store.commit("user/getToken", "erased");
     this.$store.commit("user/getToken", "erased");
     this.$store.commit("user/getCurrentUser", "erased");
-
     this.$router.push({ path: "/" });
   },
   methods: {

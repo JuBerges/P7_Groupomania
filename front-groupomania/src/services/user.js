@@ -14,6 +14,16 @@ class UserRoutes {
     const getResponse = await getUserPromise.json();
     return getResponse;
   }
+  async deleteUser() {
+    const currentUserId = this.$store.state.user.current_id;
+    let options = {
+      method: "DELETE",
+      headers: authHeader(),
+    };
+    const promise = await fetch(api + currentUserId, options);
+    const response = await promise.json();
+    return response;
+  }
 }
 
 export default new UserRoutes();

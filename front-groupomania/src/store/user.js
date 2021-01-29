@@ -25,5 +25,8 @@ export const user = {
         return Promise.resolve(user);
       });
     },
+    deleteUser({ commit }) {
+      return UserRoutes.deleteUser();
+    },
   },
 };
