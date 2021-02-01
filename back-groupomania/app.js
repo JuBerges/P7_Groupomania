@@ -10,6 +10,8 @@ const cors = require("cors");
 });*/
 
 const userRoutes = require("./routes/users");
+const postRoutes = require("./routes/posts");
+const commentRoutes = require("./routes/comments");
 
 const app = express();
 
@@ -37,5 +39,7 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
+app.use("/api/auth", postRoutes);
+app.use("/api/auth", commentRoutes);
 
 module.exports = app;
