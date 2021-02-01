@@ -152,10 +152,7 @@ exports.updateUser = (req, res) => {
         );
       })
       .then(() => {
-        res
-          .status(200)
-          .json({ message: "Utilisateur modifié !" })
-          .catch((error) => res.status(400).json({ error }));
+        res.status(200).json({ message: "Utilisateur modifié !" });
       });
   } else {
     res.status(401).json({ message: "req.file not found !" });

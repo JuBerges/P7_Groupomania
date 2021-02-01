@@ -6,6 +6,7 @@
     "dev": "vite"
   },
   "dependencies": {
+    "mitt": "^2.1.0",
     "vue": "^3.0.4",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"

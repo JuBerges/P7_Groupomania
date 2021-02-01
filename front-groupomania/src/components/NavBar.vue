@@ -1,5 +1,6 @@
 <template>
   <header
+    @click="updateAvatar"
     id="nav"
     class="grid grid-cols-7 md:grid-cols-11 gap-0 darknav h-11 darkborder fixed w-full"
   >
@@ -102,7 +103,7 @@
 
 <script>
 import SignOutModal from "../components/SignOutModal.vue";
-import { authHeader } from "../helpers/auth-header.js";
+
 export default {
   name: "NavBar",
   components: { SignOutModal },
@@ -123,6 +124,9 @@ export default {
     },
     loggingOut() {
       return this.$emit("valid-signout");
+    },
+    updateAvatar() {
+      this.avatar = this.$store.state.user.current_user.avatar;
     },
   },
 };

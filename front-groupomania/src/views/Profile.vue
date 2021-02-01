@@ -75,7 +75,7 @@
 
 <script>
 import DeleteAccount from "../components/DeleteAccount.vue";
-import { authHeader } from "../helpers/auth-header.js";
+
 export default {
   name: "Profile",
   components: { DeleteAccount },
@@ -117,7 +117,6 @@ export default {
     updateUser() {
       let that = this;
       if (this.newAvatar) {
-        console.log(this.newAvatar);
         let formData = new FormData();
         formData.append("image", this.newAvatar);
         this.$store
@@ -127,6 +126,7 @@ export default {
               console.log("Avatar modifié !");
               that.messages = [];
               that.messages.push("Changement effectué !");
+              this.$store.dispatch("user/getCurrentUser");
             } else {
               console.log(response);
             }
