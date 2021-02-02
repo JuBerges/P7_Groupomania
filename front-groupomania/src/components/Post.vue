@@ -2,7 +2,7 @@
   <article class="my-14 lg:mx-10">
     <div class="mx-auto p-4 darkpost rounded-lg shadow-md">
       <div id="postInfos" class="flex justify-between">
-        <span class="my-blue font-bold text-sm">22 Janvier 2021</span>
+        <span class="my-blue font-bold text-sm">{{ postDate }}</span>
         <span class="flex items-center">
           <p class="my-blue font-bold">Wade</p>
           <img
@@ -14,14 +14,13 @@
       </div>
       <div class="my-2 flex flex-col items-center">
         <h2 href="#" class="text-2xl text-white uppercase font-bold">
-          ENFIN!!!!!!!!!
+          {{ postTitle }}
         </h2>
-
-        <img
-          src="https://pics.me.me/holy-sheet-itworks-sheeeeeett-it-works-quickmeme-53240740.png"
-          alt="image de post"
-          class=""
-        />
+        <div
+          title="image de publication"
+          class="w-40 h-40 md:h-60 md:w-60 mt-5 mx-auto preview"
+          :style="{ 'background-image': `url(${postImage})` }"
+        ></div>
       </div>
     </div>
   </article>
@@ -29,6 +28,12 @@
 <script>
 export default {
   name: "Post",
+  data() {
+    return {
+      convertedDate: null,
+    };
+  },
+  props: ["postImage", "postTitle", "postDate"],
 };
 </script>
 
@@ -44,5 +49,9 @@ export default {
 }
 .my-gray {
   color: rgb(150, 151, 152);
+}
+.preview {
+  background-size: cover;
+  background-position: center center;
 }
 </style>

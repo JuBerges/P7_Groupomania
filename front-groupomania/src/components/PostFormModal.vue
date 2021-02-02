@@ -40,9 +40,9 @@
         aria-labelledby="modal-headline"
       >
         <div class="bg-black px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
+          <div>
             <div
-              class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10"
+              class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mb-2 sm:h-10 sm:w-10"
             >
               <!-- Heroicon name: exclamation -->
               <svg
@@ -62,12 +62,17 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3
-                class="text-2xl leading-6 font-medium text-white uppercase"
+                class="text-2xl sm:text-center leading-6 font-medium text-white uppercase"
                 id="modal-headline"
               >
                 Poster une image
               </h3>
-              <form class="flex flex-col" @submit="postForm" method="post">
+              <form
+                class="flex flex-col sm:text-center"
+                @submit="postForm"
+                method="post"
+                enctype="multipart/form-data"
+              >
                 <label class="pt-2 text-white" for="PostTitle"
                   >Choisissez un titre:
                 </label>
@@ -102,8 +107,19 @@
                   @click="chooseImage"
                 ></div>
                 <div
-                  class="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+                  class="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:mx-auto"
                 >
+                  <div v-if="messages.length">
+                    <ul>
+                      <li
+                        :key="message"
+                        v-for="message in messages"
+                        class="text-center text-red-600 sm:pl-2"
+                      >
+                        {{ message }}
+                      </li>
+                    </ul>
+                  </div>
                   <button
                     @click="postForm"
                     type="button"
@@ -114,7 +130,7 @@
                   <button
                     @click="cancelPost"
                     type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     Annuler
                   </button>
@@ -135,6 +151,7 @@ export default {
       file: null,
       postImage: null,
       title: null,
+      messages: [],
     };
   },
   methods: {
@@ -157,7 +174,32 @@ export default {
     cancelPost() {
       this.$emit("cancel-post");
     },
-    postForm() {},
+    postForm() {
+      let post = {
+        userId: this.$store.state.user.current_user.id,
+        title: this.title,
+      };
+      let that = this;
+      let formData = new FormData();
+      formData.append("post", JSON.stringify(post));
+      formData.append("image", this.postImage);
+      if (this.postImage && this.title) {
+        this.$store.dispatch("post/createPost", formData).then((response) => {
+          if (response.ok) {
+            console.log("Publication enregistrée !");
+            this.$store.dispatch("user/getCurrentUser");
+            that.$emit("update-post");
+          } else {
+            console.log(response);
+            this.messages = [];
+            this.messages.push("Une erreur est survenue ! ");
+          }
+        });
+      } else {
+        this.messages = [];
+        this.messages.push("Titre et image requis ! ");
+      }
+    },
   },
 };
 </script>

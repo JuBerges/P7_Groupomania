@@ -21,22 +21,23 @@ exports.createPost = (req, res) => {
     ...JSON.parse(req.body.post),
     img_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   };
+  console.log(postObject.userId);
   let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
   if (!req.file) {
     res.status(400).json({ message: "Form file required" });
-  } else if (validator.matches(req.body.title, regex)) {
+  } else if (validator.matches(postObject.title, regex)) {
     res
       .status(422)
       .json({ message: "Wrong format do not use specials characters" });
   } else {
     const post = models.posts.create({
-      user_id: req.body.userId,
-      img_url: req.body.imgUrl,
+      user_id: postObject.userId,
+      img_url: postObject.img_url,
       created_at: currentDate,
       updated_at: currentDate,
-      title: req.body.title,
+      title: postObject.title,
     });
-    console.log(post);
+    res.status(200).json({ message: "Publication enregistrée !" });
   }
 };
 
@@ -48,6 +49,18 @@ exports.getOne = (req, res) => {};
 
 exports.updatePost = (req, res) => {};
 
-exports.getAll = (req, res) => {};
+exports.getAll = (req, res) => {
+  models.posts
+    .findAll({
+      include: [
+        /*models.users, models.likes, models.comments*/
+      ],
+      order: [["created_at", "DESC"]],
+    })
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch((error) => res.status(500).json(error));
+};
 
 exports.deletePost = (req, res) => {};

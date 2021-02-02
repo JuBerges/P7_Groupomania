@@ -10,9 +10,18 @@
     </div>
     <post-form-modal
       @cancel-post="addPost = false"
+      @update-post="updatePost"
       v-if="addPost"
     ></post-form-modal>
-    <post></post>
+    <div v-if="allPosts.length">
+      <post
+        :key="post"
+        v-for="post in allPosts"
+        :postTitle="post.title"
+        :postImage="post.img_url"
+        :postDate="post.created_at"
+      ></post>
+    </div>
   </div>
 </template>
 
@@ -26,7 +35,19 @@ export default {
   data() {
     return {
       addPost: false,
+      allPosts: [],
     };
+  },
+  async mounted() {
+    this.$store.dispatch("post/getAllPosts").then((posts) => {
+      this.allPosts = posts;
+      console.log(posts);
+    });
+  },
+  methods: {
+    updatePost() {
+      this.addPost = false;
+    },
   },
 };
 </script>
