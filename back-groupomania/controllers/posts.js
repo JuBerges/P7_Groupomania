@@ -3,6 +3,8 @@ const validator = require("validator");
 const models = require("../models");
 const xss = require("xss");
 const date = new Date();
+const Sequelize = require("sequelize");
+
 const currentDate =
   date.getFullYear() +
   "-" +
@@ -35,7 +37,7 @@ exports.createPost = (req, res) => {
       img_url: postObject.img_url,
       created_at: currentDate,
       updated_at: currentDate,
-      title: postObject.title,
+      title: xss(postObject.title),
     });
     res.status(200).json({ message: "Publication enregistrée !" });
   }
