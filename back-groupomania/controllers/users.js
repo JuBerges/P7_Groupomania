@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
-const models = require("../models");
+const db = require("../models");
 const xss = require("xss");
 const jwt = require("jsonwebtoken");
 
@@ -48,7 +48,7 @@ exports.signup = (req, res) => {
     bcrypt
       .hash(userObject.password, 10)
       .then((hash) => {
-        const user = models.users.create({
+        const user = db.users.create({
           email: xss(userObject.email),
           username: xss(userObject.username),
           role: "user",
@@ -62,7 +62,7 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const logUser = models.users
+  const logUser = db.users
     .findOne({
       where: { email: req.body.email },
     })
@@ -91,7 +91,7 @@ exports.login = (req, res) => {
 };
 
 exports.getOne = (req, res) => {
-  const viewUser = models.users
+  const viewUser = db.users
     .findOne({ where: { id: req.params.id } })
     .then((user) => {
       if (!user) {
@@ -104,13 +104,13 @@ exports.getOne = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  const viewUser = models.users
+  const viewUser = db.users
     .findOne({ where: { id: req.params.id } })
     .then((user) => {
       const filename = user.avatar.split("/images/")[1];
       if (!filename.includes("default_profile_pic.png")) {
         fs.unlink(`images/${filename}`, () => {
-          models.users
+          db.users
             .destroy({ where: { id: req.params.id } })
             .then(() =>
               res.status(200).json({ message: "Utilisateur supprimé !" })
@@ -118,7 +118,7 @@ exports.deleteUser = (req, res) => {
             .catch((error) => res.status(400).json({ error }));
         });
       } else {
-        models.users.destroy({ where: { id: req.params.id } }).then(() =>
+        db.users.destroy({ where: { id: req.params.id } }).then(() =>
           res
             .status(200)
             .json({ message: "Utilisateur supprimé !" })
@@ -132,7 +132,7 @@ exports.deleteUser = (req, res) => {
 exports.updateUser = (req, res) => {
   let userAvatar = {};
   if (req.file) {
-    models.users
+    db.users
       .findOne({ where: { id: req.params.id } })
       .then((user) => {
         const filename = user.avatar.split("/images/")[1];
@@ -146,7 +146,7 @@ exports.updateUser = (req, res) => {
         };
       })
       .then(() => {
-        models.users.update(
+        db.users.update(
           { avatar: userAvatar.avatar },
           { where: { id: req.params.id } }
         );

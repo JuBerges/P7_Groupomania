@@ -1,6 +1,6 @@
 const fs = require("fs");
 const validator = require("validator");
-const models = require("../models");
+const db = require("../models");
 const xss = require("xss");
 const date = new Date();
 const Sequelize = require("sequelize");
@@ -32,7 +32,7 @@ exports.createPost = (req, res) => {
       .status(422)
       .json({ message: "Wrong format do not use specials characters" });
   } else {
-    const post = models.posts.create({
+    const post = db.posts.create({
       user_id: postObject.userId,
       img_url: postObject.img_url,
       created_at: currentDate,
@@ -52,11 +52,9 @@ exports.getOne = (req, res) => {};
 exports.updatePost = (req, res) => {};
 
 exports.getAll = (req, res) => {
-  models.posts
+  db.posts
     .findAll({
-      include: [
-        /*models.users, models.likes, models.comments*/
-      ],
+      include: [],
       order: [["created_at", "DESC"]],
     })
     .then((posts) => {

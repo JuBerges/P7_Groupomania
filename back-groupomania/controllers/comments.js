@@ -1,5 +1,5 @@
 const validator = require("validator");
-const models = require("../models");
+const db = require("../models");
 const xss = require("xss");
 
 exports.comment = (req, res) => {};
