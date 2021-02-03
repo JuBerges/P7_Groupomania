@@ -20,5 +20,8 @@ export const post = {
         return Promise.resolve(posts);
       });
     },
+    deletePost({ commit }, postId) {
+      return PostRoutes.deletePost(postId);
+    },
   },
 };

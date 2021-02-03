@@ -3,7 +3,7 @@
     class="w-full text-center text-white pt-2 border-t darkborder h-11 pin-b darkfooter"
   >
     <a href="https://github.com/WadeSpectre?tab=repositories" target="_blank"
-      >©WadeSpectre</a
+      >© 2021 WadeSpectre</a
     >
   </footer>
 </template>

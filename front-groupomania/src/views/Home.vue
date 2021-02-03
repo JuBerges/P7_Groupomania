@@ -15,11 +15,20 @@
     ></post-form-modal>
     <div v-if="allPosts.length">
       <post
+        @update-posts="updatePost()"
         :key="post"
         v-for="post in allPosts"
         :postTitle="post.title"
         :postImage="post.img_url"
         :postDate="post.created_at"
+        :postUserImg="post.user.avatar"
+        :postUsername="post.user.username"
+        :numberOfLikes="post.likes.length"
+        :numberOfComments="post.comments.length"
+        :postComments="post.comments"
+        :postLikes="post.likes"
+        :postOwner="post.user.id"
+        :postObject="post"
       ></post>
     </div>
   </div>
@@ -47,6 +56,10 @@ export default {
   methods: {
     updatePost() {
       this.addPost = false;
+      this.$store.dispatch("post/getAllPosts").then((posts) => {
+        this.allPosts = posts;
+        console.log(posts);
+      });
     },
   },
 };

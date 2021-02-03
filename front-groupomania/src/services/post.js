@@ -14,6 +14,15 @@ class PostRoutes {
     const response = promise;
     return response;
   }
+  async deletePost(postId) {
+    let options = {
+      method: "DELETE",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(api + postId, options);
+    const response = await promise.json();
+    return response;
+  }
   async getAllPosts() {
     const options = {
       method: "GET",

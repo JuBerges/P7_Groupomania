@@ -3,7 +3,11 @@ const validator = require("validator");
 const db = require("../models");
 const xss = require("xss");
 const date = new Date();
+
 const Sequelize = require("sequelize");
+const initModels = require("../models/init-models").initModels;
+const sequelize = require("../models/index").sequelize;
+const models = initModels(sequelize);
 
 const currentDate =
   date.getFullYear() +
@@ -43,7 +47,36 @@ exports.createPost = (req, res) => {
   }
 };
 
-exports.createLike = (req, res) => {};
+exports.createLike = (req, res) => {
+  db.likes
+    .findOne({ where: { user_id: userId, post_id: req.params.id } })
+    .then((likes) => {
+      if (likes) {
+        db.Likes.destroy({ where: { user_id: userId, post_id: req.params.id } })
+          .then(() => {
+            res.status(200).json({ message: "Like removed from that post !" });
+          })
+          .catch((error) => {
+            res.status(400).json({ error });
+          });
+      } else {
+        db.likes
+          .create({
+            post_id: req.params.id,
+            user_id: userId,
+          })
+          .then((like) => {
+            res.status(201).json(like);
+          })
+          .catch((error) => {
+            res.status(400).json({ error });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
 
 exports.getLike = (req, res) => {};
 
@@ -52,10 +85,10 @@ exports.getOne = (req, res) => {};
 exports.updatePost = (req, res) => {};
 
 exports.getAll = (req, res) => {
-  db.posts
+  models.posts
     .findAll({
-      include: [],
-      order: [["created_at", "DESC"]],
+      include: [models.users, models.likes, models.comments],
+      order: [["id", "DESC"]],
     })
     .then((posts) => {
       res.status(200).json(posts);
@@ -63,4 +96,19 @@ exports.getAll = (req, res) => {
     .catch((error) => res.status(500).json(error));
 };
 
-exports.deletePost = (req, res) => {};
+exports.deletePost = (req, res) => {
+  const erasePost = db.posts
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      const filename = post.img_url.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        db.posts
+          .destroy({ where: { id: req.params.id } })
+          .then(() =>
+            res.status(200).json({ message: "Publications supprimée !" })
+          )
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
