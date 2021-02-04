@@ -143,7 +143,7 @@
               />
             </svg>
           </div>
-          <p class="pt-1 pl-1">{{ numberOfLikes }}</p>
+          <p class="pt-1 pl-1">{{ howManyLikes }}</p>
         </div>
       </div>
     </div>
@@ -158,6 +158,7 @@ export default {
       toggleLike: false,
       toggleDelete: false,
       ownerOrAdmin: false,
+      howManyLikes: 0,
     };
   },
   props: [
@@ -174,6 +175,7 @@ export default {
     "postObject",
   ],
   mounted() {
+    this.checkNumberOfLikes();
     if (this.checkIfuserAlreadyLiked()) {
       this.toggleLike = true;
     } else {
@@ -196,6 +198,12 @@ export default {
     }
   },
   methods: {
+    checkNumberOfLikes() {
+      let postId = this.postObject.id;
+      this.$store.dispatch("post/findLikes", postId).then((response) => {
+        this.howManyLikes = response.length;
+      });
+    },
     deletePost() {
       let postId = this.postObject.id;
       this.$store.dispatch("post/deletePost", postId).then((response) => {
@@ -209,7 +217,7 @@ export default {
         postId: this.postObject.id,
       };
       this.$store.dispatch("post/handleLike", data).then((response) => {
-        this.$emit("update-posts");
+        this.checkNumberOfLikes();
         console.log(response);
       });
     },

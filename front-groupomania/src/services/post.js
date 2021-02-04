@@ -44,6 +44,15 @@ class PostRoutes {
     const response = await promise.json();
     return response;
   }
+  async findLikes(postId) {
+    let options = {
+      method: "GET",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(api + postId + "/like", options);
+    const response = await promise.json();
+    return response;
+  }
 }
 
 export default new PostRoutes();

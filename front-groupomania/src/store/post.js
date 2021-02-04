@@ -26,5 +26,8 @@ export const post = {
     handleLike({ commit }, data) {
       return PostRoutes.handleLike(data);
     },
+    findLikes({ commit }, postId) {
+      return PostRoutes.findLikes(postId);
+    },
   },
 };

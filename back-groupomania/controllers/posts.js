@@ -82,7 +82,14 @@ exports.createLike = (req, res) => {
     });
 };
 
-exports.getLike = (req, res) => {};
+exports.getLike = (req, res) => {
+  const findlikes = models.likes
+    .findAll({ where: { post_id: req.params.id } })
+    .then((like) => {
+      res.status(200).json(like);
+    })
+    .catch((error) => res.status(500).json(error));
+};
 
 exports.getOne = (req, res) => {};
 
