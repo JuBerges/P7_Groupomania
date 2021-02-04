@@ -25,9 +25,33 @@
         ></div>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-400 font-bold text-sm cursor-pointer pt-1"
-          >Commentaires: {{ numberOfComments }}</span
+        <div
+          class="flex text-gray-400 cursor-pointer"
+          @click="toggleComments = true"
         >
+          <span class="font-bold text-sm">
+            <!-- Icône de suppression -->
+            <svg
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+              />
+            </svg> </span
+          ><span class="pl-1">{{ numberOfComments }}</span>
+        </div>
+        <!--Modal pour les commentaires-->
+        <comment-modal
+          v-if="toggleComments"
+          @close-comments="toggleComments = false"
+        ></comment-modal>
         <!-- Icone corbeille pour suppression -->
         <div v-if="ownerOrAdmin" class="flex">
           <svg
@@ -150,13 +174,16 @@
   </article>
 </template>
 <script>
+import CommentModal from "./CommentModal.vue";
 export default {
+  components: { CommentModal },
   name: "Post",
   data() {
     return {
       convertedDate: null,
       toggleLike: false,
       toggleDelete: false,
+      toggleComments: false,
       ownerOrAdmin: false,
       howManyLikes: 0,
     };
@@ -167,7 +194,6 @@ export default {
     "postDate",
     "postUsername",
     "postUserImg",
-    "numberOfLikes",
     "postComments",
     "numberOfComments",
     "postLikes",

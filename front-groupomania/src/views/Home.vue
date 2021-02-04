@@ -23,7 +23,6 @@
         :postDate="post.created_at"
         :postUserImg="post.user.avatar"
         :postUsername="post.user.username"
-        :numberOfLikes="post.likes.length"
         :numberOfComments="post.comments.length"
         :postComments="post.comments"
         :postLikes="post.likes"

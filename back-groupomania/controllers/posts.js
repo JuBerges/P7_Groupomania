@@ -46,6 +46,35 @@ exports.createPost = (req, res) => {
   }
 };
 
+exports.getAll = (req, res) => {
+  models.posts
+    .findAll({
+      include: [models.users, models.likes, models.comments],
+      order: [["id", "DESC"]],
+    })
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch((error) => res.status(500).json(error));
+};
+
+exports.deletePost = (req, res) => {
+  const erasePost = db.posts
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      const filename = post.img_url.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        db.posts
+          .destroy({ where: { id: req.params.id } })
+          .then(() =>
+            res.status(200).json({ message: "Publications supprimée !" })
+          )
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
 exports.createLike = (req, res) => {
   db.likes
     .findOne({
@@ -91,35 +120,8 @@ exports.getLike = (req, res) => {
     .catch((error) => res.status(500).json(error));
 };
 
-exports.getOne = (req, res) => {};
+exports.createComment = (req, res) => {};
 
-exports.updatePost = (req, res) => {};
+exports.deleteComment = (req, res) => {};
 
-exports.getAll = (req, res) => {
-  models.posts
-    .findAll({
-      include: [models.users, models.likes, models.comments],
-      order: [["id", "DESC"]],
-    })
-    .then((posts) => {
-      res.status(200).json(posts);
-    })
-    .catch((error) => res.status(500).json(error));
-};
-
-exports.deletePost = (req, res) => {
-  const erasePost = db.posts
-    .findOne({ where: { id: req.params.id } })
-    .then((post) => {
-      const filename = post.img_url.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
-        db.posts
-          .destroy({ where: { id: req.params.id } })
-          .then(() =>
-            res.status(200).json({ message: "Publications supprimée !" })
-          )
-          .catch((error) => res.status(400).json({ error }));
-      });
-    })
-    .catch((error) => res.status(500).json({ error }));
-};
+exports.getComments = (req, res) => {};
