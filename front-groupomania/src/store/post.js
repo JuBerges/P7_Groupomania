@@ -23,5 +23,8 @@ export const post = {
     deletePost({ commit }, postId) {
       return PostRoutes.deletePost(postId);
     },
+    handleLike({ commit }, data) {
+      return PostRoutes.handleLike(data);
+    },
   },
 };

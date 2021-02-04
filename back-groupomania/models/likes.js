@@ -25,14 +25,6 @@ module.exports = function (sequelize, DataTypes) {
           key: "id",
         },
       },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
     },
     {
       sequelize,

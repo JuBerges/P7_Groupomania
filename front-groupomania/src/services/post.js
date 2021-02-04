@@ -32,6 +32,18 @@ class PostRoutes {
     const response = await promise.json();
     return response;
   }
+  async handleLike(data) {
+    let options = {
+      method: "POST",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(
+      api + data.postId + "/" + data.userId + "/like",
+      options
+    );
+    const response = await promise.json();
+    return response;
+  }
 }
 
 export default new PostRoutes();

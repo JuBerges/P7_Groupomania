@@ -14,7 +14,7 @@ router.get("/", auth, postCtrl.getAll);
 
 router.delete("/:id", auth, postCtrl.deletePost);
 
-router.post("/:id/like", postCtrl.createLike);
+router.post("/:postId/:userId/like", postCtrl.createLike);
 
 router.get("/:id/like", postCtrl.getLike);
 

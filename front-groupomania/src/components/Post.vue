@@ -2,7 +2,9 @@
   <article class="my-14 lg:mx-10">
     <div class="mx-auto p-4 darkpost rounded-lg shadow-md">
       <div id="postInfos" class="flex justify-between">
-        <span class="text-gray-400 font-bold text-sm">{{ convertedDate }}</span>
+        <span class="text-gray-400 font-bold text-sm pt-1.5">{{
+          convertedDate
+        }}</span>
         <span class="flex items-center">
           <p class="text-white font-bold">{{ postUsername }}</p>
           <div
@@ -26,6 +28,7 @@
         <span class="text-gray-400 font-bold text-sm cursor-pointer pt-1"
           >Commentaires: {{ numberOfComments }}</span
         >
+        <!-- Icone corbeille pour suppression -->
         <div v-if="ownerOrAdmin" class="flex">
           <svg
             @click="toggleDelete = true"
@@ -95,8 +98,15 @@
             </div>
           </div>
         </div>
+        <!-- Bouton like inactif -->
         <div class="text-gray-400 font-bold text-sm flex">
-          <div v-if="!toggleLike" @click="toggleLike = true">
+          <div
+            v-if="!toggleLike"
+            @click="
+              toggleLike = true;
+              likePost();
+            "
+          >
             <svg
               class="h-6 w-6 text-gray-400 cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +122,14 @@
               />
             </svg>
           </div>
-          <div v-if="toggleLike" @click="toggleLike = false">
+          <!-- Bouton like actif -->
+          <div
+            v-if="toggleLike"
+            @click="
+              toggleLike = false;
+              likePost();
+            "
+          >
             <svg
               class="h-6 w-6 my-blue cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
@@ -157,10 +174,15 @@ export default {
     "postObject",
   ],
   mounted() {
+    if (this.checkIfuserAlreadyLiked()) {
+      this.toggleLike = true;
+    } else {
+      this.toggleLike = false;
+    }
     //====> Pour convertir la date<====\\
     var date = new Date(this.postDate);
     var dateTime =
-      "Posté le " +
+      "Publié le " +
       date.getDate() +
       "/" +
       (date.getMonth() + 1) +
@@ -180,6 +202,25 @@ export default {
         this.$emit("update-posts");
         console.log(response);
       });
+    },
+    likePost() {
+      let data = {
+        userId: this.$store.state.user.current_user.id,
+        postId: this.postObject.id,
+      };
+      this.$store.dispatch("post/handleLike", data).then((response) => {
+        this.$emit("update-posts");
+        console.log(response);
+      });
+    },
+    checkIfuserAlreadyLiked() {
+      let likes = this.postLikes;
+      let currentUserId = this.$store.state.user.current_user.id;
+      for (const like of likes) {
+        if (like.user_id === currentUserId) {
+          return 1;
+        }
+      }
     },
   },
 };

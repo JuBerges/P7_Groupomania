@@ -69,20 +69,21 @@
               </h3>
               <form
                 class="flex flex-col sm:text-center"
-                @submit="postForm"
                 method="post"
                 enctype="multipart/form-data"
               >
-                <label class="pt-2 text-white" for="PostTitle"
+                <label class="pt-2 text-white" for="postTitle"
                   >Choisissez un titre:
                 </label>
                 <input
                   id="postTitle"
+                  maxlength="55"
                   class="mx-auto text-black p-1 placeholder-gray-500"
                   placeholder="Titre de votre publication"
                   type="text"
                   v-model="title"
                 />
+                <p class="text-gray-400 text-xs pt-1">Maximum 55 caratères.</p>
 
                 <span class="pt-2 text-white">Image à ajouter:</span>
                 <label
@@ -102,9 +103,9 @@
                 <p class="text-gray-400 text-xs pb-2">jpg, jpeg, png ou gif.</p>
                 <div
                   v-if="file"
-                  class="w-60 h-60 mx-auto cursor-pointer bg-contain bg-center bg-no-repeat"
+                  class="w-full h-60 mx-auto cursor-pointer bg-contain bg-center bg-no-repeat"
                   :style="{ 'background-image': `url(${file})` }"
-                  @click="chooseImage"
+                  @click.prevent="chooseImage"
                 ></div>
                 <div
                   class="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:mx-auto"
@@ -121,14 +122,14 @@
                     </ul>
                   </div>
                   <button
-                    @click="postForm"
+                    @click.prevent="postForm"
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     Poster
                   </button>
                   <button
-                    @click="cancelPost"
+                    @click.prevent="cancelPost"
                     type="button"
                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                   >

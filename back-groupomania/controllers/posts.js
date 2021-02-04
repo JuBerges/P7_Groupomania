@@ -27,7 +27,6 @@ exports.createPost = (req, res) => {
     ...JSON.parse(req.body.post),
     img_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   };
-  console.log(postObject.userId);
   let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
   if (!req.file) {
     res.status(400).json({ message: "Form file required" });
@@ -49,10 +48,15 @@ exports.createPost = (req, res) => {
 
 exports.createLike = (req, res) => {
   db.likes
-    .findOne({ where: { user_id: userId, post_id: req.params.id } })
+    .findOne({
+      where: { user_id: req.params.userId, post_id: req.params.postId },
+    })
     .then((likes) => {
       if (likes) {
-        db.Likes.destroy({ where: { user_id: userId, post_id: req.params.id } })
+        db.likes
+          .destroy({
+            where: { user_id: req.params.userId, post_id: req.params.postId },
+          })
           .then(() => {
             res.status(200).json({ message: "Like removed from that post !" });
           })
@@ -62,11 +66,11 @@ exports.createLike = (req, res) => {
       } else {
         db.likes
           .create({
-            post_id: req.params.id,
-            user_id: userId,
+            post_id: req.params.postId,
+            user_id: req.params.userId,
           })
           .then((like) => {
-            res.status(201).json(like);
+            res.status(201).json({ message: "This post has been liked !" });
           })
           .catch((error) => {
             res.status(400).json({ error });
