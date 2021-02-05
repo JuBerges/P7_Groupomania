@@ -9,6 +9,9 @@ export const post = {
     getAllPosts(state, posts) {
       state.all_posts = posts;
     },
+    getAllComments(state, comments) {
+      state.all_comments = comments;
+    },
   },
   actions: {
     createPost({ commit }, formData) {
@@ -28,6 +31,14 @@ export const post = {
     },
     findLikes({ commit }, postId) {
       return PostRoutes.findLikes(postId);
+    },
+    createComment({ commit }, data) {
+      return PostRoutes.createComment(data);
+    },
+    getComments({ commit }, postId) {
+      return PostRoutes.getComments(postId).then((comments) => {
+        return Promise.resolve(comments);
+      });
     },
   },
 };

@@ -51,6 +51,7 @@
         <comment-modal
           v-if="toggleComments"
           @close-comments="toggleComments = false"
+          :postObjectId="postObject.id"
         ></comment-modal>
         <!-- Icone corbeille pour suppression -->
         <div v-if="ownerOrAdmin" class="flex">
@@ -194,7 +195,6 @@ export default {
     "postDate",
     "postUsername",
     "postUserImg",
-    "postComments",
     "numberOfComments",
     "postLikes",
     "postOwner",

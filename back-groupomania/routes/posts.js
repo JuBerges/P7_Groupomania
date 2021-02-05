@@ -14,10 +14,10 @@ router.post("/:postId/:userId/like", auth, postCtrl.createLike);
 
 router.get("/:id/like", auth, postCtrl.getLike);
 
-router.get("/:postId/:userId/comment", auth, postCtrl.createComment);
+router.post("/comment", auth, postCtrl.createComment);
 
-router.get("/:id/comment", auth, postCtrl.deleteComment);
+router.delete("/:id/comment", auth, postCtrl.deleteComment);
 
-router.get("/:id/comment", auth, postCtrl.getComments);
+router.get("/:postId/comments", auth, postCtrl.getComments);
 
 module.exports = router;

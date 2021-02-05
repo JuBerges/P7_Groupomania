@@ -68,6 +68,7 @@
                 Poster une image
               </h3>
               <form
+                action="javascript:void(0);"
                 class="flex flex-col sm:text-center"
                 method="post"
                 enctype="multipart/form-data"

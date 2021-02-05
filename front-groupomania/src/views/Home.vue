@@ -1,5 +1,5 @@
 <template>
-  <div class="home pt-11 sm:mb-24 h-screen mx-2">
+  <div class="home pt-11 sm:mb-24 mx-2">
     <div class="flex">
       <button
         @click="addPost = true"
@@ -24,7 +24,6 @@
         :postUserImg="post.user.avatar"
         :postUsername="post.user.username"
         :numberOfComments="post.comments.length"
-        :postComments="post.comments"
         :postLikes="post.likes"
         :postOwner="post.user.id"
         :postObject="post"

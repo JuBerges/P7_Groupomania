@@ -120,8 +120,35 @@ exports.getLike = (req, res) => {
     .catch((error) => res.status(500).json(error));
 };
 
-exports.createComment = (req, res) => {};
+exports.createComment = (req, res) => {
+  let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
+  console.log(req.body.postId + " / " + req.body.comment);
+  if (validator.matches(req.body.comment, regex)) {
+    res
+      .status(422)
+      .json({ message: "Wrong format do not use specials characters" });
+  } else {
+    const post = db.comments.create({
+      comment: xss(req.body.comment),
+      post_id: req.body.postId,
+      user_id: req.body.userId,
+      created_at: currentDate,
+    });
+    res.status(200).json({ message: "Commentaire enregistrée !" });
+  }
+};
 
 exports.deleteComment = (req, res) => {};
 
-exports.getComments = (req, res) => {};
+exports.getComments = (req, res) => {
+  models.comments
+    .findAll({
+      where: { post_id: req.params.postId },
+      include: [models.users],
+      order: [["id", "DESC"]],
+    })
+    .then((comments) => {
+      res.status(200).json(comments);
+    })
+    .catch((error) => res.status(500).json(error));
+};

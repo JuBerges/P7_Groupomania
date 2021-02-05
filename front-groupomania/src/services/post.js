@@ -53,6 +53,25 @@ class PostRoutes {
     const response = await promise.json();
     return response;
   }
+  async createComment(data) {
+    let options = {
+      method: "POST",
+      headers: (await authHeader).authHeaderJson(),
+      body: JSON.stringify(data),
+    };
+    const promise = await fetch(api + "/comment", options);
+    const response = await promise.json();
+    return response;
+  }
+  async getComments(postId) {
+    const options = {
+      method: "GET",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(api + postId + "/comments", options);
+    const response = await promise.json();
+    return response;
+  }
 }
 
 export default new PostRoutes();
