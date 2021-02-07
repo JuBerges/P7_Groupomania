@@ -95,8 +95,7 @@ export default {
         this.$store.dispatch("post/createComment", data).then((response) => {
           this.comInput = null;
           this.getComments();
-          let payload = this.allComments.length;
-          this.$emit("update-comments", payload);
+          this.$emit("update-comments");
           console.log(response);
         });
       }

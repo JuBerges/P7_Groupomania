@@ -49,7 +49,7 @@
         </div>
         <!--Modal pour les commentaires-->
         <comment-modal
-          @update-comments="howManyComments = $event"
+          @update-comments="howManyComments++"
           v-if="toggleComments"
           @close-comments="toggleComments = false"
           :postObjectId="postObject.id"
