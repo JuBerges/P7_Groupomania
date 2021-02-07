@@ -28,7 +28,9 @@
       <div
         class="p-3 h-60 overflow-scroll text-white border-t-2 border-b-2 darkborder"
       >
+        <p v-if="noComment">Aucun commentaire pour le moment...&#128546;</p>
         <comment-list
+          v-else
           :key="com"
           v-for="com in allComments"
           :commentContent="com.comment"
@@ -68,6 +70,7 @@ export default {
     return {
       comInput: null,
       allComments: [],
+      noComment: false,
     };
   },
   props: ["postObjectId"],
@@ -103,7 +106,11 @@ export default {
     getComments() {
       let postId = this.postObjectId;
       this.$store.dispatch("post/getComments", postId).then((comments) => {
-        this.allComments = comments;
+        if (comments.length === 0) {
+          return (this.noComment = true);
+        } else {
+          return (this.allComments = comments);
+        }
       });
     },
   },
