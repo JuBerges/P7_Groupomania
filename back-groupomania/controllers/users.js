@@ -123,18 +123,14 @@ exports.deleteUser = (req, res) => {
         .catch((error) => res.status(500).json(error));
     });
   }
-  reAsign().then(() => {
-    db.users
-      .destroy({ where: { id: req.params.id } })
-      .then(() =>
-        res
-          .status(200)
-          .json({ message: "Utilisateur supprimé !" })
-          .catch((error) => res.status(400).json({ error }))
-      )
-
-      .catch((error) => res.status(500).json({ error }));
-  });
+  reAsign()
+    .then(() => {
+      db.users
+        .destroy({ where: { id: req.params.id } })
+        .then(() => res.status(200).json({ message: "Utilisateur supprimé !" }))
+        .catch((error) => res.status(400).json({ error }));
+    })
+    .catch((error) => res.status(500).json(error));
 };
 
 exports.updateUser = (req, res) => {

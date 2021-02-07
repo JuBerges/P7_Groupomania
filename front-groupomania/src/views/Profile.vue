@@ -63,6 +63,7 @@
         Valider le changement
       </button>
       <button
+        v-if="!isAdmin"
         @click="deleteUser"
         type="button"
         class="mt-2 w-full mx-4 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
@@ -81,6 +82,7 @@ export default {
   components: { DeleteAccount },
   data() {
     return {
+      isAdmin: false,
       username: null,
       email: null,
       avatar: null,
@@ -95,6 +97,9 @@ export default {
     this.avatar = currentUser.avatar;
     this.username = currentUser.username;
     this.email = currentUser.email;
+    if (currentUser.role === "admin") {
+      this.isAdmin = true;
+    }
   },
   methods: {
     chooseImage() {
