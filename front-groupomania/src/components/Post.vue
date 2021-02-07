@@ -45,10 +45,11 @@
                 d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
               />
             </svg> </span
-          ><span class="pl-1">{{ numberOfComments }}</span>
+          ><span class="pl-1">{{ howManyComments }}</span>
         </div>
         <!--Modal pour les commentaires-->
         <comment-modal
+          @update-comments="howManyComments = $event"
           v-if="toggleComments"
           @close-comments="toggleComments = false"
           :postObjectId="postObject.id"
@@ -187,6 +188,7 @@ export default {
       toggleComments: false,
       ownerOrAdmin: false,
       howManyLikes: 0,
+      howManyComments: 0,
     };
   },
   props: [
@@ -201,6 +203,9 @@ export default {
     "postObject",
   ],
   mounted() {
+    //====> Pour afficher le nombre de commentaire <====\\
+    this.howManyComments = this.numberOfComments;
+    //====> Pour mettre à jour les likes et vérif si user a déja liké<====\\
     this.checkNumberOfLikes();
     if (this.checkIfuserAlreadyLiked()) {
       this.toggleLike = true;
@@ -255,6 +260,9 @@ export default {
           return 1;
         }
       }
+    },
+    updateCommentsNumber(payload) {
+      this.howManyComments = payload;
     },
   },
 };

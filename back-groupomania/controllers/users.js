@@ -104,29 +104,37 @@ exports.getOne = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  const viewUser = db.users
-    .findOne({ where: { id: req.params.id } })
-    .then((user) => {
-      const filename = user.avatar.split("/images/")[1];
-      if (!filename.includes("default_profile_pic.png")) {
-        fs.unlink(`images/${filename}`, () => {
-          db.users
-            .destroy({ where: { id: req.params.id } })
-            .then(() =>
-              res.status(200).json({ message: "Utilisateur supprimé !" })
-            )
-            .catch((error) => res.status(400).json({ error }));
-        });
-      } else {
-        db.users.destroy({ where: { id: req.params.id } }).then(() =>
-          res
-            .status(200)
-            .json({ message: "Utilisateur supprimé !" })
-            .catch((error) => res.status(400).json({ error }))
-        );
-      }
-    })
-    .catch((error) => res.status(500).json({ error }));
+  function reAsign() {
+    return new Promise((resolve) => {
+      console.log("dedans");
+      db.likes
+        .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+        .then(() => {
+          db.comments
+            .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+            .then(() => {
+              db.posts
+                .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+                .then(() => resolve())
+                .catch((error) => res.status(500).json(error));
+            })
+            .catch((error) => res.status(500).json(error));
+        })
+        .catch((error) => res.status(500).json(error));
+    });
+  }
+  reAsign().then(() => {
+    db.users
+      .destroy({ where: { id: req.params.id } })
+      .then(() =>
+        res
+          .status(200)
+          .json({ message: "Utilisateur supprimé !" })
+          .catch((error) => res.status(400).json({ error }))
+      )
+
+      .catch((error) => res.status(500).json({ error }));
+  });
 };
 
 exports.updateUser = (req, res) => {

@@ -72,11 +72,7 @@ export default {
   },
   props: ["postObjectId"],
   mounted() {
-    let postId = this.postObjectId;
-    this.$store.dispatch("post/getComments", postId).then((comments) => {
-      this.allComments = comments;
-      console.log(comments);
-    });
+    this.getComments();
   },
   methods: {
     closeModal() {
@@ -98,9 +94,18 @@ export default {
         let postId = this.postObjectId;
         this.$store.dispatch("post/createComment", data).then((response) => {
           this.comInput = null;
+          this.getComments();
+          let payload = this.allComments.length;
+          this.$emit("update-comments", payload);
           console.log(response);
         });
       }
+    },
+    getComments() {
+      let postId = this.postObjectId;
+      this.$store.dispatch("post/getComments", postId).then((comments) => {
+        this.allComments = comments;
+      });
     },
   },
 };

@@ -63,14 +63,21 @@ exports.deletePost = (req, res) => {
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
       const filename = post.img_url.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
-        db.posts
-          .destroy({ where: { id: req.params.id } })
-          .then(() =>
-            res.status(200).json({ message: "Publications supprimée !" })
-          )
-          .catch((error) => res.status(400).json({ error }));
-      });
+      fs.unlink(`images/${filename}`, () => {});
+    })
+    .then(() => {
+      db.likes.destroy({ where: { post_id: req.params.id } });
+    })
+    .then(() => {
+      db.comments.destroy({ where: { post_id: req.params.id } });
+    })
+    .then(() => {
+      db.posts
+        .destroy({ where: { id: req.params.id } })
+        .then(() =>
+          res.status(200).json({ message: "Publications supprimée !" })
+        )
+        .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };

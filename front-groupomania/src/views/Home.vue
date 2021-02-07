@@ -46,6 +46,7 @@ export default {
     };
   },
   async mounted() {
+    //====>Fetch toutes les publications<====\\
     this.$store.dispatch("post/getAllPosts").then((posts) => {
       this.allPosts = posts;
       console.log(posts);
