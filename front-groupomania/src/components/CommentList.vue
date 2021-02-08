@@ -25,8 +25,9 @@
       <span class="text-gray-400 font-bold text-xs pt-1 px-1">{{
         convertedDate
       }}</span
-      ><span
+      ><span v-if="ownerOrAdmin" class="flex"
         ><svg
+          @click="displayDeleteValidation = true"
           class="h-6 w-6 px-1 my-gray cursor-pointer"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -39,6 +40,37 @@
             stroke-width="2"
             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
           /></svg
+        ><svg
+          v-if="displayDeleteValidation"
+          @click="displayDeleteValidation = false"
+          class="h-6 w-6 px-1 text-red-600 cursor-pointer"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <svg
+          v-if="displayDeleteValidation"
+          @click="deleteComment()"
+          class="h-6 w-6 px-1 text-green-600 cursor-pointer"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          /></svg
       ></span>
     </div>
   </div>
@@ -49,16 +81,45 @@ export default {
   data() {
     return {
       convertedDate: null,
+      ownerOrAdmin: false,
+      displayDeleteValidation: false,
     };
   },
+  props: [
+    "commentUserImg",
+    "commentUsername",
+    "commentDate",
+    "commentContent",
+    "commentId",
+    "commentUser",
+  ],
   mounted() {
     //====> Pour convertir la date<====\\
     var date = new Date(this.commentDate);
     var dateTime =
       date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     this.convertedDate = dateTime;
+    //====> Check si l'utilisateur est admin ou auteur du commentaire <====\\
+    let currentUser = this.$store.state.user.current_user;
+    if (
+      currentUser.id === this.commentUser.id ||
+      currentUser.role === "admin"
+    ) {
+      this.ownerOrAdmin = true;
+    } else {
+      this.ownerOrAdmin = false;
+    }
   },
-  props: ["commentUserImg", "commentUsername", "commentDate", "commentContent"],
+
+  methods: {
+    deleteComment() {
+      let commentId = this.commentId;
+      this.$store.dispatch("post/deleteComment", commentId).then((response) => {
+        console.log(response.message);
+        this.$emit("refresh-comments");
+      });
+    },
+  },
 };
 </script>
 <style scoped>

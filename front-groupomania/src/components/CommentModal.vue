@@ -26,10 +26,15 @@
       </header>
       <!-- modal body -->
       <div
+        id="commentScroll"
         class="p-3 h-60 overflow-scroll text-white border-t-2 border-b-2 darkborder"
       >
         <p v-if="noComment">Aucun commentaire pour le moment...&#128546;</p>
         <comment-list
+          @refresh-comments="
+            getComments();
+            decreaseCommentNumber();
+          "
           v-else
           :key="com"
           v-for="com in allComments"
@@ -37,6 +42,8 @@
           :commentDate="com.created_at"
           :commentUsername="com.user.username"
           :commentUserImg="com.user.avatar"
+          :commentId="com.id"
+          :commentUser="com.user"
         ></comment-list>
       </div>
       <form
@@ -76,6 +83,7 @@ export default {
   props: ["postObjectId"],
   mounted() {
     this.getComments();
+    setTimeout(this.commentScroll, 100);
   },
   methods: {
     closeModal() {
@@ -97,9 +105,11 @@ export default {
         let postId = this.postObjectId;
         this.$store.dispatch("post/createComment", data).then((response) => {
           this.comInput = null;
-          this.getComments();
           this.$emit("update-comments");
-          console.log(response);
+          console.log(response.message);
+          this.getComments();
+          setTimeout(this.commentScroll, 100);
+          this.noComment = false;
         });
       }
     },
@@ -112,6 +122,14 @@ export default {
           return (this.allComments = comments);
         }
       });
+    },
+    decreaseCommentNumber() {
+      this.$emit("decrease-comment");
+    },
+    commentScroll() {
+      document
+        .querySelector("#commentScroll")
+        .scrollTo(0, document.querySelector("#commentScroll").scrollHeight);
     },
   },
 };

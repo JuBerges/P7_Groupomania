@@ -49,6 +49,7 @@
         </div>
         <!--Modal pour les commentaires-->
         <comment-modal
+          @decrease-comment="howManyComments--"
           @update-comments="howManyComments++"
           v-if="toggleComments"
           @close-comments="toggleComments = false"
@@ -249,7 +250,6 @@ export default {
       };
       this.$store.dispatch("post/handleLike", data).then((response) => {
         this.checkNumberOfLikes();
-        console.log(response);
       });
     },
     checkIfuserAlreadyLiked() {

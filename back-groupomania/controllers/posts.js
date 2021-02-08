@@ -7,6 +7,7 @@ const date = new Date();
 const Sequelize = require("sequelize");
 const initModels = require("../models/init-models").initModels;
 const sequelize = require("../models/index").sequelize;
+const { json } = require("sequelize");
 const models = initModels(sequelize);
 
 const currentDate =
@@ -145,14 +146,21 @@ exports.createComment = (req, res) => {
   }
 };
 
-exports.deleteComment = (req, res) => {};
+exports.deleteComment = (req, res) => {
+  const eraseComment = db.comments
+    .destroy({ where: { id: req.params.id } })
+    .then(() => {
+      res.status(200).json({ message: "Commentaire supprimé !" });
+    })
+    .catch((error) => req.status(500).json(error));
+};
 
 exports.getComments = (req, res) => {
   models.comments
     .findAll({
       where: { post_id: req.params.postId },
       include: [models.users],
-      order: [["id", "DESC"]],
+      order: [["id", "ASC"]],
     })
     .then((comments) => {
       res.status(200).json(comments);

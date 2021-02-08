@@ -49,7 +49,6 @@ export default {
     //====>Fetch toutes les publications<====\\
     this.$store.dispatch("post/getAllPosts").then((posts) => {
       this.allPosts = posts;
-      console.log(posts);
     });
   },
   methods: {
@@ -57,7 +56,6 @@ export default {
       this.addPost = false;
       this.$store.dispatch("post/getAllPosts").then((posts) => {
         this.allPosts = posts;
-        console.log(posts);
       });
     },
   },

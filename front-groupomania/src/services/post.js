@@ -72,6 +72,15 @@ class PostRoutes {
     const response = await promise.json();
     return response;
   }
+  async deleteComment(commentId) {
+    let options = {
+      method: "DELETE",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(api + commentId + "/comment", options);
+    const response = await promise.json();
+    return response;
+  }
 }
 
 export default new PostRoutes();
