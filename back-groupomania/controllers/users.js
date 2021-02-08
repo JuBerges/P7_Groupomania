@@ -26,39 +26,54 @@ schema
   .oneOf(["Passw0rd", "Password123"]); // Blacklist these values
 
 exports.signup = (req, res) => {
-  const userObject = req.file
-    ? {
-        ...JSON.parse(req.body.user),
-        avatar: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
+  let userRole;
+  db.users
+    .findAll()
+    .then((users) => {
+      if (users.length === 0) {
+        return (userRole = "admin");
+      } else {
+        return (userRole = "user");
       }
-    : {
-        ...JSON.parse(req.body.user),
-        avatar: "http://localhost:3000/images/default_profile_pic.png",
-      };
-  if (
-    !validator.isEmail(userObject.email) ||
-    !validator.isAlphanumeric(userObject.username, ["fr-FR"])
-  ) {
-  } else {
-    if (!schema.validate(userObject.password)) {
-      return res.status(401).json({ error: "Mot de passe non sécurisé!!!" });
-    }
-    bcrypt
-      .hash(userObject.password, 10)
-      .then((hash) => {
-        const user = db.users.create({
-          email: xss(userObject.email),
-          username: xss(userObject.username),
-          role: "user",
-          avatar: userObject.avatar,
-          password: hash,
-        });
-        console.log(user);
-      })
-      .catch((error) => res.status(401).json({ error }));
-  }
+    })
+    .then((role) => {
+      console.log(role);
+      const userObject = req.file
+        ? {
+            ...JSON.parse(req.body.user),
+            avatar: `${req.protocol}://${req.get("host")}/images/${
+              req.file.filename
+            }`,
+          }
+        : {
+            ...JSON.parse(req.body.user),
+            avatar: "http://localhost:3000/images/default_profile_pic.png",
+          };
+      if (
+        !validator.isEmail(userObject.email) ||
+        !validator.isAlphanumeric(userObject.username, ["fr-FR"])
+      ) {
+      } else {
+        if (!schema.validate(userObject.password)) {
+          return res
+            .status(401)
+            .json({ error: "Mot de passe non sécurisé!!!" });
+        }
+        bcrypt
+          .hash(userObject.password, 10)
+          .then((hash) => {
+            const user = db.users.create({
+              email: xss(userObject.email),
+              username: xss(userObject.username),
+              role: role,
+              avatar: userObject.avatar,
+              password: hash,
+            });
+            console.log(user);
+          })
+          .catch((error) => res.status(401).json({ error }));
+      }
+    });
 };
 
 exports.login = (req, res) => {
@@ -125,10 +140,26 @@ exports.deleteUser = (req, res) => {
   }
   reAsign()
     .then(() => {
-      db.users
-        .destroy({ where: { id: req.params.id } })
-        .then(() => res.status(200).json({ message: "Utilisateur supprimé !" }))
-        .catch((error) => res.status(400).json({ error }));
+      db.users.findOne({ where: { id: req.params.id } }).then((user) => {
+        const filename = user.avatar.split("/images/")[1];
+        if (!filename.includes("default_profile_pic.png")) {
+          fs.unlink(`images/${filename}`, () => {
+            db.users
+              .destroy({ where: { id: req.params.id } })
+              .then(() =>
+                res.status(200).json({ message: "Utilisateur supprimé !" })
+              )
+              .catch((error) => res.status(400).json({ error }));
+          });
+        } else {
+          db.users.destroy({ where: { id: req.params.id } }).then(() =>
+            res
+              .status(200)
+              .json({ message: "Utilisateur supprimé !" })
+              .catch((error) => res.status(400).json({ error }))
+          );
+        }
+      });
     })
     .catch((error) => res.status(500).json(error));
 };
