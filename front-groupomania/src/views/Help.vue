@@ -1,95 +1,85 @@
 <template>
   <div class="help pt-11">
-    <h1 class="text-white bold text-5xl text-center">TEST AIDE</h1>
-    <!-- component -->
     <div>
-      <section class="text-gray-700">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="text-center mb-20">
-            <h1
-              class="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4"
-            >
-              Frequently Asked Question
-            </h1>
-            <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
-              The most common questions about how our business works and what
-              can do for you.
-            </p>
-          </div>
-          <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-            <div class="w-full lg:w-1/2 px-4 py-2">
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  How Long is this site live?
-                </summary>
-
-                <span>
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  Can I install/upload anything I want on there?
-                </summary>
-
-                <span>
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  How can I migrate to another site?
-                </summary>
-
-                <span>
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-            </div>
-            <div class="w-full lg:w-1/2 px-4 py-2">
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  Can I change the domain you give me?
-                </summary>
-
-                <span class="px-4 py-2">
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  How many sites I can create at once?
-                </summary>
-
-                <span class="px-4 py-2">
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-              <details class="mb-4">
-                <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
-                  How can I communicate with you?
-                </summary>
-
-                <span class="px-4 py-2">
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-            </div>
-          </div>
+      <main>
+        <div class="flex-col my-6">
+          <h2
+            class="text-gray-100 text-2xl font-bold text-center sm:text-3xl mx-10"
+          >
+            Bienvenue sur l'application Groupomania
+          </h2>
         </div>
-      </section>
+        <div>
+          <p class="my-blue text-center my-6 text-xl font-bold">
+            FAQ - Questions fréquentes
+          </p>
+        </div>
+        <div class="sm:w-2/4 sm:mx-auto mx-4 my-12">
+          <details class="mb-10">
+            <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
+              Comment supprimer une publication ?
+            </summary>
+
+            <span class="text-gray-200">
+              <br />
+              <p class="my-blue">Si vous êtes l'auteur de la publication :</p>
+              - il vous suffit de cliquer sur la petite îcone de corbeille et de
+              valider votre choix. <br />
+              <p class="my-blue">Si vous n'en n'êtes pas l'auteur :</p>
+              - Si un contenu vous paraît offensant ou dérengeant prevenez nous
+              en cliquant
+              <a
+                class="my-blue"
+                target="_blank"
+                href="mailto:nullepart@groupomania.org"
+                >ici</a
+              >.
+            </span>
+          </details>
+          <details class="mb-10">
+            <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
+              Comment changer d'avatar ?
+            </summary>
+
+            <span class="text-gray-200">
+              <br />
+              Pour changer d'avatar, il vous suffit de vous rendre sur la page
+              de votre profil en cliquant sur l'onglet central de la bar de
+              navigation, de cliquer sur le bouton "Cliquez ici pour changer
+              d'avatar", selectionner une de vos images préférées et de valider
+              en cliquant sur le bouton "Valider le changement".
+            </span>
+          </details>
+          <details class="mb-10">
+            <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
+              À quoi ressemblera la prochaine version de l'appli ?
+            </summary>
+
+            <span class="text-gray-200">
+              <br />
+              L'application va continer à évoluer et intégrer de nouvelles
+              fonctionalitées au fil du temps, nous publiront des sondages ici
+              afin de savoir quels changements sont les plus attendus.
+            </span>
+          </details>
+          <details class="mb-10">
+            <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
+              Comment nous contacter ?
+            </summary>
+
+            <span class="text-gray-200"
+              ><br />
+              Pour nous contacter cliquez
+              <a
+                class="my-blue"
+                target="_blank"
+                href="mailto:nullepart@groupomania.org"
+                >ici</a
+              >.
+            </span>
+          </details>
+        </div>
+      </main>
     </div>
   </div>
 </template>
@@ -100,3 +90,8 @@ export default {
   components: {},
 };
 </script>
+<style scoped>
+.my-blue {
+  color: rgb(45, 136, 255);
+}
+</style>
