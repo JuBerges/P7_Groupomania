@@ -1,5 +1,5 @@
 <template>
-  <div class="help pt-11">
+  <div class="help pt-11 mb-36">
     <div>
       <main>
         <div class="flex-col my-6">

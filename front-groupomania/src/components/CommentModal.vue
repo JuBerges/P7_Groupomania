@@ -3,7 +3,9 @@
     class="modal h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50"
   >
     <!-- modal -->
-    <div class="dark-bg rounded-lg shadow-lg w-full mx-2 border-2 darkborder">
+    <div
+      class="dark-bg rounded-lg shadow-lg w-full sm:w-2/3 mx-2 border-2 darkborder"
+    >
       <!-- modal header -->
       <header class="px-4 py-2 flex justify-between items-center rounded-t-lg">
         <h3 class="font-semibold text-lg my-blue">Commentaires</h3>
