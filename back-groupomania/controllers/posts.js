@@ -22,7 +22,7 @@ const currentDate =
   date.getMinutes() +
   ":" +
   date.getSeconds();
-
+//====> Ajoute une publication <====\\
 exports.createPost = (req, res) => {
   const postObject = {
     ...JSON.parse(req.body.post),
@@ -46,7 +46,7 @@ exports.createPost = (req, res) => {
     res.status(200).json({ message: "Publication enregistrée !" });
   }
 };
-
+//====> Récupère toutes les punlications<====\\
 exports.getAll = (req, res) => {
   models.posts
     .findAll({
@@ -58,7 +58,7 @@ exports.getAll = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
-
+//====> Efface une publication <====\\
 exports.deletePost = (req, res) => {
   const erasePost = db.posts
     .findOne({ where: { id: req.params.id } })
@@ -82,7 +82,8 @@ exports.deletePost = (req, res) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+/*====> Ajoute un like à la publication
+        ou le supprime si l'utilisateur a déja liké<====*/
 exports.createLike = (req, res) => {
   db.likes
     .findOne({
@@ -118,7 +119,7 @@ exports.createLike = (req, res) => {
       res.status(500).json(err);
     });
 };
-
+//====> Récupère les likes d'une publication <====\\
 exports.getLike = (req, res) => {
   const findlikes = models.likes
     .findAll({ where: { post_id: req.params.id } })
@@ -127,7 +128,7 @@ exports.getLike = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
-
+//====> Ajoute un commentaire à une publication<====\\
 exports.createComment = (req, res) => {
   let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
   console.log(req.body.postId + " / " + req.body.comment);
@@ -145,7 +146,7 @@ exports.createComment = (req, res) => {
     res.status(200).json({ message: "Commentaire enregistrée !" });
   }
 };
-
+//====> Supprime le commentaire d'un publication <====\\
 exports.deleteComment = (req, res) => {
   const eraseComment = db.comments
     .destroy({ where: { id: req.params.id } })
@@ -154,7 +155,7 @@ exports.deleteComment = (req, res) => {
     })
     .catch((error) => req.status(500).json(error));
 };
-
+//====> Récupère les commantaires d'une publication <====\\
 exports.getComments = (req, res) => {
   models.comments
     .findAll({

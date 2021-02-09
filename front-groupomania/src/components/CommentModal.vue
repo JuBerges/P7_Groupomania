@@ -8,6 +8,7 @@
       <header class="px-4 py-2 flex justify-between items-center rounded-t-lg">
         <h3 class="font-semibold text-lg my-blue">Commentaires</h3>
         <button class="text-black close-modal" @click="closeModal()">
+          <!-- Icône pour fermeture modal -->
           <svg
             class="h-4 w-4 my-gray"
             xmlns="http://www.w3.org/2000/svg"
@@ -15,6 +16,7 @@
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
+            <title>Icône de retour vers les publications</title>
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -83,6 +85,7 @@ export default {
   props: ["postObjectId"],
   mounted() {
     this.getComments();
+    /* Renvoi le scrolling des commentaires vers le bas */
     setTimeout(this.commentScroll, 100);
   },
   methods: {

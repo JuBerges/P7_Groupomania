@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="w-full text-center text-white pt-2 border-t darkborder h-11 darkfooter mb-0"
+    class="w-full pin-b text-center text-white pt-2 border-t darkborder h-11 darkfooter"
   >
     <a href="https://github.com/WadeSpectre?tab=repositories" target="_blank"
       >© 2021 WadeSpectre</a

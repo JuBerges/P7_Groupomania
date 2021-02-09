@@ -1,5 +1,5 @@
 <template>
-  <div class="home pt-11 sm:mb-24 mx-2">
+  <div class="home pt-11 sm:mb-24 mx-2 sm:w-2/3 sm:mx-auto">
     <div class="flex">
       <button
         @click="addPost = true"

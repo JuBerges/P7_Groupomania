@@ -1,5 +1,5 @@
 <template>
-  <div class="profile h-screen pt-11 mb-11">
+  <div class="profile h-screen pt-14 mb-11">
     <delete-account
       v-if="displayModal"
       @cancel-delete="displayModal = false"
@@ -58,7 +58,7 @@
       <button
         @click="updateUser"
         type="button"
-        class="mt-2 w-full mx-4 rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:w-auto sm:text-sm"
+        class="mt-6 mx-10 rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:w-auto sm:text-sm"
       >
         Valider le changement
       </button>
@@ -66,7 +66,7 @@
         v-if="!isAdmin"
         @click="deleteUser"
         type="button"
-        class="mt-2 w-full mx-4 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
+        class="mt-2 mx-6 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
       >
         Supprimer mon compte
       </button>
@@ -93,6 +93,7 @@ export default {
     };
   },
   async mounted() {
+    //====> Gére l'affichage des données de l'utilisateur connecté
     let currentUser = this.$store.state.user.current_user;
     this.avatar = currentUser.avatar;
     this.username = currentUser.username;

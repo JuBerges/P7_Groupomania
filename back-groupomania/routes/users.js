@@ -4,16 +4,19 @@ const multer = require("../middleware/multer-config");
 const auth = require("../middleware/auth");
 const userCtrl = require("../controllers/users");
 
+//====> Création utilisateur <====\\
 router.post("/signup", multer, userCtrl.signup);
 
+//====> Connexion utilisateur <====\\
 router.post("/login", userCtrl.login);
 
+//====> Récupèration de l'utilisateur connecté <====\\
 router.get("/:id", auth, userCtrl.getOne);
 
+//====> Mise à jour de l'avatar utilisateur connecté <====\\
 router.put("/:id", auth, multer, userCtrl.updateUser);
 
-//router.get("/", auth, userCtrl.getAll);
-
+//====> Suprression de l'utilisateur connecté <====\\
 router.delete("/:id", auth, userCtrl.deleteUser);
 
 module.exports = router;

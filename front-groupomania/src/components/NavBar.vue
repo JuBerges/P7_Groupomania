@@ -16,11 +16,11 @@
           src="../assets/images/nav-mini-logo.png"
           alt="logo groupomania"
         /><span class="text-white hidden md:block font-bold text-xl pl-1 pt-2"
-          ><p>{{ $store.state.name }}</p></span
+          ><h1>{{ $store.state.name }}</h1></span
         >
       </div>
     </router-link>
-    <!--Home Link To The Wall-->
+    <!-- Lien vers l'accueil-->
     <router-link
       @click="scrollTop"
       class="mt-2 router col-start-3 md:col-start-5"
@@ -40,7 +40,7 @@
           d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
         /></svg
     ></router-link>
-    <!-- Link To The Profile -->
+    <!-- Linen vers page profil -->
     <router-link
       @click="scrollTop"
       class="mt-2 router col-start-4 md:col-start-6"
@@ -52,7 +52,7 @@
         :style="{ 'background-image': `url(${avatar})` }"
       ></div>
     </router-link>
-    <!-- Link To Help Section -->
+    <!-- Lien vers aide -->
     <router-link
       @click="scrollTop"
       class="mt-2 router col-start-5 md:col-start-7"
@@ -72,11 +72,12 @@
           d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         /></svg
     ></router-link>
-    <!-- SignOut Button -->
+    <!-- Bouton de déconnexion -->
     <div
       class="col-start-7 md:col-start-11"
       @click="cancelSignOut = !cancelSignOut"
     >
+      <!-- Icône de déconnexion -->
       <svg
         class="h-6 w-6 mx-auto mt-2 cursor-pointer router"
         xmlns="http://www.w3.org/2000/svg"
@@ -114,6 +115,7 @@ export default {
     };
   },
   async mounted() {
+    /* Récup et stocke les infos sur l'utilisateur connecté */
     this.$store.dispatch("user/getCurrentUser").then((user) => {
       this.avatar = user.avatar;
     });

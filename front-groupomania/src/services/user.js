@@ -25,6 +25,7 @@ class UserRoutes {
     const response = await promise.json();
     return response;
   }
+  //====> Modification de l'utilisateur connecté
   async modifyCurrentUser(formData) {
     const userId = store.state.user.current_id;
     let options = {

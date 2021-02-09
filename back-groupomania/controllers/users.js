@@ -9,28 +9,31 @@ const jwt = require("jsonwebtoken");
 const schema = new passwordValidator();
 schema
   .is()
-  .min(8) // Minimum length 8
+  .min(8) // Longueur minimum 8
   .is()
-  .max(100) // Maximum length 100
+  .max(100) // Longueur maximum 100
   .has()
-  .uppercase() // Must have uppercase letters
+  .uppercase() // Doit contenir une majuscule
   .has()
-  .lowercase() // Must have lowercase letters
+  .lowercase() // Doit contenir une minuscule
   .has()
-  .digits(1) // Must have at least 2 digits
+  .digits(1) // Doit contenir au moins 2 chiffres
   .has()
   .not()
-  .spaces() // Should not have spaces
+  .spaces() // Doit contenir aucun espace
   .is()
   .not()
-  .oneOf(["Passw0rd", "Password123"]); // Blacklist these values
+  .oneOf(["Passw0rd", "Password123"]); // Mot de passes blacklistés
 
+//====> Créer un nouvel utilisateur <====\\
 exports.signup = (req, res) => {
   let userRole;
   db.users
     .findAll()
     .then((users) => {
-      if (users.length === 0) {
+      /* Le premier utilisateur créé sera l'administrateur,
+       le fichier de bdd contient déja le compte d'utilisateur supprimé */
+      if (users.length === 1) {
         return (userRole = "admin");
       } else {
         return (userRole = "user");
@@ -75,7 +78,7 @@ exports.signup = (req, res) => {
       }
     });
 };
-
+//====> Connexion d'un utilisateur <====\\
 exports.login = (req, res) => {
   const logUser = db.users
     .findOne({
@@ -104,7 +107,7 @@ exports.login = (req, res) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
+//====> Récupère l'utilisateur connecté <====\\
 exports.getOne = (req, res) => {
   const viewUser = db.users
     .findOne({ where: { id: req.params.id } })
@@ -117,7 +120,7 @@ exports.getOne = (req, res) => {
     })
     .catch((error) => res.status(404).json({ error }));
 };
-
+//====> Supprime l'utilisateur connecté <====\\
 exports.deleteUser = (req, res) => {
   function reAsign() {
     return new Promise((resolve) => {
@@ -163,7 +166,7 @@ exports.deleteUser = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
-
+//====> Met à jour l'avatar de l'utilisateur <====\\
 exports.updateUser = (req, res) => {
   let userAvatar = {};
   if (req.file) {

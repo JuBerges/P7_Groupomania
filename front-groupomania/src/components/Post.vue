@@ -30,7 +30,7 @@
           @click="toggleComments = true"
         >
           <span class="font-bold text-sm">
-            <!-- Icône de suppression -->
+            <!-- Icône commentaires -->
             <svg
               class="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +38,7 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
+              <title>Icône commentaires</title>
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -65,6 +66,7 @@
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
+            <title>Suppression de la publication</title>
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
