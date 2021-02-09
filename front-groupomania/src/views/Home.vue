@@ -19,6 +19,7 @@
         :key="post"
         v-for="post in allPosts"
         :postTitle="post.title"
+        :postContent="post.content"
         :postImage="post.img_url"
         :postDate="post.created_at"
         :postUserImg="post.user.avatar"

@@ -80,12 +80,25 @@
                 <input
                   id="postTitle"
                   maxlength="55"
-                  class="mx-auto text-black p-1 placeholder-gray-500"
+                  class="text-black p-1 placeholder-gray-500 border rounded-md"
                   placeholder="Titre de votre publication"
                   type="text"
                   v-model="title"
                 />
                 <p class="text-gray-400 text-xs pt-1">Maximum 55 caratères.</p>
+
+                <label class="pt-2 text-white" for="content"
+                  >Votre message(falcultatif):</label
+                >
+                <textarea
+                  class="resize-y border rounded-md"
+                  name="content"
+                  id="content"
+                  cols="30"
+                  rows="5"
+                  v-model="content"
+                  placeholder="Le texte de votre message(facultatif)..."
+                ></textarea>
 
                 <span class="pt-2 text-white">Image à ajouter:</span>
                 <label
@@ -154,6 +167,7 @@ export default {
       file: null,
       postImage: null,
       title: null,
+      content: null,
       messages: [],
     };
   },
@@ -181,6 +195,7 @@ export default {
       let post = {
         userId: this.$store.state.user.current_user.id,
         title: this.title,
+        content: this.content,
       };
       let that = this;
       let formData = new FormData();

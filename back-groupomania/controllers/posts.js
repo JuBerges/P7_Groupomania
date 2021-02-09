@@ -36,9 +36,11 @@ exports.createPost = (req, res) => {
       .status(422)
       .json({ message: "Wrong format do not use specials characters" });
   } else {
+    console.log(postObject.content);
     const post = db.posts.create({
       user_id: postObject.userId,
       img_url: postObject.img_url,
+      content: postObject.content,
       created_at: currentDate,
       updated_at: currentDate,
       title: xss(postObject.title),

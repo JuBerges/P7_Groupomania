@@ -18,6 +18,26 @@
         <h2 href="#" class="text-2xl text-white uppercase font-bold">
           {{ postTitle }}
         </h2>
+        <div class="w-full text-white my-4" v-if="postContent">
+          <p :class="{ truncate: !toggleText }" v-if="postContent">
+            {{ postContent }}
+          </p>
+          <button
+            v-if="!toggleText"
+            @click="toggleText = true"
+            class="text-xs my-blue"
+          >
+            Voir plus
+          </button>
+          <button
+            v-else
+            class="text-xs my-blue"
+            @click="toggleText = !toggleText"
+            :aria-pressed="toggleText ? 'true' : 'false'"
+          >
+            Voir moins
+          </button>
+        </div>
         <div
           title="image de publication"
           class="mx-auto view-post h-60 w-full"
@@ -188,6 +208,7 @@ export default {
       convertedDate: null,
       toggleLike: false,
       toggleDelete: false,
+      toggleText: false,
       toggleComments: false,
       ownerOrAdmin: false,
       howManyLikes: 0,
@@ -197,6 +218,7 @@ export default {
   props: [
     "postImage",
     "postTitle",
+    "postContent",
     "postDate",
     "postUsername",
     "postUserImg",
