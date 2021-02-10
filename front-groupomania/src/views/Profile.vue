@@ -6,74 +6,79 @@
       @valid-delete="validDelete"
     ></delete-account>
     <div
-      title="image d'avatar de l'utilisateur"
-      v-if="avatar"
-      class="w-40 h-40 md:h-60 md:w-60 mt-5 rounded-full mx-auto preview"
-      :style="{ 'background-image': `url(${avatar})` }"
-    ></div>
-    <form
-      id="changeAvatar"
-      class="text-center mt-2"
-      enctype="multipart/form-data"
+      class="darkborder rounded-lg darkpost p-2 pb-8 mx-2 sm:mx-auto sm:w-2/3"
     >
-      <label
-        for="file-upload"
-        class="cursor-pointer font-medium text-second-color hover:underline"
+      <div
+        title="image d'avatar de l'utilisateur"
+        v-if="avatar"
+        class="w-40 h-40 md:h-60 md:w-60 mt-5 rounded-full mx-auto preview"
+        :style="{ 'background-image': `url(${avatar})` }"
+      ></div>
+      <form
+        id="changeAvatar"
+        class="text-center mt-2"
+        enctype="multipart/form-data"
       >
-        Cliquez ici pour changer d'avatar
-      </label>
-      <input
-        id="file-upload"
-        name="image"
-        type="file"
-        ref="fileInput"
-        class="sr-only"
-        @input="onSelectFile"
-      />
-    </form>
-    <div
-      class="text-white text-3xl md:text-4xl font-bold text-center mt-4"
-      v-if="username"
-    >
-      {{ username }}
-    </div>
-    <div
-      class="text-white text-xl md:text-2xl font-bold text-center mt-4 mx-3"
-      v-if="email"
-    >
-      {{ email }}
-    </div>
-    <div v-if="messages.length">
-      <ul>
-        <li
-          :key="message"
-          v-for="message in messages"
-          class="text-center text-second-color"
+        <label
+          for="file-upload"
+          class="cursor-pointer font-medium text-second-color hover:underline"
         >
-          {{ message }}
-        </li>
-      </ul>
-    </div>
-    <div class="flex justify-center flex-col items-center">
-      <button
-        @click="updateUser"
-        type="button"
-        class="mt-6 mx-10 rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:w-auto sm:text-sm"
+          Cliquez ici pour changer d'avatar
+        </label>
+        <input
+          id="file-upload"
+          name="image"
+          type="file"
+          ref="fileInput"
+          class="sr-only"
+          @input="onSelectFile"
+        />
+      </form>
+      <div
+        class="text-white text-3xl md:text-4xl font-bold text-center mt-4"
+        v-if="username"
       >
-        Valider le changement
-      </button>
-      <button
-        v-if="!isAdmin"
-        @click="deleteUser"
-        type="button"
-        class="mt-2 mx-6 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
+        {{ username }}
+      </div>
+      <div
+        class="text-white text-xl md:text-2xl font-bold text-center mt-4 mx-3"
+        v-if="email"
       >
-        Supprimer mon compte
-      </button>
+        {{ email }}
+      </div>
+      <div v-if="messages.length">
+        <ul>
+          <li
+            :key="message"
+            v-for="message in messages"
+            class="text-center text-second-color"
+          >
+            {{ message }}
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-center flex-col items-center">
+        <button
+          @click="updateUser"
+          type="button"
+          class="mt-6 mx-10 rounded-md border border-transparent shadow-sm px-4 py-1 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:w-auto sm:text-sm"
+        >
+          Valider le changement
+        </button>
+        <button
+          v-if="!isAdmin"
+          @click="deleteUser"
+          type="button"
+          class="mt-2 mx-6 rounded-md border border-transparent shadow-sm px-4 py-1 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:w-auto sm:text-sm"
+        >
+          Supprimer mon compte
+        </button>
+      </div>
     </div>
+    <!-- Publications de l'utilisateur -->
     <div v-if="allPosts.length" class="mt-6">
       <h3
-        class="text-white text-2xl text-center p-4 font-bold darkborder darkpost rounded-lg mb-2 sm:w-2/3 sm:mx-auto mx-2 uppercase"
+        class="text-white text-2xl text-center p-4 font-bold darkborder darkpost rounded-lg mb-6 sm:w-2/3 sm:mx-auto mx-2 uppercase"
       >
         Vos publications
       </h3>

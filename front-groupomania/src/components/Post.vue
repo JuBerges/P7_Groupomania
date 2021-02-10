@@ -19,7 +19,7 @@
       </div>
       <div class="my-2 flex flex-col items-center darkborder rounded-lg p-2">
         <div class="flex">
-          <h2 href="#" class="text-xl my-blue uppercase font-bold">
+          <h2 href="#" class="text-xl my-blue uppercase font-extrabold">
             {{ postTitle }}
           </h2>
           <svg
