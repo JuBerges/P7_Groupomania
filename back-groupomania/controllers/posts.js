@@ -56,11 +56,9 @@ exports.updatePost = (req, res) => {
   };
   let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
   if (req.file) {
-    console.log("file présente");
     db.posts
       .findOne({ where: { id: parsedPost.postId } })
       .then((post) => {
-        console.log(post.img_url);
         const filename = post.img_url.split("/images/")[1];
         fs.unlinkSync(`images/${filename}`);
         postMod = {
@@ -90,7 +88,6 @@ exports.updatePost = (req, res) => {
         res.status(200).json({ message: "Publication modifiée !" });
       });
   } else {
-    console.log("file non présente");
     if (validator.matches(parsedPost.title, regex)) {
       res
         .status(422)

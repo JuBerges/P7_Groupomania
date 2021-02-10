@@ -22,6 +22,7 @@
         :postContent="post.content"
         :postImage="post.img_url"
         :postDate="post.created_at"
+        :postUpdateDate="post.updated_at"
         :postUserImg="post.user.avatar"
         :postUsername="post.user.username"
         :numberOfComments="post.comments.length"

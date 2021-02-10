@@ -1,10 +1,13 @@
 <template>
   <article class="my-14 lg:mx-10">
-    <div class="mx-auto p-4 darkpost rounded-lg shadow-md">
-      <div id="postInfos" class="flex justify-between">
-        <span class="text-gray-400 font-bold text-sm pt-1.5">{{
-          convertedDate
-        }}</span>
+    <div class="mx-auto p-4 darkpost rounded-lg shadow-md darkborder">
+      <div
+        id="postInfos"
+        class="flex justify-between p-2 darkborder rounded-lg"
+      >
+        <span class="text-gray-400 font-bold text-sm pt-1.5"
+          >Publié le {{ convertDate(postDate) }}</span
+        >
         <span class="flex items-center">
           <p class="text-white font-bold pr-2">{{ postUsername }}</p>
           <div
@@ -14,7 +17,7 @@
           ></div>
         </span>
       </div>
-      <div class="my-2 flex flex-col items-center">
+      <div class="my-2 flex flex-col items-center darkborder rounded-lg p-2">
         <div class="flex">
           <h2 href="#" class="text-xl my-blue uppercase font-bold">
             {{ postTitle }}
@@ -187,7 +190,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full text-white my-4" v-if="postContent">
+        <div class="w-full text-white my-4 p-2" v-if="postContent">
           <p :class="{ truncate: !toggleText }" v-if="postContent">
             {{ postContent }}
           </p>
@@ -207,13 +210,11 @@
             Voir moins
           </button>
         </div>
-        <div
-          title="image de publication"
-          class="mx-auto view-post h-60 w-full"
-          :style="{ 'background-image': `url(${postImage})` }"
-        ></div>
+        <div class="mx-auto w-full my-2">
+          <img :src="postImage" alt="Image de la publication" class="mx-auto" />
+        </div>
       </div>
-      <div class="flex justify-between">
+      <div class="flex justify-between darkborder rounded-lg p-2">
         <div
           class="flex text-gray-400 cursor-pointer"
           @click="toggleComments = true"
@@ -364,6 +365,9 @@
           <p class="pt-1 pl-1">{{ howManyLikes }}</p>
         </div>
       </div>
+      <p v-if="updated" class="my-blue text-xs pt-2 text-right">
+        Mise à jour le {{ convertDate(postUpdateDate) }}
+      </p>
     </div>
   </article>
 </template>
@@ -374,13 +378,13 @@ export default {
   name: "Post",
   data() {
     return {
-      convertedDate: null,
       toggleLike: false,
       toggleDelete: false,
       toggleText: false,
       toggleComments: false,
       toggleUpdate: false,
       ownerOrAdmin: false,
+      updated: false,
       howManyLikes: 0,
       howManyComments: 0,
       /* data pour l'update d'un post */
@@ -396,6 +400,7 @@ export default {
     "postTitle",
     "postContent",
     "postDate",
+    "postUpdateDate",
     "postUsername",
     "postUserImg",
     "numberOfComments",
@@ -404,6 +409,9 @@ export default {
     "postObject",
   ],
   mounted() {
+    if (this.postUpdateDate !== this.postDate) {
+      this.updated = true;
+    }
     //====> Pour afficher les valeurs dans les champs de modif <====\\
     this.title = this.postTitle;
     this.content = this.postContent;
@@ -417,16 +425,6 @@ export default {
     } else {
       this.toggleLike = false;
     }
-    //====> Pour convertir la date<====\\
-    var date = new Date(this.postDate);
-    var dateTime =
-      "Publié le " +
-      date.getDate() +
-      "/" +
-      (date.getMonth() + 1) +
-      "/" +
-      date.getFullYear();
-    this.convertedDate = dateTime;
     //====> Pour verif les droits de l'utilisateur<====\\
     let currentUser = this.$store.state.user.current_user;
     if (currentUser.id === this.postOwner || currentUser.role === "admin") {
@@ -434,6 +432,12 @@ export default {
     }
   },
   methods: {
+    convertDate(input) {
+      var date = new Date(input);
+      var dateTime =
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+      return dateTime;
+    },
     postUpdate() {
       let postId = this.postObject.id;
       let post = {
@@ -526,16 +530,12 @@ export default {
 .my-blue {
   color: rgb(45, 136, 255);
 }
+
 .my-gray {
   color: rgb(150, 151, 152);
 }
 .preview {
   background-size: cover;
-  background-position: center center;
-}
-.view-post {
-  background-size: contain;
-  background-repeat: no-repeat;
   background-position: center center;
 }
 </style>
