@@ -6,18 +6,187 @@
           convertedDate
         }}</span>
         <span class="flex items-center">
-          <p class="text-white font-bold">{{ postUsername }}</p>
+          <p class="text-white font-bold pr-2">{{ postUsername }}</p>
           <div
             title="image d'avatar du créateur de ce post"
-            class="w-8 h-8 mx-4 rounded-full preview"
+            class="w-8 h-8 rounded-full preview"
             :style="{ 'background-image': `url(${postUserImg})` }"
           ></div>
         </span>
       </div>
       <div class="my-2 flex flex-col items-center">
-        <h2 href="#" class="text-2xl text-white uppercase font-bold">
-          {{ postTitle }}
-        </h2>
+        <div class="flex">
+          <h2 href="#" class="text-xl my-blue uppercase font-bold">
+            {{ postTitle }}
+          </h2>
+          <svg
+            v-if="ownerOrAdmin"
+            @click="toggleUpdate = true"
+            class="w-6 flex-shrink-0 pb-1 cursor-pointer pl-2 text-gray-400 hover:text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <title>Icône de crayon</title>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+            />
+          </svg>
+        </div>
+        <!-- modal de mofif publications -->
+        <div v-if="toggleUpdate" class="fixed z-10 inset-0 overflow-y-auto">
+          <div
+            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+          >
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div
+                class="absolute inset-0 bg-gray-500 opacity-75"
+                @click="toggleUpdate = false"
+              ></div>
+            </div>
+            <span
+              class="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+              >&#8203;</span
+            >
+            <div
+              class="inline-block align-bottom bg-black rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <div class="bg-black px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div>
+                  <div
+                    class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mb-2 sm:h-10 sm:w-10"
+                  >
+                    <!-- Heroicon name: plus sign -->
+                    <svg
+                      class="h-6 w-6 text-blue-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <title>Icône de crayon</title>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3
+                      class="text-2xl sm:text-center leading-6 font-medium text-white uppercase"
+                      id="modal-headline"
+                    >
+                      Modifier la publication
+                    </h3>
+                    <form
+                      action="javascript:void(0);"
+                      class="flex flex-col sm:text-center"
+                      method="post"
+                      enctype="multipart/form-data"
+                    >
+                      <label class="pt-2 text-white" for="postTitle"
+                        >Choisissez un titre:
+                      </label>
+                      <input
+                        id="postTitle"
+                        maxlength="55"
+                        class="text-black p-1 placeholder-gray-500 border rounded-md"
+                        placeholder="Titre de votre publication"
+                        type="text"
+                        v-model="title"
+                        :value="title"
+                      />
+                      <p class="text-gray-400 text-xs pt-1">
+                        Maximum 55 caratères.
+                      </p>
+
+                      <label class="pt-2 text-white" for="content"
+                        >Votre message(falcultatif):</label
+                      >
+                      <textarea
+                        class="resize-y border rounded-md"
+                        name="content"
+                        id="content"
+                        cols="30"
+                        rows="5"
+                        v-model="content"
+                        placeholder="Le texte de votre message(facultatif)..."
+                        :value="content"
+                      ></textarea>
+                      <p class="text-gray-400 text-xs pt-1">
+                        Vous pouvez modifier la hauteur de ce champs dans le
+                        coin inférieur droit.
+                      </p>
+                      <span class="pt-2 text-white">Image à ajouter:</span>
+                      <label
+                        for="file-upload"
+                        class="cursor-pointer font-medium my-blue hover:underline"
+                      >
+                        Cliquer ici
+                      </label>
+                      <input
+                        id="file-upload"
+                        name="image"
+                        type="file"
+                        ref="fileInput"
+                        class="sr-only"
+                        @input="onSelectFile"
+                      />
+                      <p class="text-gray-400 text-xs pb-2">
+                        jpg, jpeg, png ou gif.
+                      </p>
+                      <div
+                        v-if="modFile"
+                        class="w-full h-60 mx-auto cursor-pointer bg-contain bg-center bg-no-repeat"
+                        :style="{ 'background-image': `url(${modFile})` }"
+                        @click.prevent="chooseImage"
+                      ></div>
+                      <div
+                        class="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:mx-auto"
+                      >
+                        <div v-if="messages.length">
+                          <ul>
+                            <li
+                              :key="message"
+                              v-for="message in messages"
+                              class="text-center text-red-600 sm:pl-2"
+                            >
+                              {{ message }}
+                            </li>
+                          </ul>
+                        </div>
+                        <button
+                          @click.prevent="postUpdate()"
+                          type="button"
+                          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+                        >
+                          Mettre à jour
+                        </button>
+                        <button
+                          @click.prevent="toggleUpdate = false"
+                          type="button"
+                          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                        >
+                          Annuler
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="w-full text-white my-4" v-if="postContent">
           <p :class="{ truncate: !toggleText }" v-if="postContent">
             {{ postContent }}
@@ -210,9 +379,16 @@ export default {
       toggleDelete: false,
       toggleText: false,
       toggleComments: false,
+      toggleUpdate: false,
       ownerOrAdmin: false,
       howManyLikes: 0,
       howManyComments: 0,
+      /* data pour l'update d'un post */
+      messages: [],
+      modImage: null,
+      modFile: null,
+      title: null,
+      content: null,
     };
   },
   props: [
@@ -228,6 +404,10 @@ export default {
     "postObject",
   ],
   mounted() {
+    //====> Pour afficher les valeurs dans les champs de modif <====\\
+    this.title = this.postTitle;
+    this.content = this.postContent;
+    this.modFile = this.postImage;
     //====> Pour afficher le nombre de commentaire <====\\
     this.howManyComments = this.numberOfComments;
     //====> Pour mettre à jour les likes et vérif si user a déja liké<====\\
@@ -254,6 +434,50 @@ export default {
     }
   },
   methods: {
+    postUpdate() {
+      let postId = this.postObject.id;
+      let post = {
+        title: this.title,
+        content: this.content,
+        postId: postId,
+      };
+      let that = this;
+      let formData = new FormData();
+      formData.append("post", JSON.stringify(post));
+      formData.append("image", this.modImage);
+      if (this.title) {
+        this.$store.dispatch("post/updatePost", formData).then((response) => {
+          if (response.ok) {
+            console.log("Publication modifiée !");
+            that.toggleUpdate = false;
+            this.$emit("update-posts");
+          } else {
+            console.log(response);
+            this.messages = [];
+            this.messages.push("Une erreur est survenue ! ");
+          }
+        });
+      } else {
+        this.messages = [];
+        this.messages.push("Titre requis");
+      }
+    },
+    chooseImage() {
+      this.$refs.fileInput.click();
+    },
+    onSelectFile() {
+      const input = this.$refs.fileInput;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.modFile = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+        this.modImage = files[0];
+      }
+    },
     checkNumberOfLikes() {
       let postId = this.postObject.id;
       this.$store.dispatch("post/findLikes", postId).then((response) => {

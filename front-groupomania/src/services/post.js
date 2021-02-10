@@ -14,6 +14,17 @@ class PostRoutes {
     const response = promise;
     return response;
   }
+  //====>Mise à jour d'une publication
+  async updatePost(formData) {
+    let options = {
+      method: "PUT",
+      headers: (await authHeader).authHeader(),
+      body: formData,
+    };
+    const promise = await fetch(api + "/update", options);
+    const response = promise;
+    return response;
+  }
   //====>Suppression d'une publication
   async deletePost(postId) {
     let options = {

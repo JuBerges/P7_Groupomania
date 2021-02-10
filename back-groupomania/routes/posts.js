@@ -5,7 +5,10 @@ const auth = require("../middleware/auth");
 const postCtrl = require("../controllers/posts");
 
 //====> Création publication <====\\
-router.post("/", multer, postCtrl.createPost);
+router.post("/", auth, multer, postCtrl.createPost);
+
+//====> Misa à jour publication <====\\
+router.put("/update", auth, multer, postCtrl.updatePost);
 
 //====> Récupèration des publications <====\\
 router.get("/", auth, postCtrl.getAll);

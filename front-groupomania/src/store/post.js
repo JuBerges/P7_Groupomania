@@ -17,6 +17,9 @@ export const post = {
     createPost({ commit }, formData) {
       return PostRoutes.createPost(formData);
     },
+    updatePost({ commit }, formData) {
+      return PostRoutes.updatePost(formData);
+    },
     getAllPosts({ commit }) {
       return PostRoutes.getAllPosts().then((posts) => {
         commit("getAllPosts", posts);

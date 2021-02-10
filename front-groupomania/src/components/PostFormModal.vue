@@ -44,7 +44,7 @@
             <div
               class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mb-2 sm:h-10 sm:w-10"
             >
-              <!-- Heroicon name: exclamation -->
+              <!-- Heroicon name: plus sign -->
               <svg
                 class="h-6 w-6 text-blue-600"
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <title>Icône point d'excalmation</title>
+                <title>Icône plus</title>
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -66,7 +66,7 @@
                 class="text-2xl sm:text-center leading-6 font-medium text-white uppercase"
                 id="modal-headline"
               >
-                Poster une image
+                Poster une publication
               </h3>
               <form
                 action="javascript:void(0);"

@@ -36,11 +36,10 @@ exports.createPost = (req, res) => {
       .status(422)
       .json({ message: "Wrong format do not use specials characters" });
   } else {
-    console.log(postObject.content);
     const post = db.posts.create({
       user_id: postObject.userId,
       img_url: postObject.img_url,
-      content: postObject.content,
+      content: xss(postObject.content),
       created_at: currentDate,
       updated_at: currentDate,
       title: xss(postObject.title),
@@ -48,7 +47,66 @@ exports.createPost = (req, res) => {
     res.status(200).json({ message: "Publication enregistrée !" });
   }
 };
-//====> Récupère toutes les punlications<====\\
+
+//====> Mettre à jour une publication<====\\
+exports.updatePost = (req, res) => {
+  let postMod = {};
+  let parsedPost = {
+    ...JSON.parse(req.body.post),
+  };
+  let regex = /[\|\/\\\*\+&#\{\(\[\]\}\)<>€£$%=\^`]/;
+  if (req.file) {
+    console.log("file présente");
+    db.posts
+      .findOne({ where: { id: parsedPost.postId } })
+      .then((post) => {
+        console.log(post.img_url);
+        const filename = post.img_url.split("/images/")[1];
+        fs.unlinkSync(`images/${filename}`);
+        postMod = {
+          ...JSON.parse(req.body.post),
+          img_url: `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`,
+        };
+        if (validator.matches(postMod.title, regex)) {
+          res
+            .status(422)
+            .json({ message: "Wrong format do not use specials characters" });
+        }
+      })
+      .then(() => {
+        db.posts.update(
+          {
+            img_url: postMod.img_url,
+            title: xss(postMod.title),
+            content: xss(postMod.content),
+          },
+          { where: { id: parsedPost.postId } }
+        );
+      })
+      .then(() => {
+        res.status(200).json({ message: "Publication modifiée !" });
+      });
+  } else {
+    console.log("file non présente");
+    if (validator.matches(parsedPost.title, regex)) {
+      res
+        .status(422)
+        .json({ message: "Wrong format do not use specials characters" });
+    }
+    db.posts
+      .update(
+        { title: xss(parsedPost.title), content: xss(parsedPost.content) },
+        { where: { id: parsedPost.postId } }
+      )
+      .then(() => {
+        res.status(200).json({ message: "Publication modifiée !" });
+      });
+  }
+};
+
+//====> Récupère toutes les publications<====\\
 exports.getAll = (req, res) => {
   models.posts
     .findAll({
