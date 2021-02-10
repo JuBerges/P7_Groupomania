@@ -13,6 +13,9 @@ router.put("/update", auth, multer, postCtrl.updatePost);
 //====> Récupèration des publications <====\\
 router.get("/", auth, postCtrl.getAll);
 
+//====> Récupèration des publications de l'utilisateur <====\\
+router.get("/:id", auth, postCtrl.getUserPosts);
+
 //====> Suppression d'une publication <====\\
 router.delete("/:id", auth, postCtrl.deletePost);
 

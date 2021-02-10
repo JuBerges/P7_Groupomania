@@ -1,5 +1,5 @@
 <template>
-  <article class="my-14 lg:mx-10">
+  <article class="mb-5 lg:mx-10">
     <div class="mx-auto p-4 darkpost rounded-lg shadow-md darkborder">
       <div
         id="postInfos"
@@ -409,6 +409,7 @@ export default {
     "postObject",
   ],
   mounted() {
+    //====> gére l'affichage de la date si mis à jour <====\\
     if (this.postUpdateDate !== this.postDate) {
       this.updated = true;
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="profile h-screen pt-14 mb-11">
+  <div class="profile pt-14 mb-11">
     <delete-account
       v-if="displayModal"
       @cancel-delete="displayModal = false"
@@ -71,15 +71,41 @@
         Supprimer mon compte
       </button>
     </div>
+    <div v-if="allPosts.length" class="mt-6">
+      <h3
+        class="text-white text-2xl text-center p-4 font-bold darkborder darkpost rounded-lg mb-2 sm:w-2/3 sm:mx-auto mx-2 uppercase"
+      >
+        Vos publications
+      </h3>
+      <div class="sm:mb-24 mx-2 sm:w-2/3 sm:mx-auto">
+        <post
+          @update-posts="updatePost()"
+          :key="post"
+          v-for="post in allPosts"
+          :postTitle="post.title"
+          :postContent="post.content"
+          :postImage="post.img_url"
+          :postDate="post.created_at"
+          :postUpdateDate="post.updated_at"
+          :postUserImg="post.user.avatar"
+          :postUsername="post.user.username"
+          :numberOfComments="post.comments.length"
+          :postLikes="post.likes"
+          :postOwner="post.user.id"
+          :postObject="post"
+        ></post>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import DeleteAccount from "../components/DeleteAccount.vue";
+import Post from "../components/Post.vue";
 
 export default {
   name: "Profile",
-  components: { DeleteAccount },
+  components: { DeleteAccount, Post },
   data() {
     return {
       isAdmin: false,
@@ -90,9 +116,11 @@ export default {
       currentUser: null,
       displayModal: false,
       messages: [],
+      allPosts: [],
     };
   },
   async mounted() {
+    this.updatePost();
     //====> Gére l'affichage des données de l'utilisateur connecté
     let currentUser = this.$store.state.user.current_user;
     this.avatar = currentUser.avatar;
@@ -103,6 +131,12 @@ export default {
     }
   },
   methods: {
+    updatePost() {
+      let userId = this.$store.state.user.current_user.id;
+      this.$store.dispatch("post/getUserPosts", userId).then((posts) => {
+        this.allPosts = posts;
+      });
+    },
     chooseImage() {
       this.$refs.fileInput.click();
     },
@@ -158,5 +192,11 @@ export default {
 }
 .text-second-color {
   color: rgb(45, 136, 255);
+}
+.darkborder {
+  border: solid rgb(48, 49, 50) 2px;
+}
+.darkpost {
+  background-color: rgb(36, 37, 38);
 }
 </style>

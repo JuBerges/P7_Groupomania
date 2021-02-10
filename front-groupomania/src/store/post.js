@@ -26,6 +26,11 @@ export const post = {
         return Promise.resolve(posts);
       });
     },
+    getUserPosts({ commit }, userId) {
+      return PostRoutes.getUserPosts(userId).then((posts) => {
+        return Promise.resolve(posts);
+      });
+    },
     deletePost({ commit }, postId) {
       return PostRoutes.deletePost(postId);
     },

@@ -120,6 +120,22 @@ exports.getAll = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
+
+//====> Récupère toutes les publications de l'utilisateur<====\\
+exports.getUserPosts = (req, res) => {
+  console.log(req.params.id);
+  models.posts
+    .findAll({
+      where: { user_id: req.params.id },
+      include: [models.users, models.likes, models.comments],
+      order: [["id", "DESC"]],
+    })
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch((error) => res.status(500).json(error));
+};
+
 //====> Efface une publication <====\\
 exports.deletePost = (req, res) => {
   const erasePost = db.posts

@@ -38,6 +38,22 @@
           </details>
           <details class="mb-10">
             <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
+              Comment mettre à jour une publication ?
+            </summary>
+
+            <span class="text-gray-200">
+              <br />
+              <p class="text-gray-200">
+                Si vous êtes l'auteur de la publication, vous pouvez voir
+                apparître une petite icône en forme de crayon juste à côté du
+                titre de votre publication. <br />
+                En cliquant sur cette icône un formulaire apparaîtra, vous
+                permettant ainsi de mofifier votre publication.
+              </p>
+            </span>
+          </details>
+          <details class="mb-10">
+            <summary class="font-semibold bg-gray-200 rounded-md py-2 px-4">
               Comment changer d'avatar ?
             </summary>
 

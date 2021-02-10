@@ -13,7 +13,7 @@
       @update-post="updatePost"
       v-if="addPost"
     ></post-form-modal>
-    <div v-if="allPosts.length">
+    <div v-if="allPosts.length" class="mt-14">
       <post
         @update-posts="updatePost()"
         :key="post"

@@ -45,6 +45,16 @@ class PostRoutes {
     const response = await promise.json();
     return response;
   }
+  //====>Récup les posts de l'utilisateur
+  async getUserPosts(userId) {
+    const options = {
+      method: "GET",
+      headers: (await authHeader).authHeader(),
+    };
+    const promise = await fetch(api + userId, options);
+    const response = await promise.json();
+    return response;
+  }
   //====>Gére le systeme de like
   async handleLike(data) {
     let options = {
