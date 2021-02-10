@@ -17,7 +17,7 @@ const currentDate =
   "-" +
   date.getDate() +
   " " +
-  date.getHours() +
+  (date.getHours() + 1) +
   ":" +
   date.getMinutes() +
   ":" +
@@ -81,6 +81,7 @@ exports.updatePost = (req, res) => {
             img_url: postMod.img_url,
             title: xss(postMod.title),
             content: xss(postMod.content),
+            updated_at: currentDate,
           },
           { where: { id: parsedPost.postId } }
         );
@@ -97,7 +98,11 @@ exports.updatePost = (req, res) => {
     }
     db.posts
       .update(
-        { title: xss(parsedPost.title), content: xss(parsedPost.content) },
+        {
+          title: xss(parsedPost.title),
+          content: xss(parsedPost.content),
+          updated_at: currentDate,
+        },
         { where: { id: parsedPost.postId } }
       )
       .then(() => {

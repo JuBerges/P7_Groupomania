@@ -218,7 +218,7 @@
           class="flex text-gray-400 cursor-pointer"
           @click="toggleComments = true"
         >
-          <span class="font-bold text-sm">
+          <span class="font-bold text-sm hover:text-white">
             <!-- Icône commentaires -->
             <svg
               class="w-6 h-6"
@@ -249,7 +249,7 @@
         <div v-if="ownerOrAdmin" class="flex">
           <svg
             @click="toggleDelete = true"
-            class="h-6 w-6 text-gray-400 cursor-pointer"
+            class="h-6 w-6 text-gray-400 hover:text-white cursor-pointer"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -326,7 +326,7 @@
             "
           >
             <svg
-              class="h-6 w-6 text-gray-400 cursor-pointer"
+              class="h-6 w-6 text-gray-400 hover:text-white cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
