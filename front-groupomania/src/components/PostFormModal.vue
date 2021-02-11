@@ -14,7 +14,7 @@
         To: "opacity-0"
     -->
       <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <div class="absolute inset-0 bg-black opacity-75"></div>
       </div>
 
       <!-- This element is to trick the browser into centering the modal contents. -->
@@ -34,12 +34,12 @@
         To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     -->
       <div
-        class="inline-block align-bottom bg-black rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        class="inline-block align-bottom dark-bg rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
       >
-        <div class="bg-black px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="dark-bg darkborder px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div>
             <div
               class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mb-2 sm:h-10 sm:w-10"
@@ -103,7 +103,7 @@
                 <span class="pt-2 text-white">Image à ajouter:</span>
                 <label
                   for="file-upload"
-                  class="cursor-pointer font-medium blue-text hover:underline"
+                  class="cursor-pointer font-medium my-blue hover:underline"
                 >
                   Cliquer ici
                 </label>
@@ -123,7 +123,7 @@
                   @click.prevent="chooseImage"
                 ></div>
                 <div
-                  class="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:mx-auto"
+                  class="dark-bg px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:mx-auto"
                 >
                   <div v-if="messages.length">
                     <ul>
@@ -221,8 +221,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.blue-text {
-  color: rgb(45, 136, 255);
-}
-</style>

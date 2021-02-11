@@ -5,7 +5,7 @@
       id="postInfos"
       class="flex justify-center border border-gray-600 rounded-t-lg px-1"
     >
-      <div class="flex items-center overflow-hidden">
+      <div class="flex items-center overflow-hidden p-1">
         <p class="text-white text-sm font-bold truncate">
           {{ commentUsername }}
         </p>
@@ -129,9 +129,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.preview {
-  background-size: cover;
-  background-position: center center;
-}
-</style>

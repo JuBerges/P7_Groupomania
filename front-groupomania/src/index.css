@@ -6,3 +6,20 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.preview {
+  background-size: cover;
+  background-position: center center;
+}
+.my-blue {
+  color: rgb(45, 136, 255);
+}
+.dark-bg {
+  background-color: rgb(36, 37, 38);
+}
+.darkborder {
+  border: solid rgb(48, 49, 50) 2px;
+}
+.my-gray {
+  color: rgb(150, 151, 152);
+}

@@ -38,7 +38,7 @@ export default {
 };
 </script>
 <!--Style du darkmode-->
-<style>
+<style scoped>
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 200ms, transform 200ms;

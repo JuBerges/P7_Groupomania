@@ -1,6 +1,6 @@
 <template>
   <article class="mb-5 lg:mx-10">
-    <div class="mx-auto p-4 darkpost rounded-lg shadow-md darkborder">
+    <div class="mx-auto p-4 dark-bg rounded-lg shadow-md darkborder">
       <div
         id="postInfos"
         class="flex justify-between p-2 darkborder rounded-lg"
@@ -283,7 +283,7 @@
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div class="darkpost px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="dark-bg px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div class="sm:flex sm:items-start">
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <h3
@@ -296,7 +296,7 @@
                   </div>
                 </div>
                 <div
-                  class="darkpost px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+                  class="dark-bg px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
                 >
                   <button
                     @click="deletePost()"
@@ -520,23 +520,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.darkpost {
-  background-color: rgb(36, 37, 38);
-}
-.darkborder {
-  border: solid rgb(48, 49, 50) 2px;
-}
-.my-blue {
-  color: rgb(45, 136, 255);
-}
-
-.my-gray {
-  color: rgb(150, 151, 152);
-}
-.preview {
-  background-size: cover;
-  background-position: center center;
-}
-</style>

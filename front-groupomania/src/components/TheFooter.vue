@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="w-full pin-b text-center text-white pt-2 border-t darkborder h-11 darkfooter"
+    class="w-full pin-b text-center text-white pt-2 border-t darkborder h-11 dark-bg"
   >
     <a href="https://github.com/WadeSpectre?tab=repositories" target="_blank"
       >© 2021 WadeSpectre</a
@@ -12,11 +12,3 @@ export default {
   name: "TheFooter",
 };
 </script>
-<style scoped>
-.darkfooter {
-  background-color: rgb(36, 37, 38);
-}
-.darkborder {
-  border-top: solid rgb(48, 49, 50) 2px;
-}
-</style>

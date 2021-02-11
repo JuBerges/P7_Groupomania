@@ -6,7 +6,7 @@
       @valid-delete="validDelete"
     ></delete-account>
     <div
-      class="darkborder rounded-lg darkpost p-2 pb-8 mx-2 sm:mx-auto sm:w-2/3"
+      class="darkborder rounded-lg dark-bg p-2 pb-8 mx-2 sm:mx-auto sm:w-2/3"
     >
       <div
         title="image d'avatar de l'utilisateur"
@@ -21,7 +21,7 @@
       >
         <label
           for="file-upload"
-          class="cursor-pointer font-medium text-second-color hover:underline"
+          class="cursor-pointer font-medium my-blue hover:underline"
         >
           Cliquez ici pour changer d'avatar
         </label>
@@ -51,7 +51,7 @@
           <li
             :key="message"
             v-for="message in messages"
-            class="text-center text-second-color"
+            class="text-center my-blue"
           >
             {{ message }}
           </li>
@@ -78,7 +78,7 @@
     <!-- Publications de l'utilisateur -->
     <div v-if="postsDisplayed.length" class="mt-6">
       <h3
-        class="text-white text-2xl text-center p-4 font-bold darkborder darkpost rounded-lg mb-6 sm:w-2/3 sm:mx-auto mx-2 uppercase"
+        class="text-white text-2xl text-center p-4 font-bold darkborder dark-bg rounded-lg mb-6 sm:w-2/3 sm:mx-auto mx-2 uppercase"
       >
         Vos publications
       </h3>
@@ -234,18 +234,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.preview {
-  background-size: cover;
-  background-position: center center;
-}
-.text-second-color {
-  color: rgb(45, 136, 255);
-}
-.darkborder {
-  border: solid rgb(48, 49, 50) 2px;
-}
-.darkpost {
-  background-color: rgb(36, 37, 38);
-}
-</style>

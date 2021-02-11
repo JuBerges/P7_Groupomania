@@ -15,7 +15,7 @@
         <h2 class="custom-border font-bold text-2xl">Identifiez-vous</h2>
         <form class="flex flex-col" @submit="logIn" method="post">
           <div v-if="errors.length">
-            <b class="text-second-color"
+            <b class="my-blue"
               >Merci de corriger le(s) erreur(s) suivante(s):</b
             >
             <ul>
@@ -118,7 +118,7 @@
           <span class="pt-2">Image de profil:</span>
           <label
             for="file-upload"
-            class="cursor-pointer font-medium text-second-color hover:underline"
+            class="cursor-pointer font-medium my-blue hover:underline"
           >
             Choisir une image
           </label>
@@ -318,12 +318,5 @@ export default {
 <style scoped>
 .custom-border:focus {
   border-bottom: solid 3px rgb(45, 136, 255);
-}
-.text-second-color {
-  color: rgb(45, 136, 255);
-}
-.preview {
-  background-size: cover;
-  background-position: center center;
 }
 </style>

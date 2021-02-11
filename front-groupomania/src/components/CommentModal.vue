@@ -140,22 +140,6 @@ export default {
 };
 </script>
 <style scoped>
-.dark-bg {
-  background-color: rgb(36, 37, 38);
-}
-.darkborder {
-  border: solid rgb(48, 49, 50) 2px;
-}
-.my-blue {
-  color: rgb(45, 136, 255);
-}
-.my-gray {
-  color: rgb(150, 151, 152);
-}
-.preview {
-  background-size: cover;
-  background-position: center center;
-}
 .outline-blue:focus {
   outline-color: rgb(45, 136, 255);
   outline-style: groove;
