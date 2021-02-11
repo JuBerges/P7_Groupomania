@@ -149,7 +149,7 @@ export default {
       let userId = this.$store.state.user.current_user.id;
       this.$store.dispatch("post/getUserPosts", userId).then((posts) => {
         this.allPosts = posts;
-        console.log("allPosts présent");
+        //console.log("allPosts présent");
         this.displayPosts(posts, number);
       });
     },
@@ -160,20 +160,20 @@ export default {
       if (this.postsDisplayed.length === array.length) {
         return 0;
       }
-      console.log("Fetch 5 posts de plus");
+      //console.log("Fetch 5 posts de plus");
       for (let i = 0; i <= number; i++) {
         let dest;
         if (!this.postsDisplayed.length) {
           dest = "0";
-          console.log("C'est vide! Post_id: ", array[dest].id);
+          //console.log("C'est vide! Post_id: ", array[dest].id);
           this.postsDisplayed.push(array[dest]);
         } else if (this.postsDisplayed.length === array.length) {
-          console.log("Il n'y a plus de posts à afficher!");
+          //console.log("Il n'y a plus de posts à afficher!");
           return 0;
         } else {
           dest = this.postsDisplayed.length;
           this.postsDisplayed.push(array[dest]);
-          console.log("Post_id: ", array[dest].id);
+          //console.log("Post_id: ", array[dest].id);
         }
       }
     },
