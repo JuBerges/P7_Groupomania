@@ -10,7 +10,7 @@
     </div>
     <post-form-modal
       @cancel-post="addPost = false"
-      @update-post="updatePost"
+      @update-post="fetchPosts(postsDisplayed.length)"
       v-if="addPost"
     ></post-form-modal>
     <div v-if="postsDisplayed.length" class="mt-14" id="scrollPosts">

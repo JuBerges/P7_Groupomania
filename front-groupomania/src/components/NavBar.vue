@@ -2,7 +2,7 @@
   <header
     @click="updateAvatar"
     id="nav"
-    class="grid grid-cols-7 md:grid-cols-11 gap-0 dark-bg h-11 darkborder fixed w-full"
+    class="grid grid-cols-7 md:grid-cols-11 gap-0 dark-bg h-11 border-nav fixed w-full"
   >
     <!--Logo du site-->
     <router-link
@@ -135,6 +135,9 @@ export default {
 </script>
 <!-- Style for darkmode and router-link-activ -->
 <style scoped>
+.border-nav {
+  border-bottom: solid rgb(48, 49, 50) 3px;
+}
 .router {
   color: rgb(150, 151, 152);
 }
