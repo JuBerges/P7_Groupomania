@@ -47,7 +47,7 @@
         <svg
           v-if="displayDeleteValidation"
           @click="displayDeleteValidation = false"
-          class="h-6 w-6 px-1 text-red-600 cursor-pointer"
+          class="h-6 w-6 px-1 text-red-800 cursor-pointer"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -65,7 +65,7 @@
         <svg
           v-if="displayDeleteValidation"
           @click="deleteComment()"
-          class="h-6 w-6 px-1 text-green-600 cursor-pointer"
+          class="h-6 w-6 px-1 my-blue cursor-pointer"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
