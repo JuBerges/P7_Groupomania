@@ -76,17 +76,17 @@
       </div>
     </div>
     <!-- Publications de l'utilisateur -->
-    <div v-if="allPosts.length" class="mt-6">
+    <div v-if="postsDisplayed.length" class="mt-6">
       <h3
         class="text-white text-2xl text-center p-4 font-bold darkborder darkpost rounded-lg mb-6 sm:w-2/3 sm:mx-auto mx-2 uppercase"
       >
         Vos publications
       </h3>
-      <div class="sm:mb-24 mx-2 sm:w-2/3 sm:mx-auto">
+      <div class="sm:mb-24 mx-2 sm:w-2/3 sm:mx-auto" id="scrollPosts">
         <post
-          @update-posts="updatePost()"
+          @update-posts="fetchPosts(postsDisplayed.length - 1)"
           :key="post"
-          v-for="post in allPosts"
+          v-for="post in postsDisplayed"
           :postTitle="post.title"
           :postContent="post.content"
           :postImage="post.img_url"
@@ -122,11 +122,17 @@ export default {
       displayModal: false,
       messages: [],
       allPosts: [],
+      postsDisplayed: [],
     };
   },
-  async mounted() {
-    this.updatePost();
-    //====> Gére l'affichage des données de l'utilisateur connecté
+  beforeMount() {
+    //====>Fetch toutes les publications de l'utilisateur<====\\
+    this.fetchPosts();
+  },
+  mounted() {
+    //====>Détecte la fin scrolling vertical<====\\
+    window.addEventListener("scroll", this.handleScroll);
+    //====> Gére l'affichage des données de l'utilisateur connecté<====\\
     let currentUser = this.$store.state.user.current_user;
     this.avatar = currentUser.avatar;
     this.username = currentUser.username;
@@ -135,12 +141,50 @@ export default {
       this.isAdmin = true;
     }
   },
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
   methods: {
-    updatePost() {
+    fetchPosts(number) {
       let userId = this.$store.state.user.current_user.id;
       this.$store.dispatch("post/getUserPosts", userId).then((posts) => {
         this.allPosts = posts;
+        console.log("allPosts présent");
+        this.displayPosts(posts, number);
       });
+    },
+    displayPosts(array, number) {
+      /* "Number" est utilisé pour mettre à jour les posts et afficher seulement 
+      les posts chargés à l'écran quand l'utilisateur mets à jour l'un de ses posts */
+      !number ? (number = 2) : (this.postsDisplayed = []);
+      if (this.postsDisplayed.length === array.length) {
+        return 0;
+      }
+      console.log("Fetch 5 posts de plus");
+      for (let i = 0; i <= number; i++) {
+        let dest;
+        if (!this.postsDisplayed.length) {
+          dest = "0";
+          console.log("C'est vide! Post_id: ", array[dest].id);
+          this.postsDisplayed.push(array[dest]);
+        } else if (this.postsDisplayed.length === array.length) {
+          console.log("Il n'y a plus de posts à afficher!");
+          return 0;
+        } else {
+          dest = this.postsDisplayed.length;
+          this.postsDisplayed.push(array[dest]);
+          console.log("Post_id: ", array[dest].id);
+        }
+      }
+    },
+    handleScroll() {
+      const scroller = document.getElementById("scrollPosts");
+      if (!scroller) {
+        return 0;
+      }
+      if (window.innerHeight + window.scrollY >= scroller.offsetHeight) {
+        this.displayPosts(this.allPosts);
+      }
     },
     chooseImage() {
       this.$refs.fileInput.click();

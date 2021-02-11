@@ -13,11 +13,11 @@
       @update-post="updatePost"
       v-if="addPost"
     ></post-form-modal>
-    <div v-if="postsMounted.length" class="mt-14" id="scrollPosts">
+    <div v-if="postsDisplayed.length" class="mt-14" id="scrollPosts">
       <post
-        @update-posts="fetchPosts(postsMounted.length - 1)"
+        @update-posts="fetchPosts(postsDisplayed.length - 1)"
         :key="post"
-        v-for="post in postsMounted"
+        v-for="post in postsDisplayed"
         :postTitle="post.title"
         :postContent="post.content"
         :postImage="post.img_url"
@@ -45,15 +45,18 @@ export default {
     return {
       addPost: false,
       allPosts: [],
-      postsMounted: [],
+      postsDisplayed: [],
+      onHome: false,
     };
   },
   beforeMount() {
     //====>Fetch toutes les publications<====\\
     this.fetchPosts();
-    //====>Affiche les publications quand on scroll<====\\
+    //====>Bloque la fonction haddleScroll si l'utisateur n'est pas sur l'acceuil<====\\
+    this.onHome = true;
   },
   mounted() {
+    //====>Détecte la fin scrolling vertical<====\\
     window.addEventListener("scroll", this.handleScroll);
   },
   unmounted() {
@@ -64,37 +67,40 @@ export default {
       this.addPost = false;
       this.$store.dispatch("post/getAllPosts").then((posts) => {
         this.allPosts = posts;
-        console.log("allPosts présent");
+        //console.log("allPosts présent");
         this.displayPosts(posts, number);
       });
     },
     displayPosts(array, number) {
-      !number ? (number = 4) : (this.postsMounted = []);
-      if (this.postsMounted.length === array.length) {
+      /* "Number" est utilisé pour mettre à jour les posts et afficher seulement 
+      les posts chargés à l'écran quand l'utilisateur mets à jour l'un de ses posts */
+      !number ? (number = 4) : (this.postsDisplayed = []);
+      if (this.postsDisplayed.length === array.length) {
         return 0;
       }
-      console.log("fetch 3 de plus");
+      //console.log("Fetch 5 posts de plus");
       for (let i = 0; i <= number; i++) {
         let dest;
-        if (!this.postsMounted.length) {
+        if (!this.postsDisplayed.length) {
           dest = "0";
-          console.log("ok c'est vide ", array[dest].title);
-          this.postsMounted.push(array[dest]);
-        } else if (this.postsMounted.length === array.length) {
-          console.log("Il n'y a plus de posts à afficher!");
+          //console.log("C'est vide! Post_id: ", array[dest].id);
+          this.postsDisplayed.push(array[dest]);
+        } else if (this.postsDisplayed.length === array.length) {
+          //console.log("Il n'y a plus de posts à afficher!");
           return 0;
         } else {
-          dest = this.postsMounted.length;
-          this.postsMounted.push(array[dest]);
-          console.log(array[dest].title);
+          dest = this.postsDisplayed.length;
+          this.postsDisplayed.push(array[dest]);
+          //console.log("Post_id: ", array[dest].id);
         }
       }
     },
     handleScroll() {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.getElementById("scrollPosts").offsetHeight
-      ) {
+      const scroller = document.getElementById("scrollPosts");
+      if (!this.onHome || !scroller) {
+        return 0;
+      }
+      if (window.innerHeight + window.scrollY >= scroller.offsetHeight) {
         this.displayPosts(this.allPosts);
       }
     },
