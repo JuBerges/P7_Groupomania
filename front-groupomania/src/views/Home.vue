@@ -13,11 +13,11 @@
       @update-post="updatePost"
       v-if="addPost"
     ></post-form-modal>
-    <div v-if="allPosts.length" class="mt-14">
+    <div v-if="postsMounted.length" class="mt-14" id="scrollPosts">
       <post
-        @update-posts="updatePost()"
+        @update-posts="fetchPosts(postsMounted.length - 1)"
         :key="post"
-        v-for="post in allPosts"
+        v-for="post in postsMounted"
         :postTitle="post.title"
         :postContent="post.content"
         :postImage="post.img_url"
@@ -45,20 +45,58 @@ export default {
     return {
       addPost: false,
       allPosts: [],
+      postsMounted: [],
     };
   },
-  async mounted() {
+  beforeMount() {
     //====>Fetch toutes les publications<====\\
-    this.$store.dispatch("post/getAllPosts").then((posts) => {
-      this.allPosts = posts;
-    });
+    this.fetchPosts();
+    //====>Affiche les publications quand on scroll<====\\
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    updatePost() {
+    fetchPosts(number) {
       this.addPost = false;
       this.$store.dispatch("post/getAllPosts").then((posts) => {
         this.allPosts = posts;
+        console.log("allPosts présent");
+        this.displayPosts(posts, number);
       });
+    },
+    displayPosts(array, number) {
+      !number ? (number = 4) : (this.postsMounted = []);
+      if (this.postsMounted.length === array.length) {
+        return 0;
+      }
+      console.log("fetch 3 de plus");
+      for (let i = 0; i <= number; i++) {
+        let dest;
+        if (!this.postsMounted.length) {
+          dest = "0";
+          console.log("ok c'est vide ", array[dest].title);
+          this.postsMounted.push(array[dest]);
+        } else if (this.postsMounted.length === array.length) {
+          console.log("Il n'y a plus de posts à afficher!");
+          return 0;
+        } else {
+          dest = this.postsMounted.length;
+          this.postsMounted.push(array[dest]);
+          console.log(array[dest].title);
+        }
+      }
+    },
+    handleScroll() {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.getElementById("scrollPosts").offsetHeight
+      ) {
+        this.displayPosts(this.allPosts);
+      }
     },
   },
 };
