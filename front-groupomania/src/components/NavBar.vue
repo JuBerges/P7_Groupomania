@@ -50,7 +50,7 @@
         v-if="avatar"
         :src="avatar"
         alt="logo de l'utlisateur lien vers page profil"
-        class="h-6 w-6 rounded-full mx-auto preview"
+        class="h-6 w-6 rounded-full mx-auto"
       />
     </router-link>
     <!-- Lien vers aide -->

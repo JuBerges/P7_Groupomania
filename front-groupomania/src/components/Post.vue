@@ -12,7 +12,7 @@
           <p class="text-white font-bold pr-2">{{ postUsername }}</p>
           <div
             title="image d'avatar du créateur de ce post"
-            class="w-8 h-8 rounded-full preview"
+            class="w-8 h-8 rounded-full preview blueborder-mini"
             :style="{ 'background-image': `url(${postUserImg})` }"
           ></div>
         </span>
