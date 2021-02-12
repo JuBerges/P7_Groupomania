@@ -120,6 +120,19 @@ exports.getOne = (req, res) => {
     })
     .catch((error) => res.status(404).json({ error }));
 };
+//====> Récupèration les l'utilisateurs <====\\
+exports.getAll = (req, res) => {
+  const viewUsers = db.users
+    .findAll()
+    .then((users) => {
+      if (!users) {
+        return res.status(404).send(new Error("User not found!"));
+      }
+      res.status(200).json(users);
+    })
+    .catch((error) => res.status(404).json({ error }));
+};
+
 //====> Supprime l'utilisateur connecté <====\\
 exports.deleteUser = (req, res) => {
   function reAsign() {

@@ -69,7 +69,7 @@
                 ATTENTION!
               </h3>
               <div class="mt-2">
-                <p class="text-sm text-red-500">
+                <p class="text-sm text-red-700">
                   Vous étes sur le point de supprimer votre compte.
                 </p>
               </div>
@@ -139,21 +139,9 @@ export default {
       }
     },
     async deleteUser() {
-      const currentUserId = this.$store.state.user.current_id;
-      let options = {
-        method: "DELETE",
-        headers: authHeader(),
-      };
-      const promise = await fetch(
-        "http://localhost:3000/api/auth/" + currentUserId,
-        options
-      );
-      const response = await promise.json();
-      this.username = response.username;
-      this.email = response.email;
-      this.avatar = response.avatar;
-      console.log(response);
-      return response;
+      this.$store.dispatch("user/deleteUser").then((response) => {
+        console.log(response);
+      });
     },
   },
 };

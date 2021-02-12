@@ -13,6 +13,9 @@ router.post("/login", userCtrl.login);
 //====> Récupèration de l'utilisateur connecté <====\\
 router.get("/:id", auth, userCtrl.getOne);
 
+//====> Récupèration les l'utilisateurs <====\\
+router.get("/", auth, userCtrl.getAll);
+
 //====> Mise à jour de l'avatar utilisateur connecté <====\\
 router.put("/:id", auth, multer, userCtrl.updateUser);
 

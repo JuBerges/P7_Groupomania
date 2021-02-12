@@ -45,7 +45,7 @@
           </the-button>
           <p class="pt-4">Vous n'avez pas de compte?</p>
           <button
-            class="p text-blue-600 hover:underline mb-6"
+            class="p my-blue hover:underline mb-6"
             @click="
               (toggleOptions = true),
                 ((errors = []), (password = null), (email = null))
@@ -104,7 +104,7 @@
             type="password"
             v-model="password"
           /><input
-            id="passwordCheck"
+            id="password"
             class="mx-auto text-black p-1 placeholder-gray-500 mt-1"
             placeholder="Retapez votre mot de passe"
             type="password"
@@ -146,7 +146,7 @@
           </the-button>
           <p class="pt-4">Déjà membre ?</p>
           <button
-            class="p text-blue-600 hover:underline pb-11"
+            class="p my-blue hover:underline pb-11"
             @click="(toggleOptions = false), (username = null)"
           >
             Se connecter

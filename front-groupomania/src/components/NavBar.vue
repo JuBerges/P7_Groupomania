@@ -45,12 +45,13 @@
       @click="scrollTop"
       class="mt-2 router col-start-4 md:col-start-6"
       :to="{ name: 'Profile' }"
-      ><div
-        title="image d'avatar de l'utilisateur"
+    >
+      <img
         v-if="avatar"
+        :src="avatar"
+        alt="logo de l'utlisateur lien vers page profil"
         class="h-6 w-6 rounded-full mx-auto preview"
-        :style="{ 'background-image': `url(${avatar})` }"
-      ></div>
+      />
     </router-link>
     <!-- Lien vers aide -->
     <router-link

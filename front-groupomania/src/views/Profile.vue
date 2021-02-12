@@ -75,16 +75,32 @@
         </button>
       </div>
     </div>
+    <!-- Utilisateurs pour admin -->
+    <div v-if="isAdmin">
+      <div>
+        <h2
+          class="text-white mt-6 text-2xl text-center p-4 font-bold darkborder dark-bg rounded-lg sm:w-2/3 sm:mx-auto mx-2 uppercase"
+        >
+          utilisateurs
+        </h2>
+      </div>
+      <users-viewer
+        @refresh-users="fetchUsers"
+        :key="user"
+        v-for="user in users"
+        :userViewed="user"
+      ></users-viewer>
+    </div>
     <!-- Publications de l'utilisateur -->
     <div v-if="postsDisplayed.length" class="mt-6">
       <h3
-        class="text-white text-2xl text-center p-4 font-bold darkborder dark-bg rounded-lg mb-6 sm:w-2/3 sm:mx-auto mx-2 uppercase"
+        class="text-white text-2xl text-center p-4 font-bold darkborder dark-bg rounded-lg sm:w-2/3 sm:mx-auto mx-2 uppercase"
       >
         Vos publications
       </h3>
       <div class="sm:mb-24 mx-2 sm:w-2/3 sm:mx-auto" id="scrollPosts">
         <post
-          @update-posts="fetchPosts(postsDisplayed.length - 1)"
+          @update-posts="fetchPosts(postsDisplayed.length)"
           :key="post"
           v-for="post in postsDisplayed"
           :postTitle="post.title"
@@ -107,10 +123,11 @@
 <script>
 import DeleteAccount from "../components/DeleteAccount.vue";
 import Post from "../components/Post.vue";
+import UsersViewer from "../components/UsersViewer.vue";
 
 export default {
   name: "Profile",
-  components: { DeleteAccount, Post },
+  components: { DeleteAccount, Post, UsersViewer },
   data() {
     return {
       isAdmin: false,
@@ -123,6 +140,7 @@ export default {
       messages: [],
       allPosts: [],
       postsDisplayed: [],
+      users: [],
     };
   },
   beforeMount() {
@@ -140,6 +158,8 @@ export default {
     if (currentUser.role === "admin") {
       this.isAdmin = true;
     }
+    //====>Récup les utilisateurs<====\\
+    this.fetchUsers();
   },
   unmounted() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -230,6 +250,11 @@ export default {
     },
     validDelete() {
       this.$emit("valid-signout");
+    },
+    fetchUsers() {
+      this.$store.dispatch("user/getAllUsers").then((users) => {
+        this.users = users;
+      });
     },
   },
 };

@@ -14,6 +14,6 @@ export default {
 
 <style scoped>
 .btn-blue {
-  background-color: rgb(45, 136, 255);
+  background-color: rgb(0, 108, 250);
 }
 </style>

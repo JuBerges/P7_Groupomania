@@ -28,8 +28,16 @@ export const user = {
         return Promise.resolve(user);
       });
     },
+    getAllUsers({ commit }) {
+      return UserRoutes.getAllUsers().then((users) => {
+        return Promise.resolve(users);
+      });
+    },
     deleteUser({ commit }) {
       return UserRoutes.deleteUser();
+    },
+    adminDeleteUser({ commit }, userId) {
+      return UserRoutes.adminDeleteUser(userId);
     },
   },
 };

@@ -56,6 +56,7 @@
         enctype="multipart/form-data"
       >
         <input
+          id="com"
           class="w-2/3 p-0.5 outline-blue outline-none rounded bg-gray-200 focus:bg-white"
           type="text"
           placeholder="Écrivez un commentaire ici..."
