@@ -20,6 +20,9 @@ body {
 .darkborder {
   border: solid rgb(48, 49, 50) 2px;
 }
+.darkborder-top {
+  border-top: solid rgb(48, 49, 50) 2px;
+}
 .blueborder {
   border: solid rgb(51, 139, 255) 4px;
 }
