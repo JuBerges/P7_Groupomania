@@ -107,7 +107,7 @@
                         placeholder="Titre de votre publication"
                         type="text"
                         v-model="title"
-                        :value="title"
+                        :v-model="title"
                       />
                       <p class="text-gray-400 text-xs pt-1">
                         Maximum 55 caratères.
@@ -124,7 +124,7 @@
                         rows="5"
                         v-model="content"
                         placeholder="Le texte de votre message(facultatif)..."
-                        :value="content"
+                        :v-model="content"
                       ></textarea>
                       <p class="text-gray-400 text-xs pt-1">
                         Vous pouvez modifier la hauteur de ce champs dans le
