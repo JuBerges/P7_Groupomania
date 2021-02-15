@@ -1,34 +1,42 @@
 /* ./src/index.css */
 body {
-  background-color: rgb(24, 25, 26);
+    background-color: rgb(24, 25, 26);
 }
+
 /*! @import */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .preview {
-  background-size: cover;
-  background-position: center center;
+    background-size: cover;
+    background-position: center center;
 }
+
 .my-blue {
-  color: rgb(51, 139, 255);
+    color: rgb(51, 139, 255);
 }
+
 .dark-bg {
-  background-color: rgb(36, 37, 38);
+    background-color: rgb(36, 37, 38);
 }
+
 .darkborder {
-  border: solid rgb(48, 49, 50) 2px;
+    border: solid rgb(48, 49, 50) 2px;
 }
+
 .darkborder-top {
-  border-top: solid rgb(48, 49, 50) 2px;
+    border-top: solid rgb(48, 49, 50) 2px;
 }
+
 .blueborder {
-  border: solid rgb(51, 139, 255) 4px;
+    border: solid rgb(51, 139, 255) 4px;
 }
+
 .blueborder-mini {
-  border: solid rgb(51, 139, 255) 3px;
+    border: solid rgb(51, 139, 255) 3px;
 }
+
 .my-gray {
-  color: rgb(150, 151, 152);
+    color: rgb(150, 151, 152);
 }

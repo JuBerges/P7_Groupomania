@@ -132,7 +132,6 @@ exports.getAll = (req, res) => {
     })
     .catch((error) => res.status(404).json({ error }));
 };
-
 //====> Supprime l'utilisateur connecté <====\\
 exports.deleteUser = (req, res) => {
   function reAsign() {

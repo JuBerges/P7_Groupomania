@@ -22,6 +22,7 @@ const currentDate =
   date.getMinutes() +
   ":" +
   date.getSeconds();
+
 //====> Ajoute une publication <====\\
 exports.createPost = (req, res) => {
   const postObject = {
@@ -47,7 +48,6 @@ exports.createPost = (req, res) => {
     res.status(200).json({ message: "Publication enregistrée !" });
   }
 };
-
 //====> Mettre à jour une publication<====\\
 exports.updatePost = (req, res) => {
   let postMod = {};
@@ -107,7 +107,6 @@ exports.updatePost = (req, res) => {
       });
   }
 };
-
 //====> Récupère toutes les publications<====\\
 exports.getAll = (req, res) => {
   models.posts
@@ -120,7 +119,6 @@ exports.getAll = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
-
 //====> Récupère toutes les publications de l'utilisateur<====\\
 exports.getUserPosts = (req, res) => {
   console.log(req.params.id);
@@ -135,7 +133,6 @@ exports.getUserPosts = (req, res) => {
     })
     .catch((error) => res.status(500).json(error));
 };
-
 //====> Efface une publication <====\\
 exports.deletePost = (req, res) => {
   const erasePost = db.posts
