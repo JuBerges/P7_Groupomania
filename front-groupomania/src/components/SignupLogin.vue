@@ -196,6 +196,7 @@ export default {
                             console.log("Utilisateur connecté !!");
                             that.$store.commit("user/getId", user.userId);
                             that.$store.commit("user/getToken", user.token);
+                            that.$store.commit("user/getCurrentUser", user.currentUser);
                         } else {
                             that.errors = [];
                             that.errors.push("Email et/ou mot de passe non reconnue(s).");

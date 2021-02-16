@@ -4,7 +4,7 @@
         <div class="darkborder rounded-lg dark-bg p-2 pb-8 mx-2 sm:mx-auto sm:w-2/3">
             <div title="image d'avatar de l'utilisateur" v-if="avatar" class="w-40 h-40 md:h-60 md:w-60 mt-5 rounded-full mx-auto preview blueborder" :style="{ 'background-image': `url(${avatar})` }"></div>
             <form id="changeAvatar" class="text-center mt-4" enctype="multipart/form-data">
-                <label for="file-upload" class="cursor-pointer font-medium my-blue dark-bg rounded-lg p-1 blueborder-mini">
+                <label for="file-upload" class="cursor-pointer font-medium my-blue dark-bg p-1">
                     Cliquez ici pour changer d'avatar
                 </label>
                 <input id="file-upload" name="image" type="file" ref="fileInput" class="sr-only" @input="onSelectFile" />
