@@ -138,13 +138,13 @@ exports.deleteUser = (req, res) => {
     return new Promise((resolve) => {
       console.log("dedans");
       db.likes
-        .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+        .update({ user_id: 1 }, { where: { user_id: req.params.id } })
         .then(() => {
           db.comments
-            .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+            .update({ user_id: 1 }, { where: { user_id: req.params.id } })
             .then(() => {
               db.posts
-                .update({ user_id: 3 }, { where: { user_id: req.params.id } })
+                .update({ user_id: 1 }, { where: { user_id: req.params.id } })
                 .then(() => resolve())
                 .catch((error) => res.status(500).json(error));
             })
