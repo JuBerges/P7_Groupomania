@@ -3,18 +3,18 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const helmet = require("helmet");
 const cors = require("cors");
-//const rateLimit = require("express-rate-limit"); //===> Use to limit repeated requests
-/*const limiter = rateLimit({
+const rateLimit = require("express-rate-limit"); //===> Use to limit repeated requests
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //===> 15 minutes
   max: 500, //===> limit each IP to 100 requests per windowMs
-});*/
+});
 
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 
 const app = express();
 
-//app.use(limiter);
+app.use(limiter);
 
 app.use(helmet.xssFilter()); //====>Cross-site scripting sercurity
 
